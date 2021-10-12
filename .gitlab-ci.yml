@@ -1,0 +1,14 @@
+image: node:latest
+
+stages:
+    - staging
+
+staging:
+    type: deploy
+    stage: staging
+    image: ruby:latest
+    script:
+        - gem install dpl    
+        - dpl --provider=heroku --app=$HEROKU_APP_SERVER_STAGING --api-key=$HEROKU_API_KEY
+    tags: 
+        - dalfcs_docker_kvm 
