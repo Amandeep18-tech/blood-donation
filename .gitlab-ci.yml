@@ -1,7 +1,33 @@
 image: node:latest
+variables:
+  MAVEN_OPTS: "-Dorg.gradle.daemon=false" 
+  GIT_STRATEGY: clone
 
 stages:
+    - build
+    - test
     - staging
+    
+build:
+  stage: build
+  tags:
+    - dalfcs_docker_kvm
+  script: 
+    - echo "Maven compile started"
+    - "mvn  clean install"
+  
+
+
+
+test:
+  stage: test
+  tags:
+    - dalfcs_docker_kvm
+
+  script: 
+    - echo "Maven test started"
+    - "mvn test"
+
 
 staging:
     type: deploy
