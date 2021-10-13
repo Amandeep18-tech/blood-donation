@@ -1,7 +1,36 @@
 image: node:latest
+variables:
+  MAVEN_OPTS: "-Dorg.gradle.daemon=false" 
+  GIT_STRATEGY: clone
 
 stages:
+    - build
+    - test
     - staging
+    - production
+    
+build:
+  image: maven:latest
+  stage: build
+  tags:
+    - dalfcs_docker_kvm
+  script: 
+    - echo "Maven compile started"
+    - "mvn  clean install"
+  
+
+
+
+test:
+  image: maven:latest
+  stage: test
+  tags:
+    - dalfcs_docker_kvm
+
+  script: 
+    - echo "Maven test started"
+    - "mvn test"
+
 
 staging:
     type: deploy
@@ -9,6 +38,16 @@ staging:
     image: ruby:latest
     script:
         - gem install dpl    
-        - dpl --provider=heroku --app=$HEROKU_APP_SERVER_STAGING --api-key=$HEROKU_API_KEY
+        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
     tags: 
-        - dalfcs_docker_kvm 
+        - dalfcs_docker_kvm
+
+production:
+    type: deploy
+    stage: production
+    image: ruby:latest
+    script:
+        - gem install dpl    
+        - dpl --provider=heroku --app=$HEROKU_APP_PROD --api-key=$HEROKU_API_KEY
+    tags: 
+        - dalfcs_docker_kvm  
