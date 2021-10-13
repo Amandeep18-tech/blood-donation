@@ -37,6 +37,6 @@ staging:
     image: ruby:latest
     script:
         - gem install dpl    
-        - dpl --provider=heroku --app=$HEROKU_APP_SERVER_STAGING --api-key=$HEROKU_API_KEY
+        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
     tags: 
         - dalfcs_docker_kvm 
