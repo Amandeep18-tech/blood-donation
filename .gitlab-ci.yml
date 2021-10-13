@@ -9,6 +9,7 @@ stages:
     - staging
     
 build:
+  image: maven:latest
   stage: build
   tags:
     - dalfcs_docker_kvm
@@ -20,6 +21,7 @@ build:
 
 
 test:
+  image: maven:latest
   stage: test
   tags:
     - dalfcs_docker_kvm
