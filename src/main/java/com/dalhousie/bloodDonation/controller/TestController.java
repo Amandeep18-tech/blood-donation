@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("books-rest")
+@RequestMapping("api")
 public class TestController {
     @GetMapping(value = "/test", produces = "text/plain")
     public String getBook() {
