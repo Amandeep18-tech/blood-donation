@@ -42,7 +42,7 @@ production:
   stage: production
   image: ruby:latest
   only:
-    - master
+    - main
   script:
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_PROD --api-key=$HEROKU_API_KEY
