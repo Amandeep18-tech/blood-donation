@@ -1,57 +1,50 @@
 image: node:latest
 variables:
-  MAVEN_OPTS: "-Dorg.gradle.daemon=false" 
+  MAVEN_OPTS: "-Dorg.gradle.daemon=false"
   GIT_STRATEGY: clone
 
 stages:
-    - build
-    - test
-    - staging
-    - production
-    
+  - build
+  - test
+  - staging
+  - production
+
 build:
   image: maven:latest
   stage: build
   tags:
     - dalfcs_docker_kvm
-  script: 
+  script:
     - echo "Maven compile started"
     - "mvn  clean install"
-  
-
-
 
 test:
   image: maven:latest
   stage: test
   tags:
     - dalfcs_docker_kvm
-
-  script: 
+  script:
     - echo "Maven test started"
     - "mvn test"
 
-
 staging:
-    type: deploy
-    stage: staging
-    image: ruby:latest
-    only:
-      - develop
-    script:
-        - gem install dpl    
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
-    tags: 
-        - dalfcs_docker_kvm
+  stage: staging
+  image: ruby:latest
+  only:
+    - develop
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+  tags:
+    - dalfcs_docker_kvm
 
 production:
-    type: deploy
-    stage: production
-    image: ruby:latest
-    only:
-      - master
-    script:
-        - gem install dpl    
-        - dpl --provider=heroku --app=$HEROKU_APP_PROD --api-key=$HEROKU_API_KEY
-    tags: 
-        - dalfcs_docker_kvm  
+  stage: production
+  image: ruby:latest
+  only:
+    - main
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_PROD --api-key=$HEROKU_API_KEY
+  tags:
+    - dalfcs_docker_kvm
