@@ -16,7 +16,7 @@ build:
     - dalfcs_docker_kvm
   script:
     - echo "Maven compile started"
-    - "mvn  clean install"
+    - "mvn clean install"
 
 test:
   image: maven:latest
@@ -33,8 +33,10 @@ staging:
   only:
     - develop
   script:
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - echo "Maven deploy Stage"
+    - "mvn package"
+    - "apt install sshpass"
+    - "sshpass -p 'WuKong@0880' scp target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
   tags:
     - dalfcs_docker_kvm
 
@@ -44,7 +46,9 @@ production:
   only:
     - main
   script:
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_PROD --api-key=$HEROKU_API_KEY
+    - echo "Maven deploy Prod"
+    - "mvn package"
+    - "apt install sshpass"
+    - "sshpass -p 'WuKong@0880' scp target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
   tags:
     - dalfcs_docker_kvm
