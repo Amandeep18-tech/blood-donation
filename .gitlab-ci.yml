@@ -13,7 +13,7 @@ build:
   image: maven:latest
   stage: build
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
   script:
     - echo "Maven compile started"
     - "mvn clean install"
@@ -22,7 +22,7 @@ test:
   image: maven:latest
   stage: test
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
   script:
     - echo "Maven test started"
     - "mvn test"
@@ -38,7 +38,7 @@ staging:
     - "apt install sshpass"
     - "sshpass -p 'WuKong@0880' scp target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
 
 production:
   stage: production
@@ -51,4 +51,4 @@ production:
     - "apt install sshpass"
     - "sshpass -p 'WuKong@0880' scp target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
