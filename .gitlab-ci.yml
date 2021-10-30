@@ -34,7 +34,7 @@ staging:
     - echo "Maven deploy Stage"
     - "mvn package"
     - "chmod 600 ./ssh-key"
-    - "scp -i $SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
+    - "scp -i $SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=./known_hosts target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
   tags:
     - ugrad
 
