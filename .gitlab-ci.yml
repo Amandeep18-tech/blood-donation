@@ -13,16 +13,16 @@ build:
   image: maven:latest
   stage: build
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
   script:
     - echo "Maven compile started"
-    - "mvn  clean install"
+    - "mvn clean install"
 
 test:
   image: maven:latest
   stage: test
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
   script:
     - echo "Maven test started"
     - "mvn test"
@@ -33,10 +33,12 @@ staging:
   only:
     - develop
   script:
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - echo "Maven deploy Stage"
+    - "mvn -Ptest package"
+    - "chmod 600 $SSH_KEY"
+    - "scp -i $SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=./known_hosts target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc/test/bloodDonation.jar"
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
 
 production:
   stage: production
@@ -44,7 +46,9 @@ production:
   only:
     - main
   script:
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_PROD --api-key=$HEROKU_API_KEY
+    - echo "Maven deploy Prod"
+    - "mvn -Pprod package"
+    - "chmod 600 $SSH_KEY"
+    - "scp -i $SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=./known_hosts target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc/prod/bloodDonation.jar"
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
