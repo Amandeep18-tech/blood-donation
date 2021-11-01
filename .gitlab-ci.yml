@@ -30,11 +30,17 @@ test:
 staging:
   stage: staging
   image: ruby:latest
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
   script:
     - echo "Maven deploy Stage"
     - "mvn package"
     - "chmod 600 ./ssh-key"
-    - "scp -i $SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=./known_hosts target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
+    - "scp -o StrictHostKeyChecking=no target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
   tags:
     - ugrad
 
