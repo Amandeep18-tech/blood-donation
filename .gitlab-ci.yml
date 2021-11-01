@@ -13,7 +13,7 @@ build:
   image: maven:latest
   stage: build
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
   script:
     - echo "Maven compile started"
     - "mvn clean install"
@@ -22,7 +22,7 @@ test:
   image: maven:latest
   stage: test
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
   script:
     - echo "Maven test started"
     - "mvn test"
@@ -34,11 +34,11 @@ staging:
     - develop
   script:
     - echo "Maven deploy Stage"
-    - "mvn package"
-    - "apt install sshpass"
-    - "sshpass -p 'WuKong@0880' scp target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
+    - "mvn -Ptest package"
+    - "chmod 600 $SSH_KEY"
+    - "scp -i $SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=./known_hosts target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc/test/bloodDonation.jar"
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
 
 production:
   stage: production
@@ -47,8 +47,8 @@ production:
     - main
   script:
     - echo "Maven deploy Prod"
-    - "mvn package"
-    - "apt install sshpass"
-    - "sshpass -p 'WuKong@0880' scp target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc"
+    - "mvn -Pprod package"
+    - "chmod 600 $SSH_KEY"
+    - "scp -i $SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=./known_hosts target/bloodDonation-0.0.1-SNAPSHOT.jar kkn@timberlea.cs.dal.ca:/users/grad/kkn/asdc/prod/bloodDonation.jar"
   tags:
-    - dalfcs_docker_kvm
+    - ugrad

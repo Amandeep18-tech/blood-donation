@@ -1,4 +1,4 @@
-package com.dalhousie.bloodDonation.model;
+package com.dalhousie.bloodDonation.repos;
 
 public class FinancialDonationRepository {
 }
