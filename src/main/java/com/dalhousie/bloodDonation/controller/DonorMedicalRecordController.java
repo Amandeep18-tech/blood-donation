@@ -70,10 +70,10 @@ public class DonorMedicalRecordController {
         boolean checkDonorID = manageAppointmentImpl.CheckDonorMedicalID(donorId);
         if (checkDonorID) {
             donorMedicalRecords = manageAppointmentImpl.GetDonorDetails(donorId);
-            System.out.println("HIV :" + donorMedicalRecords.getHIV_flag() + "Hepatitis C: "
-                    + donorMedicalRecords.getHepatitis_C() + " Hepatitis B" + donorMedicalRecords.getHepatitis_C()
-                    + "Hemoglobin level " + donorMedicalRecords.getHemoglobin_level() + "Hemochromostatis: "
-                    + donorMedicalRecords.getHemochromatosis());
+            System.out.println(" HIV :" + donorMedicalRecords.getHIV_flag() + " Hepatitis C: "
+                    + donorMedicalRecords.getHepatitis_C() + " Hepatitis B " + donorMedicalRecords.getHepatitis_C()
+                    + " Hemoglobin level " + donorMedicalRecords.getHemoglobin_level() + " Hemochromostatis: "
+                    + donorMedicalRecords.getHemochromatosis()+" RBC count:"+donorMedicalRecords.getRbcCount()+" Platelet count:"+donorMedicalRecords.getPlateletCount());
 
             System.out.println("Enter the whether the patient has hepatitis B ");
             System.out.println("Do you want to change this value");
