@@ -6,10 +6,10 @@ import com.dalhousie.bloodDonation.controller.DonorAppointmentController;
 import com.dalhousie.bloodDonation.controller.DonorMedicalRecordController;
 import com.dalhousie.bloodDonation.controller.ListSuitableDonorController;
 import com.dalhousie.bloodDonation.utils.DBUtils;
+import com.dalhousie.bloodDonation.controller.MenuController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 @SpringBootApplication
@@ -36,6 +36,8 @@ public class BloodDonationSystemApplication {
         // donorAppointmentController.bookDate();
         // listSuitableDonorController.patientDonorList();
         listSuitableDonorController.organisationDonorSelection();
+        MenuController menuController = new MenuController();
+        menuController.displayMenu();
         SpringApplication.run(BloodDonationSystemApplication.class, args);
         new FinancialDonationController().selectModeOfPayment();
     }
