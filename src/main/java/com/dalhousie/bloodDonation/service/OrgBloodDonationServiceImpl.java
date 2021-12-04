@@ -9,6 +9,7 @@ import com.dalhousie.bloodDonation.repos.BloodDonationDetailsRepository;
 import com.dalhousie.bloodDonation.repos.BloodRequestOrganisationRepository;
 import com.dalhousie.bloodDonation.utils.DateUtils;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,12 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
     private static BloodDonationDetailsRepository bloodDonationDetailsRepository = null;
 
     public OrgBloodDonationServiceImpl(){
-        bloodDonationDetailsRepository = new BloodDonationDetailsRepository();
+        try {
+            bloodDonationDetailsRepository = new BloodDonationDetailsRepository();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         bloodRequestOrganisationRepository = new BloodRequestOrganisationRepository();
     }
 
