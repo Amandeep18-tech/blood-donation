@@ -21,7 +21,7 @@ public class DonorMedicalRecordsRepository {
     }
 
     public boolean addNewMedicalRecord(DonorMedicalRecords donorMedicalRecords) throws SQLException{
-        String query = "INSERT INTO donor_medical_records(id, "+"donor_id," + "hepatitis_B," + "hepatitis_C,"+"HIV_flag,"+"hemoglobin_level,"+"hemochromatosis) VALUES (?, ?, ?,?,?,?,?)";
+        String query = "INSERT INTO donor_medical_records(id, "+"donor_id," + "hepatitis_B," + "hepatitis_C,"+"HIV_flag,"+"hemoglobin_level,"+"hemochromatosis,"+"rbc_count,"+"platelet_count) VALUES (?, ?, ?,?,?,?,?,?,?)";
         
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
@@ -33,6 +33,8 @@ public class DonorMedicalRecordsRepository {
         ps.setInt(5,donorMedicalRecords.getHIV_flag());
         ps.setInt(6,donorMedicalRecords.getHemoglobin_level());
         ps.setInt(7,donorMedicalRecords.getHemochromatosis());
+        ps.setInt(8,donorMedicalRecords.getRbcCount());
+        ps.setInt(9,donorMedicalRecords.getPlateletCount());
         
         executeUpdate = ps.executeUpdate();
         return true;
@@ -52,7 +54,8 @@ public class DonorMedicalRecordsRepository {
             donorMedicalRecords.setHemochromatosis(rs.getInt("hemochromatosis"));
             donorMedicalRecords.setId(rs.getString("id"));
             donorMedicalRecords.setHemoglobin_level(rs.getInt("hemoglobin_level"));
-            
+            donorMedicalRecords.setRbcCount(rs.getInt("rbc_count"));
+            donorMedicalRecords.setPlateletCount(rs.getInt("platelet_count"));
             medicalRecordList.add(donorMedicalRecords);
         }
         return medicalRecordList;
@@ -62,7 +65,7 @@ public class DonorMedicalRecordsRepository {
 
     public boolean updateMedicalRecord(DonorMedicalRecords donorMedicalRecords,String donorID) throws SQLException{
         
-        String query = "UPDATE donor_medical_records SET HIV_flag= ?,hepatitis_B=?,hepatitis_C=?,hemochromatosis=?,hemoglobin_level=? WHERE donor_id = ?";
+        String query = "UPDATE donor_medical_records SET HIV_flag= ?,hepatitis_B=?,hepatitis_C=?,hemochromatosis=?,hemoglobin_level=?,rbc_count=?,platelet_count=? WHERE donor_id = ?";
         
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1,donorMedicalRecords.getHIV_flag());
@@ -70,7 +73,9 @@ public class DonorMedicalRecordsRepository {
         ps.setInt(3,donorMedicalRecords.getHepatitis_C());
         ps.setInt(4,donorMedicalRecords.getHemochromatosis());
         ps.setInt(5,donorMedicalRecords.getHemoglobin_level());
-        ps.setString(6,donorID);
+        ps.setInt(6,donorMedicalRecords.getRbcCount());
+        ps.setInt(7,donorMedicalRecords.getHemoglobin_level());
+        ps.setString(8,donorID);
         
         
         executeUpdate = ps.executeUpdate();

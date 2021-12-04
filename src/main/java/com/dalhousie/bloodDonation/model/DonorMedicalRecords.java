@@ -8,7 +8,21 @@ public class DonorMedicalRecords {
     Integer HIV_flag;
     Integer hemoglobin_level;
     Integer hemochromatosis;
+    Integer rbcCount;
+    Integer plateletCount;
 
+    public Integer getRbcCount() {
+        return rbcCount;
+    }
+    public void setRbcCount(Integer rbcCount) {
+        this.rbcCount = rbcCount;
+    }
+    public Integer getPlateletCount() {
+        return plateletCount;
+    }
+    public void setPlateletCount(Integer plateletCount) {
+        this.plateletCount = plateletCount;
+    }
     public String getId() {
         return id;
     }

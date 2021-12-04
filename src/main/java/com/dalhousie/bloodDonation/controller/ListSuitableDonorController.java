@@ -40,7 +40,7 @@ public class ListSuitableDonorController {
                 personBloodType=person.getBlood_group();
             }
             
-        }
+        }// depends on the user login.
         
         List<String> donorId = new ArrayList <String> ();
         donorId=listSuitableDonorImpl.getSuitableDonorID(personBloodType);
@@ -76,6 +76,10 @@ public class ListSuitableDonorController {
                 donorSelection.put(getDonorId,choicesByOrganization);
             }
             System.out.println(donorSelection);
+            System.out.println("Choose hemoglobin level between between 120-175 grams per litre");
+            Integer hemoglobinLevel=Integer.parseInt(sc.nextLine());
+            
+
 
         }
 

@@ -9,7 +9,10 @@ import com.dalhousie.bloodDonation.constants.SlotAvailableConstants;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.dalhousie.bloodDonation.constants.SlotAvailableConstants;
@@ -51,7 +54,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
     }
 
     @Override
-    public boolean CompareDate(String dateFormatInput, String slotIdInput) throws SQLException {
+    public boolean CompareDate(String dateFormatInput, String slotIdInput) throws SQLException, ParseException {
         MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
 
         List<MedicalAppointmentDetails> detailList = medicalAppointmentDetailRepository.getAllDetails();
@@ -59,6 +62,15 @@ public class ManageAppointmentImpl implements ManageAppointment {
         for (MedicalAppointmentDetails medicalAppointmentDetail : detailList) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateToString = dateFormat.format(medicalAppointmentDetail.getslotDate());
+            Date dateByUser = dateFormat.parse(dateToString);
+            Date today = Calendar.getInstance().getTime();
+            String todayDateToString = dateFormat.format(today);
+            Date todayDate = dateFormat.parse(todayDateToString);
+            
+            
+           if(todayDate.before(dateByUser)){
+               return true;
+           }
 
             if (medicalAppointmentDetail.getslotID().equals(slotIdInput) && dateToString.equals(dateFormatInput)) {
                 return true;

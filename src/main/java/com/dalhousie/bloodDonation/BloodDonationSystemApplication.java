@@ -11,11 +11,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 @SpringBootApplication
 public class BloodDonationSystemApplication {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ParseException {
         DBUtils dbUtils = new DBUtils();
         Connection conn = dbUtils.getConnection();
         
@@ -28,16 +29,16 @@ public class BloodDonationSystemApplication {
         // appointmentController.bookDate();
         // appointmentController.ShowPersonInactiveList();
         // appointmentController.MakePersonActive();
-        // donorMedicalRecordController.addMedicalRecords();
+        donorMedicalRecordController.addMedicalRecords();
         // donorMedicalRecordController.editMedicalRecords();
         // donorAppointmentController.seeDonorRequests();
         // donorAppointmentController.confirmDonorRequests();
         // donorAppointmentController.displayAppointmentTime();
         // donorAppointmentController.bookDate();
         // listSuitableDonorController.patientDonorList();
-        listSuitableDonorController.organisationDonorSelection();
+        // listSuitableDonorController.organisationDonorSelection();
         SpringApplication.run(BloodDonationSystemApplication.class, args);
-        new FinancialDonationController().selectModeOfPayment();
+        // new FinancialDonationController().selectModeOfPayment();
     }
 
 }

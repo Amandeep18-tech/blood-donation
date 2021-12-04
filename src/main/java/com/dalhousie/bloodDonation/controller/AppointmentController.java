@@ -77,7 +77,7 @@ public class AppointmentController {
 
     }
 
-    public void bookDate() throws SQLException {
+    public void bookDate() throws SQLException, ParseException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -123,7 +123,7 @@ public class AppointmentController {
 
                 if (dateAvailable) {
                     System.out.println();
-                    System.out.println("Please enter a different date, this date is booked.");
+                    System.out.println("Please enter a different date, this date is unavailable");
                     continue;
                 }
 
