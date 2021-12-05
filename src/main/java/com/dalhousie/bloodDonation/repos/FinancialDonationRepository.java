@@ -35,6 +35,5 @@ public class FinancialDonationRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }

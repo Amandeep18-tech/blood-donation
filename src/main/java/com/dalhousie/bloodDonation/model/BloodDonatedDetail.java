@@ -3,7 +3,7 @@ package com.dalhousie.bloodDonation.model;
 import com.dalhousie.bloodDonation.constants.BloodDonationStatus;
 import com.dalhousie.bloodDonation.constants.BloodGroup;
 
-public class BloodDonationDetail {
+public class BloodDonatedDetail {
     private String donorID;
     private BloodGroup bloodGroup;
     private String donatedAt;
@@ -32,6 +32,10 @@ public class BloodDonationDetail {
 
     public void setDonatedAt(String donatedAt) {
         this.donatedAt = donatedAt;
+    }
+
+    public BloodDonationStatus getStatus() {
+        return status;
     }
 
     public void setStatus(BloodDonationStatus status) {
