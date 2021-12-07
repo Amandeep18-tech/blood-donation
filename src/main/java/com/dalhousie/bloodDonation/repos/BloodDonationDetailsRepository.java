@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.dalhousie.bloodDonation.constants.BloodDonationStatus;
 import com.dalhousie.bloodDonation.constants.BloodGroup;
-import com.dalhousie.bloodDonation.model.BloodDonationDetail;
+import com.dalhousie.bloodDonation.model.BloodDonatedDetail;
 import com.dalhousie.bloodDonation.model.BloodDonationDetails;
 import com.dalhousie.bloodDonation.model.BloodRequestOrganisation;
 import com.dalhousie.bloodDonation.utils.DBUtils;
@@ -41,16 +41,16 @@ public class BloodDonationDetailsRepository {
         
         
     }
-    public List<BloodDonationDetail> getAllRecords() {
-        List<BloodDonationDetail> bloodDonationDetails = new ArrayList<>();
-        BloodDonationDetail bloodDonationDetail = new BloodDonationDetail();
+    public List<BloodDonatedDetail> getAllRecords() {
+        List<BloodDonatedDetail> bloodDonationDetails = new ArrayList<>();
+        BloodDonatedDetail bloodDonationDetail = new BloodDonatedDetail();
         bloodDonationDetail.setBloodGroup(BloodGroup.ABNeg);
         bloodDonationDetail.setDonorID("D001");
         bloodDonationDetail.setDonatedAt("21/05/2021");
         bloodDonationDetail.setOrgId("O001");
         bloodDonationDetail.setStatus(BloodDonationStatus.unused);
         bloodDonationDetails.add(bloodDonationDetail);
-        BloodDonationDetail bloodDonationDetail2 = new BloodDonationDetail();
+        BloodDonatedDetail bloodDonationDetail2 = new BloodDonatedDetail();
         bloodDonationDetail2.setBloodGroup(BloodGroup.BPos);
         bloodDonationDetail2.setDonorID("D002");
         bloodDonationDetail2.setDonatedAt("21/05/2021");
@@ -60,10 +60,10 @@ public class BloodDonationDetailsRepository {
         return bloodDonationDetails;
     }
 
-    public void update(BloodDonationDetail bloodDonationDetail) {
+    public void update(BloodDonatedDetail bloodDonationDetail) {
     }
 
-    public void save(BloodDonationDetail bloodRequestOrganisation) {
+    public void save(BloodDonatedDetail bloodRequestOrganisation) {
     }
 
 

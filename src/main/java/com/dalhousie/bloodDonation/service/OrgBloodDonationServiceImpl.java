@@ -3,7 +3,7 @@ package com.dalhousie.bloodDonation.service;
 import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.constants.BloodReqOrgStatus;
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.BloodDonationDetail;
+import com.dalhousie.bloodDonation.model.BloodDonatedDetail;
 import com.dalhousie.bloodDonation.model.BloodRequestOrganisation;
 import com.dalhousie.bloodDonation.repos.BloodDonationDetailsRepository;
 import com.dalhousie.bloodDonation.repos.BloodRequestOrganisationRepository;
@@ -30,7 +30,7 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
     @Override
     public List<String[]> getListByDonorId(String orgId) throws CustomException {
-        List<BloodDonationDetail> bloodDonationDetails =bloodDonationDetailsRepository.getAllRecords();
+        List<BloodDonatedDetail> bloodDonationDetails =bloodDonationDetailsRepository.getAllRecords();
         return (List<String[]>) bloodDonationDetails.stream()
                 .filter(bloodDonationDetail -> bloodDonationDetail.getOrgId().equalsIgnoreCase(orgId))
                 .map(bloodDonationDetail -> {
@@ -40,10 +40,10 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
     @Override
     public List<String[]> getListByBloodGroup(String orgId) throws CustomException {
-        List<BloodDonationDetail> bloodDonationDetails =bloodDonationDetailsRepository.getAllRecords();
-        Map<BloodGroup, List<BloodDonationDetail>> map = bloodDonationDetails.stream()
+        List<BloodDonatedDetail> bloodDonationDetails =bloodDonationDetailsRepository.getAllRecords();
+        Map<BloodGroup, List<BloodDonatedDetail>> map = bloodDonationDetails.stream()
                 .filter(bloodDonationDetail -> bloodDonationDetail.getOrgId().equalsIgnoreCase(orgId))
-                .collect(Collectors.groupingBy(BloodDonationDetail::getBloodGroup));
+                .collect(Collectors.groupingBy(BloodDonatedDetail::getBloodGroup));
         List<String[]> returnValue = new ArrayList<>();
         map.forEach((bloodGroup, bloodDonationDetails1) -> {
             returnValue.add(new String[]{bloodGroup.type, String.valueOf(bloodDonationDetails1.size())});
@@ -67,9 +67,9 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
         int bloodRequested = bloodRequestOrganisation.getUnitsRequired();
         BloodGroup bloodGroup = bloodRequestOrganisation.getBloodGroup();
 
-        List<BloodDonationDetail> availableBloodDonationDetails = bloodDonationDetailsRepository.getAllRecords().stream()
+        List<BloodDonatedDetail> availableBloodDonationDetails = bloodDonationDetailsRepository.getAllRecords().stream()
                 .filter(x -> x.getOrgId().equalsIgnoreCase(bloodRequestOrganisation.getOrgId()))
-                .collect(Collectors.groupingBy(BloodDonationDetail::getBloodGroup))
+                .collect(Collectors.groupingBy(BloodDonatedDetail::getBloodGroup))
                 .get(bloodGroup);
         int bloodAvailable = availableBloodDonationDetails.size();
         if (bloodRequested > bloodAvailable) {
@@ -86,12 +86,12 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
     @Override
     public LinkedHashMap<String, String> getRecommendedOrganisation(int unitsNeeded, BloodGroup bloodGroup) throws CustomException {
-        Map<String, List<BloodDonationDetail>> collect = bloodDonationDetailsRepository.getAllRecords().stream()
+        Map<String, List<BloodDonatedDetail>> collect = bloodDonationDetailsRepository.getAllRecords().stream()
                 .filter(x -> x.getBloodGroup() == bloodGroup)
-                .collect(Collectors.groupingBy(BloodDonationDetail::getOrgId));
+                .collect(Collectors.groupingBy(BloodDonatedDetail::getOrgId));
         LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap();
         //Todo Added recommendation logics
-        for (Map.Entry<String, List<BloodDonationDetail>> entry : collect.entrySet()) {
+        for (Map.Entry<String, List<BloodDonatedDetail>> entry : collect.entrySet()) {
             linkedHashMap.put(entry.getKey(), String.valueOf(entry.getValue().size()));
         }
         return linkedHashMap;

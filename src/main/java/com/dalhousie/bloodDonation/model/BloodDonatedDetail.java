@@ -3,7 +3,7 @@ package com.dalhousie.bloodDonation.model;
 import com.dalhousie.bloodDonation.constants.BloodDonationStatus;
 import com.dalhousie.bloodDonation.constants.BloodGroup;
 
-public class BloodDonationDetail {
+public class BloodDonatedDetail {
     private String donorID;
     private BloodGroup bloodGroup;
     private String donatedAt;

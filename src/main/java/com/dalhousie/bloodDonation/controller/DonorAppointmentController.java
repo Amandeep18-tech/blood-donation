@@ -3,13 +3,17 @@ package com.dalhousie.bloodDonation.controller;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.dalhousie.bloodDonation.constants.BloodDonationStatus;
+import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.model.BloodDonationDetails;
 import com.dalhousie.bloodDonation.model.BloodDonationDetaisHistory;
 import com.dalhousie.bloodDonation.model.Organisation;
 import com.dalhousie.bloodDonation.model.PatientBloodRequest;
+import com.dalhousie.bloodDonation.repos.BloodDonatedDetailsRepository;
 import com.dalhousie.bloodDonation.repos.BloodDonationDetailsHistoryRepository;
 import com.dalhousie.bloodDonation.repos.BloodDonationDetailsRepository;
 import com.dalhousie.bloodDonation.repos.OrganizationRepository;
@@ -22,6 +26,7 @@ public class DonorAppointmentController {
     PatientRequestMappingRepository patientRequestMappingRepository = null;
     BloodDonationDetaisHistory bloodDonationDetaisHistory = null;
     BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = null;
+    BloodDonatedDetailsRepository bloodDonatedDetailsRepository=null;
 
     public DonorAppointmentController() throws SQLException {
         donationBookingImpl = new DonorDonationBookingImpl();
@@ -29,9 +34,31 @@ public class DonorAppointmentController {
         patientRequestMappingRepository = new PatientRequestMappingRepository();
         bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
         bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
+        bloodDonatedDetailsRepository= new BloodDonatedDetailsRepository();
 
     }
+    public void todayDonationConfirmation() throws SQLException{
+        System.out.println("Today's Blood Request: ");
+        ArrayList<String> todaysId= new ArrayList<String>();
+        todaysId=donationBookingImpl.GetTodayDonation();
+        Scanner sc = new Scanner(System.in);
+        for(int i=0;i<todaysId.size();i++){
+            System.out.println("Has the following donor done the blood donation");
+            System.out.println(todaysId.get(i));
+            System.out.println("Press 1 for accept 2. Reject");
+            String acceptFlag=sc.nextLine();
 
+            if(acceptFlag.equals("1")){
+                bloodDonatedDetailsRepository.confirmDonation("001", todaysId.get(i));
+                
+            }
+            else{
+                continue;
+            }
+
+        }
+ 
+    }
     public void seeDonorRequests() throws SQLException {
 
         System.out.println("Please look into the blood donation requests you have");

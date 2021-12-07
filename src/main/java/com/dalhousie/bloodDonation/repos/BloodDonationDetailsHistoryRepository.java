@@ -32,7 +32,7 @@ public class BloodDonationDetailsHistoryRepository {
             bloodDonationDetaisHistory.setSlotDate(rs.getDate("slot_date"));
             bloodDonationDetaisHistory.setId(rs.getString("id"));
             bloodDonationDetaisHistory.setSlotId(rs.getString("slot_id"));
-            bloodDonationDetaisHistory.setBloodGroup(BloodGroup.valueOf(rs.getString("blood_group")));
+            // bloodDonationDetaisHistory.setBloodGroup(BloodGroup.valueOf(rs.getString("blood_group")));
             allDonationDetails.add(bloodDonationDetaisHistory);
         }
         return allDonationDetails;
@@ -41,7 +41,7 @@ public class BloodDonationDetailsHistoryRepository {
     }
     public boolean saveDonationDate(BloodDonationDetaisHistory bloodDonationDetaisHistory,String slotId, String dateInput) throws SQLException{
         String query = "INSERT INTO blood_donation_details_history (id, " + "donor_id, " + "slot_id,"+"slot_date) VALUES (?, ?, ?,?)";
-        BloodGroup dummy = BloodGroup.ABNeg;
+        // BloodGroup dummy = BloodGroup.ABNeg;
 
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
@@ -50,7 +50,7 @@ public class BloodDonationDetailsHistoryRepository {
         ps.setString(2,"5c256da3-3d82-11ec-917b-e2ed2ce588f5");
         ps.setString(3,slotId );
         ps.setString(4,dateInput);
-        ps.setString(5, dummy.name());
+        // ps.setString(5, dummy.name());
         executeUpdate = ps.executeUpdate();
         return true;
     }

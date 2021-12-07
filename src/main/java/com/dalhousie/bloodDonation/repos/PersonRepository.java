@@ -23,8 +23,7 @@ public class PersonRepository {
         List<Person> personDetail = new ArrayList();
         while (rs.next()){
             Person person = new Person();
-            person.setName(rs.getString("person_first_name"));
-            person.setAppointment_attended_flag(rs.getInt("appointment_attended_flag"));
+            person.setName(rs.getString("person_first_name")); 
             person.setPerson_id(rs.getString("person_id"));
             person.setBlood_group(rs.getString("blood_group"));
             person.setName(rs.getString("person_first_name"));
