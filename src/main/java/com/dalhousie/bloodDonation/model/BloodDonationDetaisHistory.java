@@ -2,12 +2,15 @@ package com.dalhousie.bloodDonation.model;
 
 import java.util.Date;
 
+import com.dalhousie.bloodDonation.constants.BloodGroup;
+
 public class BloodDonationDetaisHistory {
     String id;
     String donorId;
     String slotId;
     Date slotDate;
-    String bloodGroup;
+    BloodGroup bloodGroup;
+    
     public String getId() {
         return id;
     }
@@ -32,10 +35,10 @@ public class BloodDonationDetaisHistory {
     public void setSlotDate(Date slotDate) {
         this.slotDate = slotDate;
     }
-    public String getBloodGroup() {
+    public BloodGroup getBloodGroup() {
         return bloodGroup;
     }
-    public void setBloodGroup(String bloodGroup) {
+    public void setBloodGroup(BloodGroup bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
     

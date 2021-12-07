@@ -2,7 +2,10 @@ package com.dalhousie.bloodDonation.service;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.dalhousie.bloodDonation.constants.SlotAvailableConstants;
@@ -89,15 +92,25 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
     }
 
     @Override
-    public boolean CompareDonationDate(String dateFormatInput, String slotIdInput) throws SQLException {
+    public boolean CompareDonationDate(String dateFormatInput, String slotIdInput) throws SQLException, ParseException {
         BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
         List<BloodDonationDetaisHistory> allDonationHistory = bloodDonationDetailsHistoryRepository.getAllDetails();
 
         for (BloodDonationDetaisHistory bloodDonationDetaisHistory : allDonationHistory) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateToString = dateFormat.format(bloodDonationDetaisHistory.getSlotDate());
+            Date dateByUser = dateFormat.parse(dateToString);
+            Date today = Calendar.getInstance().getTime();
+            String todayDateToString = dateFormat.format(today);
+            Date todayDate = dateFormat.parse(todayDateToString);
+            
+            
+           if(todayDate.before(dateByUser)){
+               return true;
+           }
 
-            if ((bloodDonationDetaisHistory).getSlotId().equals(slotIdInput) && dateToString.equals(dateFormatInput)) {
+
+            if ((bloodDonationDetaisHistory.getSlotId().equals(slotIdInput)) && dateToString.equals(dateFormatInput) ) {
                 return true;
             }
 

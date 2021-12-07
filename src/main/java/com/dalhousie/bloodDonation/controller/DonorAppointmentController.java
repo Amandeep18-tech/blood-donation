@@ -20,8 +20,8 @@ public class DonorAppointmentController {
     DonorDonationBookingImpl donationBookingImpl = null;
     PatientBloodRequest patientBloodRequest = null;
     PatientRequestMappingRepository patientRequestMappingRepository = null;
-    BloodDonationDetaisHistory bloodDonationDetaisHistory=null;
-    BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository=null;
+    BloodDonationDetaisHistory bloodDonationDetaisHistory = null;
+    BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = null;
 
     public DonorAppointmentController() throws SQLException {
         donationBookingImpl = new DonorDonationBookingImpl();
@@ -29,7 +29,7 @@ public class DonorAppointmentController {
         patientRequestMappingRepository = new PatientRequestMappingRepository();
         bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
         bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
-        
+
     }
 
     public void seeDonorRequests() throws SQLException {
@@ -100,10 +100,9 @@ public class DonorAppointmentController {
 
     }
 
-    public void bookDate() throws SQLException {
+    public void bookDate() throws SQLException, ParseException {
 
         Scanner scanner = new Scanner(System.in);
-
         String appointmentBookingChoice = null;
         String slotDonationIdInput = null;
         boolean dateAvailable;
@@ -121,11 +120,8 @@ public class DonorAppointmentController {
 
                 case "1":
                     System.out.println();
-
                     String dateInput = scanner.next();
-
                     System.out.println("Enter the Slot ID");
-
                     slotDonationIdInput = scanner.next();
                     System.out.println();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -142,11 +138,11 @@ public class DonorAppointmentController {
                     }
                     String dateFormat = simpleDateFormat.format(dateInput2);
 
-                    dateAvailable = donationBookingImpl.CompareDonationDate(dateFormat, slotDonationIdInput);
-
+                    dateAvailable = donationBookingImpl.CompareDonationDate(dateFormat, getDonationSlotId);
+                    System.out.println(dateAvailable);
                     if (dateAvailable) {
                         System.out.println();
-                        System.out.println("Please enter a different date, this date is booked.");
+                        System.out.println("Please enter a different date, this date is unavailable");
                         continue;
                     }
 
@@ -159,13 +155,13 @@ public class DonorAppointmentController {
                         if (dateConfirmation.equals("1")) {
                             System.out.println();
                             boolean confirmDate = false;
-                            confirmDate = bloodDonationDetailsHistoryRepository.saveDonationDate(bloodDonationDetaisHistory,
+                            confirmDate = bloodDonationDetailsHistoryRepository.saveDonationDate(
+                                    bloodDonationDetaisHistory,
                                     getDonationSlotId,
                                     dateFormat);
                             if (confirmDate == true) {
                                 System.out.println("Your appointment is booked");
                                 System.out.println("Thank you");
-
                                 appointmentBookingChoice = "2";
                                 break;
                             }
