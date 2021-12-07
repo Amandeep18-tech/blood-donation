@@ -13,6 +13,7 @@ public class InitController {
     private final RewardsController rewardsController;
     private final MenuController menuController;
     private final FinancialDonationController financialDonationController;
+    private final SurveyController surveyController;
 
     public InitController() {
         sc = new Scanner(System.in);
@@ -22,6 +23,7 @@ public class InitController {
         rewardsController = new RewardsController();
         menuController = new MenuController();
         financialDonationController = new FinancialDonationController();
+        surveyController = new SurveyController();
     }
 
     public void mainMenu() {
@@ -86,7 +88,7 @@ public class InitController {
                         rewardsController.menu();
                         break;
                     case 5:
-                        menuController.displayMenu();
+                        surveyController.displayPendingSurveyToUser();
                         break;
                     case 6:
                         financialDonationController.selectModeOfPayment();
@@ -129,7 +131,7 @@ public class InitController {
                         //Todo
                         break;
                     case 5:
-                        menuController.displayMenu();
+                        surveyController.displayPendingSurveyToUser();
                         break;
                     case 6:
                         financialDonationController.selectModeOfPayment();
@@ -172,7 +174,7 @@ public class InitController {
                         //Todo
                         break;
                     case 3:
-                        menuController.displayMenu();
+                        surveyController.displaySurveyMenuForOrganization();
                         break;
                     case 4:
                         menuController.displayMenu();

@@ -51,7 +51,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public void deleteSurvey() throws SQLException {
-        viewAllSurvey();
+        //viewAllSurvey();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Delete: ");
         int id = in.nextInt();
@@ -62,7 +62,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public void updateSurvey() throws SQLException {
-        viewAllSurvey();
+        //viewAllSurvey();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Update: ");
         int id = in.nextInt();

@@ -53,8 +53,8 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void viewAllSurveyQuestions() throws SQLException {
-        SurveyServiceImpl surveyServiceImpl = new SurveyServiceImpl();
-        surveyServiceImpl.viewAllSurvey();
+//        SurveyServiceImpl surveyServiceImpl = new SurveyServiceImpl();
+//        surveyServiceImpl.viewAllSurvey();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
@@ -71,7 +71,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void deleteSurveyQuestion() throws SQLException {
-        viewAllSurveyQuestions();
+        //viewAllSurveyQuestions();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Question ID To Delete: ");
         int id = in.nextInt();
@@ -82,7 +82,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void updateSurveyQuestion() throws SQLException {
-        viewAllSurveyQuestions();
+        //viewAllSurveyQuestions();
         Scanner in = new Scanner(System.in);
         System.out.print("\n Enter Question ID To Update: ");
         int id = in.nextInt();

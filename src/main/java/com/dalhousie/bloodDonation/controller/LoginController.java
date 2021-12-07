@@ -1,14 +1,9 @@
 package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.model.User;
-import com.dalhousie.bloodDonation.service.FinancialDonationServiceImpl;
 import com.dalhousie.bloodDonation.service.LoginService;
 import com.dalhousie.bloodDonation.service.LoginServiceImpl;
-import org.mindrot.jbcrypt.BCrypt;
 
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LoginController {
