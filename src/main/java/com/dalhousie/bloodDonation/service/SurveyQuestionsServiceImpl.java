@@ -34,9 +34,9 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void storeSurveyQuestions(List<SurveyQuestions> questionList) throws SQLException {
-        SurveyQuestionsRepositoryImpl questionDAO = new SurveyQuestionsRepositoryImpl();
+        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
         for (SurveyQuestions questionObj : questionList) {
-            questionDAO.add(questionObj);
+            questionRepo.add(questionObj);
         }
         System.out.println("Survey Created Successfully!");
     }
@@ -58,8 +58,8 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
-        SurveyQuestionsRepositoryImpl questionDAO = new SurveyQuestionsRepositoryImpl();
-        List<SurveyQuestions> questionList = questionDAO.getAllSurveyQuestions(surveyMasterId);
+        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        List<SurveyQuestions> questionList = questionRepo.getAllSurveyQuestions(surveyMasterId);
         System.out.println();
         System.out.print("Question ID\t\tSurvey ID\t\tQuestion");
         System.out.println();
@@ -75,8 +75,8 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Question ID To Delete: ");
         int id = in.nextInt();
-        SurveyQuestionsRepositoryImpl questionDAO = new SurveyQuestionsRepositoryImpl();
-        questionDAO.delete(id);
+        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        questionRepo.delete(id);
         System.out.println("\nQuestion With ID- " + id + " Deleted Successfully!");
     }
 
@@ -87,8 +87,8 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
         System.out.print("\n Enter Question ID To Update: ");
         int id = in.nextInt();
         in.nextLine();
-        SurveyQuestionsRepositoryImpl questionDAO = new SurveyQuestionsRepositoryImpl();
-        SurveyQuestions surveyQuestion = questionDAO.getSurveyQuestion(id);
+        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        SurveyQuestions surveyQuestion = questionRepo.getSurveyQuestion(id);
         System.out.print("\nNote: Leave The Field Blank If You Do Not Want To Update");
         System.out.print("\nEnter Survey Question: ");
         this.surveyQuestion = in.nextLine();
@@ -96,7 +96,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
             this.surveyQuestion = surveyQuestion.getSurveyQuestion();
         }
         surveyQuestion.setSurveyQuestion(this.surveyQuestion);
-        questionDAO.update(surveyQuestion);
+        questionRepo.update(surveyQuestion);
         System.out.println("\nQuestion With ID- " + id + " Updated Successfully!");
     }
 }

@@ -50,14 +50,14 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         patientInfo.setAddress(address);
         patientInfo.setContactNumber(contactNumber);
         patientInfo.setEmailId(emailId);
-        PatientPersonalInformationRepositoryImpl patientInfoDAO = new PatientPersonalInformationRepositoryImpl();
-        return patientInfoDAO.addPatient(patientInfo);
+        PatientPersonalInformationRepositoryImpl patientInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        return patientInfoRepo.addPatient(patientInfo);
     }
 
     @Override
     public void viewAllPatients() throws SQLException {
-        PatientPersonalInformationRepositoryImpl patientInfoDAO = new PatientPersonalInformationRepositoryImpl();
-        List<PatientPersonalInformation> patientList = patientInfoDAO.getAllPatients();
+        PatientPersonalInformationRepositoryImpl patientInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        List<PatientPersonalInformation> patientList = patientInfoRepo.getAllPatients();
         System.out.println();
         System.out.format("%5s%8s%25s%15s%12s%36s%13s", "Patient ID", "Name", "DOB", "Age", "Email ID", "Contact Number", "Address");
         System.out.println();
@@ -73,8 +73,8 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Delete: ");
         int id = in.nextInt();
-        PatientPersonalInformationRepositoryImpl patientPersonalInfoDAO = new PatientPersonalInformationRepositoryImpl();
-        patientPersonalInfoDAO.delete(id);
+        PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        patientPersonalInfoRepo.delete(id);
         System.out.println("\nPatient With ID- " + id + " Deleted Successfully!");
     }
 
@@ -85,8 +85,8 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         System.out.print("\nEnter Patient ID To Update: ");
         int id = in.nextInt();
         in.nextLine();
-        PatientPersonalInformationRepositoryImpl patientPersonalInfoDAO = new PatientPersonalInformationRepositoryImpl();
-        PatientPersonalInformation patientPersonalInfo = patientPersonalInfoDAO.getPatient(id);
+        PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        PatientPersonalInformation patientPersonalInfo = patientPersonalInfoRepo.getPatient(id);
         System.out.print("\nNote: Leave The Field Blank If You Do Not Want To Update");
         System.out.print("\nEnter Patient Name: ");
         patientName = in.nextLine();
@@ -124,7 +124,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         patientPersonalInfo.setAddress(address);
         patientPersonalInfo.setContactNumber(contactNumber);
         patientPersonalInfo.setEmailId(emailId);
-        patientPersonalInfoDAO.update(patientPersonalInfo);
+        patientPersonalInfoRepo.update(patientPersonalInfo);
         System.out.println("\nPatient With ID- " + id + " Updated Successfully!");
     }
 
@@ -140,8 +140,8 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         PatientMedicalInformation patientMedicalInfo;
         String headers = scan.nextLine();
         List<String> headerList = Arrays.asList(headers.split(","));
-        PatientPersonalInformationRepositoryImpl patientPersonalInfoDAO = new PatientPersonalInformationRepositoryImpl();
-        PatientMedicalInformationRepositoryImpl patientMedicalInfoDAO = new PatientMedicalInformationRepositoryImpl();
+        PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
         if (headerList.size() == 6) {
             while (scan.hasNextLine()) {
                 patientPersonalInfo = new PatientPersonalInformation();
@@ -152,11 +152,11 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
                 patientPersonalInfo.setAddress(rowValues.get(3));
                 patientPersonalInfo.setContactNumber(rowValues.get(4));
                 patientPersonalInfo.setEmailId(rowValues.get(5));
-                int patientId = patientPersonalInfoDAO.addPatient(patientPersonalInfo);
+                int patientId = patientPersonalInfoRepo.addPatient(patientPersonalInfo);
                 System.out.println("Personal Information For Patient With ID-" + patientId + " Imported Successfully!");
             }
         }
-        if (headerList.size() == 11) {
+        if (headerList.size() == 18) {
             scan.close();
             scan = new Scanner(file);
             scan.nextLine();
@@ -169,7 +169,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
                 patientPersonalInfo.setAddress(rowValues.get(3));
                 patientPersonalInfo.setContactNumber(rowValues.get(4));
                 patientPersonalInfo.setEmailId(rowValues.get(5));
-                int patientId = patientPersonalInfoDAO.addPatient(patientPersonalInfo);
+                int patientId = patientPersonalInfoRepo.addPatient(patientPersonalInfo);
                 patientMedicalInfo = new PatientMedicalInformation();
                 patientMedicalInfo.setPatientId(patientId);
                 patientMedicalInfo.setBloodGroup(rowValues.get(6));
@@ -177,7 +177,14 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
                 patientMedicalInfo.setDrReference(rowValues.get(8));
                 patientMedicalInfo.setRequirementReason(rowValues.get(9));
                 patientMedicalInfo.setPriority(rowValues.get(10));
-                patientMedicalInfoDAO.addPatientMedicalInformation(patientMedicalInfo);
+                patientMedicalInfo.setHasHepatitisB(Integer.parseInt(rowValues.get(11)));
+                patientMedicalInfo.setHasHepatitisC(Integer.parseInt(rowValues.get(12)));
+                patientMedicalInfo.setHasHIV(Integer.parseInt(rowValues.get(13)));
+                patientMedicalInfo.setHasHemochromatosis(Integer.parseInt(rowValues.get(14)));
+                patientMedicalInfo.setHemoglobinLevel(Integer.parseInt(rowValues.get(15)));
+                patientMedicalInfo.setRbcCount(Integer.parseInt(rowValues.get(14)));
+                patientMedicalInfo.setPlateletCount(Integer.parseInt(rowValues.get(15)));
+                patientMedicalInfoRepo.addPatientMedicalInformation(patientMedicalInfo);
                 System.out.println("Complete Information For Patient With ID-" + patientId + " Imported Successfully!");
             }
         }

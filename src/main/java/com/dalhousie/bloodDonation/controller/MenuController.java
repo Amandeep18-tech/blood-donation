@@ -17,7 +17,7 @@ public class MenuController {
     private PatientPersonalInformationServiceImpl patientPersonalInfoService = null;
     private PatientMedicalInformationServiceImpl patientMedicalInfoService = null;
 
-    public void displayMenu() throws SQLException{
+    public void displayMenu() throws SQLException {
         while (true) {
             System.out.print("\nMain Menu\n");
             System.out.println("1. Survey\n2. Patients\n3. Exit");
