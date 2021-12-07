@@ -41,32 +41,4 @@ public class BloodDonationDetailsRepository {
         
         
     }
-    public List<BloodDonatedDetail> getAllRecords() {
-        List<BloodDonatedDetail> bloodDonationDetails = new ArrayList<>();
-        BloodDonatedDetail bloodDonationDetail = new BloodDonatedDetail();
-        bloodDonationDetail.setBloodGroup(BloodGroup.ABNeg);
-        bloodDonationDetail.setDonorID("D001");
-        bloodDonationDetail.setDonatedAt("21/05/2021");
-        bloodDonationDetail.setOrgId("O001");
-        bloodDonationDetail.setStatus(BloodDonationStatus.unused);
-        bloodDonationDetails.add(bloodDonationDetail);
-        BloodDonatedDetail bloodDonationDetail2 = new BloodDonatedDetail();
-        bloodDonationDetail2.setBloodGroup(BloodGroup.BPos);
-        bloodDonationDetail2.setDonorID("D002");
-        bloodDonationDetail2.setDonatedAt("21/05/2021");
-        bloodDonationDetail2.setOrgId("O001");
-        bloodDonationDetail2.setStatus(BloodDonationStatus.unused);
-        bloodDonationDetails.add(bloodDonationDetail2);
-        return bloodDonationDetails;
-    }
-
-    public void update(BloodDonatedDetail bloodDonationDetail) {
-    }
-
-    public void save(BloodDonatedDetail bloodRequestOrganisation) {
-    }
-
-
-    public void save(BloodRequestOrganisation bloodRequestOrganisation) {
-    }
 }

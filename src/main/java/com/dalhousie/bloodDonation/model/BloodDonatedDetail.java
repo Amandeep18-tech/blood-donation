@@ -34,6 +34,10 @@ public class BloodDonatedDetail {
         this.donatedAt = donatedAt;
     }
 
+    public BloodDonationStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(BloodDonationStatus status) {
         this.status = status;
     }

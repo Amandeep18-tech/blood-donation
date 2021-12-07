@@ -8,7 +8,7 @@ public class BloodRequestOrganisation {
     private String orgId;
     private String receiverOrgId;
     private int unitsRequired;
-    private BloodReqOrgStatus bloodReqOrgStatus;
+    private BloodReqOrgStatus status;
     private BloodGroup bloodGroup;
     private String timestamp;
 
@@ -52,12 +52,12 @@ public class BloodRequestOrganisation {
         this.unitsRequired = unitsRequired;
     }
 
-    public BloodReqOrgStatus getBloodReqOrgStatus() {
-        return bloodReqOrgStatus;
+    public BloodReqOrgStatus getStatus() {
+        return status;
     }
 
-    public void setBloodReqOrgStatus(BloodReqOrgStatus bloodReqOrgStatus) {
-        this.bloodReqOrgStatus = bloodReqOrgStatus;
+    public void setStatus(BloodReqOrgStatus status) {
+        this.status = status;
     }
 
     public String getTimestamp() {

@@ -19,8 +19,8 @@ public class SurveyDetailsServiceImpl implements SurveyDetailsService {
         int surveyMasterId = in.nextInt();
         in.nextLine();
         System.out.println();
-        SurveyQuestionsRepositoryImpl questionDAO = new SurveyQuestionsRepositoryImpl();
-        List<SurveyQuestions> questionList = questionDAO.getAllSurveyQuestions(surveyMasterId);
+        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        List<SurveyQuestions> questionList = questionRepo.getAllSurveyQuestions(surveyMasterId);
         List<SurveyDetails> surveyDetailsList = new ArrayList<>();
         for (SurveyQuestions questionObj : questionList) {
             System.out.println("Question: " + questionObj.getSurveyQuestion());
