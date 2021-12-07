@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -119,5 +120,25 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
         return false;
 
     }
+
+    public ArrayList<String> GetTodayDonation() throws SQLException{
+        BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
+        List<BloodDonationDetaisHistory> bloodDonationDetailsHistoryList = bloodDonationDetailsHistoryRepository.getAllDetails();
+        ArrayList<String> idList = new ArrayList<String>();
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String todayToString = simpleDateFormat.format(today);
+        for(BloodDonationDetaisHistory bloodDonationDetaisHistory:bloodDonationDetailsHistoryList){
+            System.out.println(bloodDonationDetaisHistory.getSlotDate());
+            String donorDate= simpleDateFormat.format(bloodDonationDetaisHistory.getSlotDate());
+            if(donorDate.equals(todayToString)){
+                
+                idList.add(bloodDonationDetaisHistory.getDonorId());
+            }
+        }
+        return idList;
+    
+    }
+
 }
 

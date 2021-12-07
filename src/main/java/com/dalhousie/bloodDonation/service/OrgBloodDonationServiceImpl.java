@@ -24,6 +24,7 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
     @Override
     public List<String[]> getListByDonorId(String orgId) throws CustomException {
+
         List<BloodDonatedDetail> bloodDonatedDetails = bloodDonatedDetailRepository.getAllRecords();
         return (List<String[]>) bloodDonatedDetails.stream()
                 .filter(bloodDonatedDetail -> bloodDonatedDetail.getOrgId().equalsIgnoreCase(orgId))
@@ -61,6 +62,7 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
         int bloodRequested = bloodRequestOrganisation.getUnitsRequired();
         BloodGroup bloodGroup = bloodRequestOrganisation.getBloodGroup();
 
+
         List<BloodDonatedDetail> availableBloodDonatedDetails = bloodDonatedDetailRepository.getAllRecords().stream()
                 .filter(x -> x.getOrgId().equalsIgnoreCase(bloodRequestOrganisation.getOrgId()))
                 .collect(Collectors.groupingBy(BloodDonatedDetail::getBloodGroup))
@@ -81,6 +83,7 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
     @Override
     public LinkedHashMap<String, String> getRecommendedOrganisation(int unitsNeeded, BloodGroup bloodGroup) throws CustomException {
+
         Map<String, List<BloodDonatedDetail>> collect = bloodDonatedDetailRepository.getAllRecords().stream()
                 .filter(x -> x.getBloodGroup() == bloodGroup)
                 .collect(Collectors.groupingBy(BloodDonatedDetail::getOrgId));

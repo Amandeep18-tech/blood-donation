@@ -99,14 +99,14 @@ public class ManageAppointmentImpl implements ManageAppointment {
 
     }
 
-    @Override
-    public String GetPersonWithInactiveStatus(Person person) throws SQLException {
-        if (person.getAppointment_attended_flag() == 0) {
-            return person.getName();
-        }
-        return null;
+    // @Override
+    // public String GetPersonWithInactiveStatus(Person person) throws SQLException {
+    //     if (person.getAppointment_attended_flag() == 0) {
+    //         return person.getName();
+    //     }
+    //     return null;
 
-    }
+    // }
 
     @Override
     public boolean CheckDonorMedicalID(String donorId) throws SQLException {

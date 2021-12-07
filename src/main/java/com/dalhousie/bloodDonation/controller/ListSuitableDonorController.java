@@ -29,7 +29,7 @@ public class ListSuitableDonorController {
     }
 
     public void patientDonorList() throws SQLException {
-        System.out.println("List of Suitable donor based on your profile");
+        System.out.println("List of Suitable patient based on your profile");
         String personBloodType=null;
         List<Person> personList = personRepository.getPerson();
         String currentId="5d9b8b40-5213-11ec-917b-e2ed2ce588f5";
@@ -78,7 +78,7 @@ public class ListSuitableDonorController {
             System.out.println(donorSelection);
             System.out.println("Choose hemoglobin level between between 120-175 grams per litre");
             Integer hemoglobinLevel=Integer.parseInt(sc.nextLine());
-            
+
 
 
         }

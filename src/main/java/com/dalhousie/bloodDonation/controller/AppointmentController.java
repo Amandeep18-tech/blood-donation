@@ -160,32 +160,6 @@ public class AppointmentController {
 
     }
 
-    public void ShowPersonInactiveList() throws SQLException
-    {
-        
-        List<Person> personList=personRepository.getPerson();
-        
-        String personDetail;
-        System.out.println("List of person with inactive status");
-        for (Person person:personList) {
-            personDetail = manageAppointmentImpl.GetPersonWithInactiveStatus(person);
-            System.out.println(personDetail);
-        }
-
-
-    }
-
-    public void MakePersonActive() throws SQLException{
-        Scanner scanner=new Scanner(System.in);
-        System.out.println("Enter the first name of the person who attended their appointment");
-        String inputName=scanner.nextLine();
-        personRepository.updatePersonStatus();
-        
-        
-
-
-    }
-
 
 
 }
