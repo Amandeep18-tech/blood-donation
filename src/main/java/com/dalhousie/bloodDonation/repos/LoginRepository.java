@@ -1,6 +1,7 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.controller.LoginController;
+import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 import org.mindrot.jbcrypt.BCrypt;
@@ -14,6 +15,7 @@ public class LoginRepository {
     String pass;
     int flag=0;
     LoginController loginController;
+    SessionManagement session = new SessionManagement();
     Scanner sc = new Scanner(System.in);
     public void checkExistingUser(String userName,String password){
         try {
@@ -31,6 +33,10 @@ public class LoginRepository {
                 if(userName.equals(username) && BCrypt.checkpw(password, pass)  ){
                     //  password.equals(pass)
                     System.out.println("Welcome: "+userName);
+                   // HttpSession session = request.getSession(true);
+
+                    session.getSessionMap().put(userName,user);
+
                     flag=1;
                     break;
                 }

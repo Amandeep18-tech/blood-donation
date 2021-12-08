@@ -1,12 +1,14 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.model.Notification;
+import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
 
 import java.sql.*;
 
 public class NotificationRepository {
     public Notification fetchData(String priority1) throws ClassNotFoundException, SQLException {
+        SessionManagement session = new SessionManagement();
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con= DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
@@ -44,5 +46,6 @@ public class NotificationRepository {
         notification.setPriority(messsage_priority);
         notification.setNotification_type(notification_type);
         return notification;
+
     }
 }

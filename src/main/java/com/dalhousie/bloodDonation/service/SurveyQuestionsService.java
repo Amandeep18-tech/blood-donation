@@ -10,7 +10,7 @@ public interface SurveyQuestionsService {
 
     void storeSurveyQuestions(List<SurveyQuestions> questionList) throws SQLException;
 
-    void addQuestionToExistingSurvey() throws SQLException;
+    int addQuestionToExistingSurveyInput() throws SQLException;
 
     void viewAllSurveyQuestions() throws SQLException;
 
