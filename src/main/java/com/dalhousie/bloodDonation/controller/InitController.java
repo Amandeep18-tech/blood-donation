@@ -2,6 +2,8 @@ package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class InitController {
@@ -15,7 +17,7 @@ public class InitController {
     private final FinancialDonationController financialDonationController;
     private final SurveyController surveyController;
 
-    public InitController() {
+    public InitController() throws SQLException {
         sc = new Scanner(System.in);
         loginController = new LoginController();
         listSuitableDonorController = new ListSuitableDonorController();
@@ -26,7 +28,7 @@ public class InitController {
         surveyController = new SurveyController();
     }
 
-    public void mainMenu() {
+    public void mainMenu()  {
         int choice = 0;
         do {
             try {
@@ -53,6 +55,8 @@ public class InitController {
                 }
             }catch (CustomException e){
                 System.out.println(e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             //Todo If login success
             donor();
@@ -100,6 +104,12 @@ public class InitController {
                 }
             }catch (CustomException e){
                 System.out.println(e.getMessage());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } while (choice != 4);
     }

@@ -1,8 +1,11 @@
 package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.constants.BloodDonationConstants;
+import com.dalhousie.bloodDonation.controller.LoginController;
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.Cache;
 import com.dalhousie.bloodDonation.model.OTPDetails;
+import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
 import com.dalhousie.bloodDonation.repos.LoginRepository;
 import net.bytebuddy.utility.RandomString;
@@ -36,15 +39,19 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public void userLogin(String userName,String password) throws Exception {
-    if(userName.isEmpty() || password.isEmpty()){
-        throw new NullPointerException();
-    }
-    if(!userName.isEmpty() && !password.isEmpty()){
-        loginRepository.checkExistingUser(userName,password);
+    public void userLogin(String userName,String password) throws CustomException {
+        try {
+            if (userName.isEmpty() || password.isEmpty()) {
+                throw new NullPointerException();
+            }
+            if (!userName.isEmpty() && !password.isEmpty()) {
+                loginRepository.checkExistingUser(userName, password);
+            }
+        }catch (Exception e){
+            throw new CustomException("Error caaugh while loggingin");
+        }
     }
 
-    }
 
     @Override
     public void userSignup(User user) throws Exception {
@@ -59,7 +66,7 @@ public class LoginServiceImpl implements LoginService{
         generateAndSendOtp(user);
         }
 
-        public void generateAndSendOtp(User user) throws MessagingException, UnsupportedEncodingException {
+        public void generateAndSendOtp(User user) throws  CustomException {
             String OTP = RandomString.make(8);
             long issueTime = Instant.now().getEpochSecond();
             OTPDetails otpDetails = new OTPDetails(OTP,issueTime);
@@ -87,7 +94,7 @@ public class LoginServiceImpl implements LoginService{
                                 break;
                             }
                         } catch(Exception e) {
-                            e.printStackTrace();
+                            throw new CustomException("Something wrong with password");
                         }
 
                     }
@@ -126,8 +133,7 @@ public class LoginServiceImpl implements LoginService{
 
 
     @Override
-    public boolean sendVerificationEmail(User user, String OTP)
-            throws MessagingException, UnsupportedEncodingException {
+    public boolean sendVerificationEmail(User user, String OTP) throws CustomException{
         final String username = "janhavisonawane33@gmail.com";
         final String password = "onsgratwlvpddlim";
 
@@ -154,10 +160,7 @@ public class LoginServiceImpl implements LoginService{
                     InternetAddress.parse(user.getUserName())
             );
             message.setSubject("Testing Gmail SSL");
-            message.setContent("Hello " + user.getFirstname() +",<br>"+
-                    " to reset your password, you're required to use the following "
-                    + "One Time Password to login: "
-                    + "<strong>"+OTP+"</strong>" , "text/html" );
+            message.setContent("<strong>"+OTP+"</strong>" , "text/html" );
 //            message.setText();
 
             Transport.send(message);
@@ -166,9 +169,21 @@ public class LoginServiceImpl implements LoginService{
             return true;
 
         } catch (MessagingException e) {
-            e.printStackTrace();
+            throw new CustomException("Error in sending Verification mail");
         }
-        return true;
+
+    }
+
+    @Override
+    public void userLogout() throws CustomException {
+        try {
+            SessionManagement session = new SessionManagement();
+            session.getSessionMap().clear();
+            LoginController loginController = new LoginController();
+            loginController.menu();
+        }catch (CustomException e){
+            throw  new CustomException("Somethig went wrong while logging out");
+        }
     }
 
 }
