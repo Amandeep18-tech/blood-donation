@@ -38,23 +38,19 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
         for (SurveyQuestions questionObj : questionList) {
             questionRepo.add(questionObj);
         }
-        System.out.println("Survey Created Successfully!");
+        System.out.println("Survey Questions Added Successfully!");
     }
 
     @Override
-    public void addQuestionToExistingSurvey() throws SQLException {
+    public int addQuestionToExistingSurveyInput() throws SQLException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
-        List<SurveyQuestions> questionList = getSurveyQuestionsInput(surveyMasterId);
-        storeSurveyQuestions(questionList);
-        System.out.println("Questions Added To Survey With ID- " + surveyMasterId + " Successfully!");
+        return surveyMasterId;
     }
 
     @Override
     public void viewAllSurveyQuestions() throws SQLException {
-//        SurveyServiceImpl surveyServiceImpl = new SurveyServiceImpl();
-//        surveyServiceImpl.viewAllSurvey();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
@@ -71,7 +67,6 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void deleteSurveyQuestion() throws SQLException {
-        //viewAllSurveyQuestions();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Question ID To Delete: ");
         int id = in.nextInt();
@@ -82,7 +77,6 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void updateSurveyQuestion() throws SQLException {
-        //viewAllSurveyQuestions();
         Scanner in = new Scanner(System.in);
         System.out.print("\n Enter Question ID To Update: ");
         int id = in.nextInt();

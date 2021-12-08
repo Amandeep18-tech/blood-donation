@@ -41,17 +41,16 @@ public class SurveyServiceImpl implements SurveyService {
         SurveyRepositoryImpl surveyRepositoryImpl = new SurveyRepositoryImpl();
         List<Survey> surveyList = surveyRepositoryImpl.getAllSurvey();
         System.out.println();
-        System.out.format("%5s%10s%32s%25s", "Survey ID", "Title", "Description", "Type");
+        System.out.format("%5s%9s%34s%38s", "Survey ID", "Type", "Survey Title", "Survey Description");
         System.out.println();
         for (Survey survey : surveyList) {
-            System.out.format("%-14s%-26s%-32s%-20s", survey.getId(), survey.getSurveyTitle(), survey.getSurveyDesc(), survey.getSurveyType());
+            System.out.format("%-14s%-26s%-32s%-20s", survey.getId(), survey.getSurveyType(), survey.getSurveyTitle(), survey.getSurveyDesc());
             System.out.println();
         }
     }
 
     @Override
     public void deleteSurvey() throws SQLException {
-        //viewAllSurvey();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Delete: ");
         int id = in.nextInt();
@@ -62,7 +61,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public void updateSurvey() throws SQLException {
-        //viewAllSurvey();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Update: ");
         int id = in.nextInt();
