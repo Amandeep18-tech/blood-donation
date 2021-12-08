@@ -11,13 +11,12 @@ import java.text.ParseException;
 
 
 public interface ManageAppointment {
-    public String GetAvailableTime(MedicalAppointmentMaster medicalAppointmentMaster,String placeName) throws SQLException;
-    public String GetSlotId(String SlotIdInput) throws SQLException;
-    public boolean CompareDate(String dateFormat,String slotIdInput) throws SQLException,ParseException;
-    public String SelectPlace(String placeName) throws SQLException;
-    // public String GetPersonWithInactiveStatus(Person person) throws SQLException;
-    public boolean CheckDonorMedicalID(String donorId) throws SQLException;
-    public DonorMedicalRecords GetDonorDetails(String donorId) throws SQLException;
+    public String GetAvailableTime(MedicalAppointmentMaster medicalAppointmentMaster,String placeName);
+    public String GetSlotId(String SlotIdInput);
+    public boolean CompareDate(String dateFormat,String slotIdInput);
+    public String SelectPlace(String placeName);
+    public boolean CheckDonorMedicalID(String donorId);
+    public DonorMedicalRecords GetDonorDetails(String donorId);
    
     
 }

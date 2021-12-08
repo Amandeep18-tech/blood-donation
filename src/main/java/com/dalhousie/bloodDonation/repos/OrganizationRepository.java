@@ -13,26 +13,36 @@ import com.dalhousie.bloodDonation.model.Organisation;
 public class OrganizationRepository {
     Connection conn;
 
-    public OrganizationRepository() throws SQLException {
+    public OrganizationRepository()  {
         DBUtils dbUtils = new DBUtils();
+        try{
         conn = dbUtils.getConnection();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     
-    public List<Organisation> getAllPlaces() throws SQLException{
-        String query="SELECT * FROM organisation";
-        PreparedStatement ps = conn.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
+    public List<Organisation> getAllPlaces(){
         List<Organisation> organisationList = new ArrayList();
-        while (rs.next()){
-            Organisation organisationDetails = new Organisation();
-            organisationDetails.setLocation(rs.getString("location"));
-            organisationDetails.setOrganisation_name(rs.getString("organisation_name"));
-            
-    
-            organisationDetails.setorganisationID(rs.getString("organisation_id"));
-            
-            organisationList.add(organisationDetails);
+        try{
+            String query="SELECT * FROM organisation";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Organisation organisationDetails = new Organisation();
+                organisationDetails.setLocation(rs.getString("location"));
+                organisationDetails.setOrganisation_name(rs.getString("organisation_name"));
+                
+        
+                organisationDetails.setorganisationID(rs.getString("organisation_id"));
+                
+                organisationList.add(organisationDetails);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
         }
         return organisationList;
         

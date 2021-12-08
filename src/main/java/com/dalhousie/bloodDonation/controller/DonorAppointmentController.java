@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import com.dalhousie.bloodDonation.constants.BloodDonationStatus;
 import com.dalhousie.bloodDonation.constants.BloodGroup;
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.BloodDonationDetails;
 import com.dalhousie.bloodDonation.model.BloodDonationDetaisHistory;
 import com.dalhousie.bloodDonation.model.Organisation;
@@ -28,7 +29,7 @@ public class DonorAppointmentController {
     BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = null;
     BloodDonatedDetailsRepository bloodDonatedDetailsRepository=null;
 
-    public DonorAppointmentController() throws SQLException {
+    public DonorAppointmentController() {
         donationBookingImpl = new DonorDonationBookingImpl();
         patientBloodRequest = new PatientBloodRequest();
         patientRequestMappingRepository = new PatientRequestMappingRepository();
@@ -37,7 +38,7 @@ public class DonorAppointmentController {
         bloodDonatedDetailsRepository= new BloodDonatedDetailsRepository();
 
     }
-    public void todayDonationConfirmation() throws SQLException{
+    public void todayDonationConfirmation() throws CustomException{
         System.out.println("Today's Blood Request: ");
         ArrayList<String> todaysId= new ArrayList<String>();
         todaysId=donationBookingImpl.GetTodayDonation();
@@ -105,7 +106,7 @@ public class DonorAppointmentController {
 
     }
 
-    public String bookDonationPlace() throws SQLException {
+    public String bookDonationPlace() throws CustomException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your choice");
         OrganizationRepository organizationRepository = new OrganizationRepository();
@@ -119,15 +120,17 @@ public class DonorAppointmentController {
         inputPlaceName = scanner.nextLine();
 
         String checkDonationPlace = null;
-        checkDonationPlace = donationBookingImpl.SelectDonationPlace(checkDonationPlace);
-        if (checkDonationPlace != null) {
-            return checkDonationPlace;
+        checkDonationPlace = donationBookingImpl.SelectDonationPlace(inputPlaceName);
+        if(checkDonationPlace==null){
+            throw new CustomException("Invalid place");
         }
-        return null;
+
+        return checkDonationPlace;
+
 
     }
 
-    public void bookDate() throws SQLException, ParseException {
+    public void bookDate(){
 
         Scanner scanner = new Scanner(System.in);
         String appointmentBookingChoice = null;

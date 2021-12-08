@@ -17,17 +17,22 @@ import com.dalhousie.bloodDonation.utils.DBUtils;
 public class BloodDonationDetailsRepository {
     Connection conn;
 
-    public BloodDonationDetailsRepository() throws SQLException {
+    public BloodDonationDetailsRepository(){
         DBUtils dbUtils = new DBUtils();
-        conn = dbUtils.getConnection();
+        try {
+            conn = dbUtils.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     
-    public List<BloodDonationDetails> getAllDonorAppointment() throws SQLException{
+    public List<BloodDonationDetails> getAllDonorAppointment() {
         String query="SELECT * FROM blood_donation_details";
+        List<BloodDonationDetails> donorSlotList = new ArrayList();
+        try{
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
-        List<BloodDonationDetails> donorSlotList = new ArrayList();
         while (rs.next()){
             BloodDonationDetails bloodDonationDetails = new BloodDonationDetails();
             bloodDonationDetails.setId(rs.getString("id"));
@@ -36,6 +41,10 @@ public class BloodDonationDetailsRepository {
             bloodDonationDetails.setSlotNumber(rs.getInt("slot_number"));
             
             donorSlotList.add(bloodDonationDetails);
+        }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
         }
         return donorSlotList;
         

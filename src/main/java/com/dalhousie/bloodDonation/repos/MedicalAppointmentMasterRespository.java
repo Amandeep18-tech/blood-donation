@@ -13,17 +13,22 @@ import java.util.List;
 public class MedicalAppointmentMasterRespository{
     Connection conn;
 
-    public MedicalAppointmentMasterRespository() throws SQLException {
+    public MedicalAppointmentMasterRespository()  {
         DBUtils dbUtils = new DBUtils();
-        conn = dbUtils.getConnection();
+        try {
+            conn = dbUtils.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     
-    public List<MedicalAppointmentMaster> getAllAppointment() throws SQLException{
+    public List<MedicalAppointmentMaster> getAllAppointment(){
+        List<MedicalAppointmentMaster> appointmentList = new ArrayList();
+        try{
         String query="SELECT * FROM medical_appointment_master";
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
-        List<MedicalAppointmentMaster> appointmentList = new ArrayList();
         while (rs.next()){
             MedicalAppointmentMaster medical_appointment_available = new MedicalAppointmentMaster();
             medical_appointment_available.setmedicalAppointmentMasterID(rs.getString("medical_appointment_master_id"));
@@ -33,6 +38,10 @@ public class MedicalAppointmentMasterRespository{
             medical_appointment_available.setslotStartTime(rs.getTime("slot_start_time"));
             
             appointmentList.add(medical_appointment_available);
+        }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
         }
         return appointmentList;
         

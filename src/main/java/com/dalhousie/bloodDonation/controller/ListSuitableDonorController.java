@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.Person;
 import com.dalhousie.bloodDonation.repos.DonorMedicalRecordsRepository;
@@ -20,7 +22,7 @@ public class ListSuitableDonorController {
     ListSuitableDonorImpl listSuitableDonorImpl=null;
 
     
-    public ListSuitableDonorController() throws SQLException{
+    public ListSuitableDonorController() throws CustomException{
         personRepository= new PersonRepository();
         person = new Person();
         donorMedicalRecords = new DonorMedicalRecords();
@@ -28,7 +30,7 @@ public class ListSuitableDonorController {
         listSuitableDonorImpl = new ListSuitableDonorImpl();
     }
 
-    public void patientDonorList() throws SQLException {
+    public void patientDonorList() throws CustomException {
         System.out.println("List of Suitable patient based on your profile");
         String personBloodType=null;
         List<Person> personList = personRepository.getPerson();
@@ -44,6 +46,9 @@ public class ListSuitableDonorController {
         
         List<String> donorId = new ArrayList <String> ();
         donorId=listSuitableDonorImpl.getSuitableDonorID(personBloodType);
+        if (donorId==null){
+            throw new CustomException("No donor found");
+        }
         donorId.remove(currentId);
         List<DonorMedicalRecords> donorMedicalRecordsList = new ArrayList <DonorMedicalRecords>();
         System.out.println(donorId);
@@ -58,30 +63,98 @@ public class ListSuitableDonorController {
         
     }
 
-    public void organisationDonorSelection() throws SQLException{
-        System.out.println("Do you want to select Donors according to Blood Request Yes or No");
+    public void organisationDonorSelection() {
+        System.out.println("Do you want to select Donors according to various criteria Yes or No");
         Scanner sc = new Scanner(System.in);
         String selection=sc.nextLine();
         HashMap<String,List<String>> donorSelection = new HashMap<String,List<String>> ();
         List<String> choicesByOrganization = new ArrayList<String>();
+        String typeSelection=null;
         if(selection.toLowerCase().equals("yes")){
-            System.out.println("Which blood type you want to select?");
-            String bloodType=sc.nextLine();
-            choicesByOrganization.add(bloodType);
-            List<Person> personList= personRepository.getPerson();
-            String getDonorId=null;
-            for(Person person:personList){
-                getDonorId= listSuitableDonorImpl.getBloodTypeId(bloodType);
-                System.out.println(getDonorId);
-                donorSelection.put(getDonorId,choicesByOrganization);
+                System.out.println("Which blood type you want to select?");
+                String bloodType=sc.nextLine();
+                choicesByOrganization.add(bloodType);
+                List<Person> personList= personRepository.getPerson();
+                String getDonorId=null;
+                for(Person person:personList){
+                    getDonorId= listSuitableDonorImpl.getBloodTypeId(bloodType,person.getPerson_id());
+                    if(getDonorId==null){
+                        continue;
+                    }
+                    donorSelection.put(getDonorId,choicesByOrganization);
+                }
+
+            
+            System.out.println("Do you want to choose hemologin level");
+            typeSelection= sc.nextLine();
+            if(typeSelection.toLowerCase().equals("yes")){
+                System.out.println("Choose hemoglobin level between between 120-175 grams per litre");
+                Integer hemoglobinLevel=Integer.parseInt(sc.nextLine());
+                boolean hemoglobinFound=false;
+                choicesByOrganization.add(Integer.toString(hemoglobinLevel));
+                for (String key : donorSelection.keySet()) {
+                    hemoglobinFound=listSuitableDonorImpl.getHemoglobinCount(key,hemoglobinLevel);
+                    if(hemoglobinFound){
+                        donorSelection.put(key,choicesByOrganization);
+                    }
+                    else{
+                        donorSelection.remove(key);
+                    }
+                    
+                }
             }
-            System.out.println(donorSelection);
-            System.out.println("Choose hemoglobin level between between 120-175 grams per litre");
-            Integer hemoglobinLevel=Integer.parseInt(sc.nextLine());
+            
+            System.out.println("Do you want to choose platelet level");
+            typeSelection= sc.nextLine();
+            if(typeSelection.toLowerCase().equals("yes")){
+                System.out.println("Choose platelet count ");
+                Integer plateletCount=Integer.parseInt(sc.nextLine());
+                boolean plateletCountFound=false;
+                choicesByOrganization.add(Integer.toString(plateletCount));
+               
+                for (String key : donorSelection.keySet()) {
+                    plateletCountFound=listSuitableDonorImpl.getPlateletCount(key,plateletCount);
+                    if(plateletCountFound){
+                        
+                        donorSelection.put(key,choicesByOrganization);
+                    }
+                    else{
+                        donorSelection.remove(key);
+                    }
 
+                }
+            }
 
+            System.out.println("Do you want to choose RBC level");
+            typeSelection= sc.nextLine();
+            if(typeSelection.toLowerCase().equals("yes")){
+                System.out.println("Choose RBC count");
+                Integer rbcCount=Integer.parseInt(sc.nextLine());
+                boolean rbcCountFound=false;
+                choicesByOrganization.add(Integer.toString(rbcCount));
+                for (String key : donorSelection.keySet()) {
+                    rbcCountFound=listSuitableDonorImpl.getRBCCount(key,rbcCount);
+                    if(rbcCountFound){
+                        donorSelection.put(key,choicesByOrganization);
+                    }
+                    else{
+                        donorSelection.remove(key);
+                    }
+                    
+
+                }
+            
+            }
+           
+            
+            
 
         }
+        donorSelection.forEach((key, value) -> {
+            String name= listSuitableDonorImpl.getPersonName(key);
+            System.out.println(name);
+            System.out.println(value);
+        });
 
     }
 }

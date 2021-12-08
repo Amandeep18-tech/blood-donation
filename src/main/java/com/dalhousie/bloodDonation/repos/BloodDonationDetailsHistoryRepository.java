@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.model.BloodDonationDetaisHistory;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
@@ -16,16 +14,22 @@ public class BloodDonationDetailsHistoryRepository {
     Connection conn;
     private int executeUpdate;
 
-    public BloodDonationDetailsHistoryRepository() throws SQLException {
+    public BloodDonationDetailsHistoryRepository()  {
         DBUtils dbUtils = new DBUtils();
-        conn = dbUtils.getConnection();
+        try {
+            conn = dbUtils.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public List<BloodDonationDetaisHistory> getAllDetails() throws SQLException{
+    public List<BloodDonationDetaisHistory> getAllDetails() {
         String query="SELECT * FROM blood_donation_details_history";
+        List<BloodDonationDetaisHistory> allDonationDetails = new ArrayList();
+        try{
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
-        List<BloodDonationDetaisHistory> allDonationDetails = new ArrayList();
+        
         while (rs.next()){
             BloodDonationDetaisHistory bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
             bloodDonationDetaisHistory.setDonorId(rs.getString("donor_id"));
@@ -34,12 +38,20 @@ public class BloodDonationDetailsHistoryRepository {
             bloodDonationDetaisHistory.setSlotId(rs.getString("slot_id"));
             // bloodDonationDetaisHistory.setBloodGroup(BloodGroup.valueOf(rs.getString("blood_group")));
             allDonationDetails.add(bloodDonationDetaisHistory);
+            }
+            
+        }
+        
+        catch(SQLException e){
+            e.printStackTrace();
         }
         return allDonationDetails;
-        
+
+
         
     }
-    public boolean saveDonationDate(BloodDonationDetaisHistory bloodDonationDetaisHistory,String slotId, String dateInput) throws SQLException{
+    public boolean saveDonationDate(BloodDonationDetaisHistory bloodDonationDetaisHistory,String slotId, String dateInput) {
+        try{
         String query = "INSERT INTO blood_donation_details_history (id, " + "donor_id, " + "slot_id,"+"slot_date) VALUES (?, ?, ?,?)";
         // BloodGroup dummy = BloodGroup.ABNeg;
 
@@ -52,6 +64,10 @@ public class BloodDonationDetailsHistoryRepository {
         ps.setString(4,dateInput);
         // ps.setString(5, dummy.name());
         executeUpdate = ps.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
         return true;
     }
     

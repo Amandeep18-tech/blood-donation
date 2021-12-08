@@ -6,6 +6,9 @@ import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 import com.mysql.cj.xdevapi.Statement;
 import java.util.UUID;
+
+import javax.net.ssl.SSLException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,16 +21,22 @@ public class MedicalAppointmentDetailRepository {
     Connection conn;
     private int executeUpdate;
 
-    public MedicalAppointmentDetailRepository() throws SQLException {
+    public MedicalAppointmentDetailRepository(){
         DBUtils dbUtils = new DBUtils();
-        conn = dbUtils.getConnection();
+        try {
+            conn = dbUtils.getConnection();
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+        }
     }
 
-    public List<MedicalAppointmentDetails> getAllDetails() throws SQLException{
+    public List<MedicalAppointmentDetails> getAllDetails() {
+        List<MedicalAppointmentDetails> allDateList = new ArrayList();
+        try{
         String query="SELECT * FROM medical_appointment_details";
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
-        List<MedicalAppointmentDetails> allDateList = new ArrayList();
         while (rs.next()){
             MedicalAppointmentDetails medical_appointment_details = new MedicalAppointmentDetails();
             medical_appointment_details.setmedicalAppointmentDetailsID(rs.getString("medical_appointment_details_id"));
@@ -39,14 +48,18 @@ public class MedicalAppointmentDetailRepository {
             
             allDateList.add(medical_appointment_details);
         }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
         return allDateList;
         
         
     }
 
-    public boolean saveDate(MedicalAppointmentDetails medicalAppointmentDetails,String slotId, String dateInput) throws SQLException{
+    public boolean saveDate(MedicalAppointmentDetails medicalAppointmentDetails,String slotId, String dateInput){
+        try{
         String query = "INSERT INTO medical_appointment_details (medical_appointment_details_id, " + "patient_id, " + "slot_id,"+"slot_date) VALUES (?, ?, ?,?)";
-        
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
@@ -55,6 +68,10 @@ public class MedicalAppointmentDetailRepository {
         ps.setString(3,slotId );
         ps.setString(4,dateInput);
         executeUpdate = ps.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
         return true;
     }
     

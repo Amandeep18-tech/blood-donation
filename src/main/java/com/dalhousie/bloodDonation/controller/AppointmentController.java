@@ -1,44 +1,34 @@
 package com.dalhousie.bloodDonation.controller;
 
-import java.rmi.ConnectIOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
 import com.dalhousie.bloodDonation.model.MedicalAppointmentMaster;
 import com.dalhousie.bloodDonation.model.Organisation;
-import com.dalhousie.bloodDonation.model.Person;
 import com.dalhousie.bloodDonation.repos.MedicalAppointmentMasterRespository;
 import com.dalhousie.bloodDonation.repos.OrganizationRepository;
-import com.dalhousie.bloodDonation.repos.PersonRepository;
 import com.dalhousie.bloodDonation.service.ManageAppointmentImpl;
 import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
 
 public class AppointmentController {
     private ManageAppointmentImpl manageAppointmentImpl = null;
-    private MedicalAppointmentMaster medicalAppointmentMaster = null;
-    private OrganizationRepository organizationRepository = null;
     private MedicalAppointmentDetails medicalAppointmentDetails = null;
     private MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = null;
-    private PersonRepository personRepository=null;
+    
 
 
-    public AppointmentController() throws SQLException {
-        personRepository= new PersonRepository();
+    public AppointmentController(){
         manageAppointmentImpl = new ManageAppointmentImpl();
-        medicalAppointmentMaster = new MedicalAppointmentMaster();
-        organizationRepository = new OrganizationRepository();
         medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
         medicalAppointmentDetails = new MedicalAppointmentDetails();
 
     }
 
-    public void displayAppointmentTime() throws SQLException {
+    public void displayAppointmentTime() throws CustomException {
         System.out.println("The available time is");
 
         System.out.println();
@@ -55,7 +45,7 @@ public class AppointmentController {
 
     }
 
-    public String bookPlace() throws SQLException {
+    public String bookPlace() throws CustomException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your choice");
         OrganizationRepository organizationRepository = new OrganizationRepository();
@@ -70,14 +60,15 @@ public class AppointmentController {
 
         String checkPlace = null;
         checkPlace = manageAppointmentImpl.SelectPlace(inputPlaceName);
-        if (checkPlace != null) {
-            return checkPlace;
+        if(checkPlace==null){
+            throw new CustomException("Invalid place");
         }
-        return null;
+       
+        return checkPlace;
 
     }
 
-    public void bookDate() throws SQLException, ParseException {
+    public void bookDate()  {
 
         Scanner scanner = new Scanner(System.in);
 

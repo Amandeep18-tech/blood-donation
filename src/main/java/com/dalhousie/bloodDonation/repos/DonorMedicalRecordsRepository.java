@@ -15,14 +15,18 @@ public class DonorMedicalRecordsRepository {
     Connection conn;
     private int executeUpdate;
 
-    public DonorMedicalRecordsRepository() throws SQLException {
+    public DonorMedicalRecordsRepository(){
         DBUtils dbUtils = new DBUtils();
-        conn = dbUtils.getConnection();
+        try {
+            conn = dbUtils.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public boolean addNewMedicalRecord(DonorMedicalRecords donorMedicalRecords) throws SQLException{
+    public boolean addNewMedicalRecord(DonorMedicalRecords donorMedicalRecords) {
+        try{
         String query = "INSERT INTO donor_medical_records(id, "+"donor_id," + "hepatitis_B," + "hepatitis_C,"+"HIV_flag,"+"hemoglobin_level,"+"hemochromatosis,"+"rbc_count,"+"platelet_count) VALUES (?, ?, ?,?,?,?,?,?,?)";
-        
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
@@ -35,16 +39,20 @@ public class DonorMedicalRecordsRepository {
         ps.setInt(7,donorMedicalRecords.getHemochromatosis());
         ps.setInt(8,donorMedicalRecords.getRbcCount());
         ps.setInt(9,donorMedicalRecords.getPlateletCount());
-        
         executeUpdate = ps.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
         return true;
     }
 
-    public List<DonorMedicalRecords> getAllDonorMedicalRecords() throws SQLException{
+    public List<DonorMedicalRecords> getAllDonorMedicalRecords(){
+        List<DonorMedicalRecords> medicalRecordList = new ArrayList();
+        try{
         String query="SELECT * FROM donor_medical_records";
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
-        List<DonorMedicalRecords> medicalRecordList = new ArrayList();
         while (rs.next()){
             DonorMedicalRecords donorMedicalRecords= new DonorMedicalRecords();
             donorMedicalRecords.setDonor_id(rs.getString("donor_id"));
@@ -58,15 +66,19 @@ public class DonorMedicalRecordsRepository {
             donorMedicalRecords.setPlateletCount(rs.getInt("platelet_count"));
             medicalRecordList.add(donorMedicalRecords);
         }
+        
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
         return medicalRecordList;
         
         
     }
 
-    public boolean updateMedicalRecord(DonorMedicalRecords donorMedicalRecords,String donorID) throws SQLException{
-        
+    public boolean updateMedicalRecord(DonorMedicalRecords donorMedicalRecords,String donorID){
+        try{
         String query = "UPDATE donor_medical_records SET HIV_flag= ?,hepatitis_B=?,hepatitis_C=?,hemochromatosis=?,hemoglobin_level=?,rbc_count=?,platelet_count=? WHERE donor_id = ?";
-        
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1,donorMedicalRecords.getHIV_flag());
         ps.setInt(2,donorMedicalRecords.getHepatitis_B());
@@ -79,6 +91,11 @@ public class DonorMedicalRecordsRepository {
         
         
         executeUpdate = ps.executeUpdate();
+        
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
         return true;
     }
 

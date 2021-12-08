@@ -13,7 +13,7 @@ import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
 public class DonorMedicalRecordImpl implements DonorMedicalRecord{
     
     @Override
-    public ArrayList<String> GetTodayMedicalRecord() throws SQLException{
+    public ArrayList<String> GetTodayMedicalRecord(){
         MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
         List<MedicalAppointmentDetails> medicalAppointmentDetailsList = medicalAppointmentDetailRepository.getAllDetails();
         ArrayList<String> medicalAppointmentId= new ArrayList<String>();

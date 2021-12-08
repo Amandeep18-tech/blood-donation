@@ -15,25 +15,34 @@ public class PatientBloodRequestRepository {
     Connection conn;
     private int executeUpdate;
 
-    public PatientBloodRequestRepository() throws SQLException {
+    public PatientBloodRequestRepository(){
         DBUtils dbUtils = new DBUtils();
-        conn = dbUtils.getConnection();
+        try {
+            conn = dbUtils.getConnection();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public List<PatientBloodRequest> getAllDonorRequests() throws SQLException{
-        String query="SELECT * FROM patient_blood_request";
-        PreparedStatement ps = conn.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
+    public List<PatientBloodRequest> getAllDonorRequests(){
         List<PatientBloodRequest> allDonorRequests = new ArrayList();
-        while (rs.next()){
-            PatientBloodRequest patientBloodRequest = new PatientBloodRequest();
-            patientBloodRequest.setId(rs.getString("id"));
-            patientBloodRequest.setAppointmentDate(rs.getDate("appointment_date"));
-            patientBloodRequest.setAppointmentTime(rs.getTime("appointment_time"));
-            patientBloodRequest.setStatus(rs.getString("status"));
-            
-            allDonorRequests.add(patientBloodRequest);
-        }
+        try{
+            String query="SELECT * FROM patient_blood_request";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                PatientBloodRequest patientBloodRequest = new PatientBloodRequest();
+                patientBloodRequest.setId(rs.getString("id"));
+                patientBloodRequest.setAppointmentDate(rs.getDate("appointment_date"));
+                patientBloodRequest.setAppointmentTime(rs.getTime("appointment_time"));
+                patientBloodRequest.setStatus(rs.getString("status"));
+                
+                allDonorRequests.add(patientBloodRequest);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }      
         return allDonorRequests;
         
         

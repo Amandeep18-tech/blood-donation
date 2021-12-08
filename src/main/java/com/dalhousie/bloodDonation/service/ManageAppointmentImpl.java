@@ -26,8 +26,7 @@ import com.dalhousie.bloodDonation.model.Organisation;
 public class ManageAppointmentImpl implements ManageAppointment {
 
     @Override
-    public String GetAvailableTime(MedicalAppointmentMaster medicalAppointmentMaster, String placeName)
-            throws SQLException {
+    public String GetAvailableTime(MedicalAppointmentMaster medicalAppointmentMaster, String placeName){
         if (medicalAppointmentMaster.getorganisationID().equals(placeName)) {
             
             return medicalAppointmentMaster.getslotNumber() + " " + medicalAppointmentMaster.getslotStartTime() + " "
@@ -38,7 +37,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
     }
 
     @Override
-    public String GetSlotId(String slotIdInput) throws SQLException {
+    public String GetSlotId(String slotIdInput) {
 
         MedicalAppointmentMasterRespository medicalAppointmentMasterRespository = new MedicalAppointmentMasterRespository();
         List<MedicalAppointmentMaster> masterList = medicalAppointmentMasterRespository.getAllAppointment();
@@ -54,7 +53,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
     }
 
     @Override
-    public boolean CompareDate(String dateFormatInput, String slotIdInput) throws SQLException, ParseException {
+    public boolean CompareDate(String dateFormatInput, String slotIdInput) {
         MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
 
         List<MedicalAppointmentDetails> detailList = medicalAppointmentDetailRepository.getAllDetails();
@@ -62,6 +61,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
         for (MedicalAppointmentDetails medicalAppointmentDetail : detailList) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateToString = dateFormat.format(medicalAppointmentDetail.getslotDate());
+            try{
             Date dateByUser = dateFormat.parse(dateToString);
             Date today = Calendar.getInstance().getTime();
             String todayDateToString = dateFormat.format(today);
@@ -75,6 +75,9 @@ public class ManageAppointmentImpl implements ManageAppointment {
             if (medicalAppointmentDetail.getslotID().equals(slotIdInput) && dateToString.equals(dateFormatInput)) {
                 return true;
             }
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
 
         }
 
@@ -83,7 +86,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
     }
 
     @Override
-    public String SelectPlace(String placeName) throws SQLException {
+    public String SelectPlace(String placeName) {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         List<Organisation> placeList = organizationRepository.getAllPlaces();
 
@@ -99,17 +102,9 @@ public class ManageAppointmentImpl implements ManageAppointment {
 
     }
 
-    // @Override
-    // public String GetPersonWithInactiveStatus(Person person) throws SQLException {
-    //     if (person.getAppointment_attended_flag() == 0) {
-    //         return person.getName();
-    //     }
-    //     return null;
-
-    // }
 
     @Override
-    public boolean CheckDonorMedicalID(String donorId) throws SQLException {
+    public boolean CheckDonorMedicalID(String donorId){
 
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalList = donorMedicalRecordsRepository.getAllDonorMedicalRecords();
@@ -124,7 +119,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
         return false;
     }
 
-    public DonorMedicalRecords GetDonorDetails(String donorId) throws SQLException {
+    public DonorMedicalRecords GetDonorDetails(String donorId) {
 
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalList = donorMedicalRecordsRepository.getAllDonorMedicalRecords();

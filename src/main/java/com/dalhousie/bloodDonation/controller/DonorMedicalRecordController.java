@@ -2,6 +2,8 @@ package com.dalhousie.bloodDonation.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.Person;
 import com.dalhousie.bloodDonation.repos.DonorMedicalRecordsRepository;
@@ -15,7 +17,7 @@ public class DonorMedicalRecordController {
     private DonorMedicalRecordImpl donorMedicalRecordImpl=null;
     private Person person=null;
 
-    public DonorMedicalRecordController() throws SQLException {
+    public DonorMedicalRecordController()  {
         donorMedicalRecords = new DonorMedicalRecords();
         donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         manageAppointmentImpl = new ManageAppointmentImpl();
@@ -23,15 +25,18 @@ public class DonorMedicalRecordController {
         person= new Person();
     }
 
-    public ArrayList<String> confirmTodayMedicalApppointment() throws SQLException{
+    public ArrayList<String> confirmTodayMedicalApppointment() throws CustomException{
         System.out.println("Today's Medical Test: ");
         ArrayList<String> todaysId= new ArrayList<String>();
         todaysId=donorMedicalRecordImpl.GetTodayMedicalRecord();
+        if(todaysId.size()==0){
+            throw new CustomException("No appointment for today");
+        }
         return todaysId;
         
     }
 
-    public void addMedicalRecords() throws SQLException {
+    public void addMedicalRecords() throws CustomException {
         Scanner sc = new Scanner(System.in);
 
         ArrayList<String> donorId= new ArrayList<String>();
