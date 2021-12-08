@@ -19,4 +19,6 @@ public interface FinancialDonationService {
     boolean verifyDonation(String transRefNum, DonationType bankTransfer) throws CustomException;
 
     void validateAndSendLink(Double amount, String mobileNumber) throws CustomException;
+
+    void makeDonation(String refNumber, DonationType donationType);
 }
