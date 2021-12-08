@@ -1,11 +1,14 @@
 package com.dalhousie.bloodDonation.repos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.dalhousie.bloodDonation.model.PatientBloodRequest;
 import com.dalhousie.bloodDonation.utils.DBUtils;
@@ -46,5 +49,27 @@ public class PatientBloodRequestRepository {
         return allDonorRequests;
         
         
+    }
+
+    public boolean addNewDonation(String patientID,Date appointmentDate, Time appointmentTime)  {
+        String query = "INSERT INTO patient_blood_request (id, " + "patient_id, " + "priority,"+"appointment_date,"+"appointment_time,"+"status) VALUES (?, ?, ?,?,?,?)";
+        
+        try{
+        PreparedStatement ps = conn.prepareStatement(query);
+        UUID uuid = UUID.randomUUID();
+        String uuidAsString = uuid.toString();
+        ps.setString(1, uuidAsString);
+        ps.setString(2,patientID);
+        ps.setInt(3,1);
+        ps.setDate(4,appointmentDate);
+        ps.setTime(5,appointmentTime);
+        ps.setInt(6, 0);
+        int executeUpdate = ps.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

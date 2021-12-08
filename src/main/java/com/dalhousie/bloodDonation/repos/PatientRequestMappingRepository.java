@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.dalhousie.bloodDonation.model.PatientRequestMapping;
 import com.dalhousie.bloodDonation.utils.DBUtils;
@@ -57,6 +58,28 @@ public class PatientRequestMappingRepository {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public boolean addPatientDonation(String patientId, String donorID){
+        String query = "INSERT INTO patient_request_mapping (id, " + "patient_blood_request_id, " + "donor_or_organisation_id,"+"accept_flag) VALUES (?, ?, ?,?)";
+        
+        try{
+        PreparedStatement ps = conn.prepareStatement(query);
+        UUID uuid = UUID.randomUUID();
+        String uuidAsString = uuid.toString();
+        ps.setString(1, uuidAsString);
+        ps.setString(2,patientId);
+        ps.setString(3,donorID);
+        ps.setInt(4,-1);
+        
+        int executeUpdate = ps.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+           e.printStackTrace();
+        }
+        return true;
+
     }
 
 }

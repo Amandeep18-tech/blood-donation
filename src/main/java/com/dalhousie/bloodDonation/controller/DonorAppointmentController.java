@@ -1,9 +1,11 @@
 package com.dalhousie.bloodDonation.controller;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,6 +20,7 @@ import com.dalhousie.bloodDonation.repos.BloodDonatedDetailsRepository;
 import com.dalhousie.bloodDonation.repos.BloodDonationDetailsHistoryRepository;
 import com.dalhousie.bloodDonation.repos.BloodDonationDetailsRepository;
 import com.dalhousie.bloodDonation.repos.OrganizationRepository;
+import com.dalhousie.bloodDonation.repos.PatientBloodRequestRepository;
 import com.dalhousie.bloodDonation.repos.PatientRequestMappingRepository;
 import com.dalhousie.bloodDonation.service.DonorDonationBookingImpl;
 
@@ -28,14 +31,44 @@ public class DonorAppointmentController {
     BloodDonationDetaisHistory bloodDonationDetaisHistory = null;
     BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = null;
     BloodDonatedDetailsRepository bloodDonatedDetailsRepository=null;
-
+    PatientBloodRequestRepository patientBloodRequestRepository=null;
     public DonorAppointmentController() {
         donationBookingImpl = new DonorDonationBookingImpl();
         patientBloodRequest = new PatientBloodRequest();
         patientRequestMappingRepository = new PatientRequestMappingRepository();
+        patientBloodRequestRepository = new PatientBloodRequestRepository();
         bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
         bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
         bloodDonatedDetailsRepository= new BloodDonatedDetailsRepository();
+
+    }
+    public void addPatientRequest(){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Please add patient id");
+        String patientId= sc.nextLine();
+        System.out.println("Please add request Date");
+        String requestDate= sc.nextLine();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateInput=null;
+        try {
+            dateInput=simpleDateFormat.parse(requestDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        java.sql.Date dateToStore= new java.sql.Date(dateInput.getTime());
+        System.out.println("Please add request Time");
+        String requestTime= sc.nextLine();
+        DateFormat formatter = new SimpleDateFormat("HH:mm");
+        java.sql.Time timeValue=null;
+        try {
+            timeValue = new java.sql.Time(formatter.parse(requestTime).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Please add Suitable Donor");
+        String suitableDonorId=sc.nextLine();
+        patientBloodRequestRepository.addNewDonation(patientId, dateToStore, timeValue);
+        patientRequestMappingRepository.addPatientDonation(patientId, suitableDonorId);
 
     }
     public void todayDonationConfirmation() throws CustomException{
