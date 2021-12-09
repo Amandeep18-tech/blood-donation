@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.mail.MessagingException;
+
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.BloodDonationDetails;
 import com.dalhousie.bloodDonation.model.BloodDonationDetaisHistory;
@@ -35,88 +36,89 @@ import com.dalhousie.bloodDonation.service.LoginServiceImpl;
 import com.dalhousie.bloodDonation.service.SessionService;
 import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 
+import com.dalhousie.bloodDonation.utils.IOUtils;
 import net.bytebuddy.utility.RandomString;
 
 public class DonorAppointmentController {
     private final DonorDonationBooking donationBooking;
     private PatientBloodRequest patientBloodRequest;
-    private final PatientRequestMappingRepository patientRequestMappingRepository; 
+    private final PatientRequestMappingRepository patientRequestMappingRepository;
     private final BloodDonationDetaisHistory bloodDonationDetaisHistory;
-    private final BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository; 
+    private final BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository;
     private final BloodDonatedDetailsRepository bloodDonatedDetailsRepository;
     private final PatientBloodRequestRepository patientBloodRequestRepository;
     private final LocationService locationService;
     private final User user;
     private final LoginService loginService;
     private final SessionService sessionService;
+    private final Scanner sc;
 
     public DonorAppointmentController() {
+        sc = IOUtils.getInstance();
         donationBooking = new DonorDonationBookingImpl();
         patientBloodRequest = new PatientBloodRequest();
         patientRequestMappingRepository = new PatientRequestMappingRepository();
         patientBloodRequestRepository = new PatientBloodRequestRepository();
         bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
         bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
-        bloodDonatedDetailsRepository= new BloodDonatedDetailsRepository();
-        locationService= new LocationServiceImpl();
-        user= new User();
-        loginService= new LoginServiceImpl();
+        bloodDonatedDetailsRepository = new BloodDonatedDetailsRepository();
+        locationService = new LocationServiceImpl();
+        user = new User();
+        loginService = new LoginServiceImpl();
         sessionService = new SessionServiceImpl();
 
     }
-    
-    public void addPatientRequest(){
-        Scanner sc= new Scanner(System.in);
+
+    public void addPatientRequest() {
         System.out.println("Please add patient id");
-        String patientId= sc.nextLine();
+        String patientId = sc.nextLine();
         System.out.println("Please add request Date");
-        String requestDate= sc.nextLine();
+        String requestDate = sc.nextLine();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateInput=null;
+        Date dateInput = null;
         try {
-            dateInput=simpleDateFormat.parse(requestDate);
+            dateInput = simpleDateFormat.parse(requestDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        java.sql.Date dateToStore= new java.sql.Date(dateInput.getTime());
+        java.sql.Date dateToStore = new java.sql.Date(dateInput.getTime());
         System.out.println("Please add request Time");
-        String requestTime= sc.nextLine();
+        String requestTime = sc.nextLine();
         DateFormat formatter = new SimpleDateFormat("HH:mm");
-        java.sql.Time timeValue=null;
+        java.sql.Time timeValue = null;
         try {
             timeValue = new java.sql.Time(formatter.parse(requestTime).getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
         System.out.println("Please add Suitable Donor");
-        String suitableDonorId=sc.nextLine();
+        String suitableDonorId = sc.nextLine();
         patientBloodRequestRepository.addNewDonation(patientId, dateToStore, timeValue);
         patientRequestMappingRepository.addPatientDonation(patientId, suitableDonorId);
 
     }
 
-    public void todayDonationConfirmation() throws CustomException{
+    public void todayDonationConfirmation() throws CustomException {
         System.out.println("Today's Blood Request: ");
-        ArrayList<String> todaysId= new ArrayList<String>();
-        todaysId=donationBooking.getTodayDonation();
-        Scanner sc = new Scanner(System.in);
-        for(int i=0;i<todaysId.size();i++){
+        ArrayList<String> todaysId = new ArrayList<String>();
+        todaysId = donationBooking.getTodayDonation();
+        for (int i = 0; i < todaysId.size(); i++) {
             System.out.println("Has the following donor done the blood donation");
             System.out.println(todaysId.get(i));
             System.out.println("Press 1 for accept 2. Reject");
-            String acceptFlag=sc.nextLine();
+            String acceptFlag = sc.nextLine();
 
-            if(acceptFlag.equals("1")){
+            if (acceptFlag.equals("1")) {
                 bloodDonatedDetailsRepository.confirmDonation(sessionService.getUserId(), todaysId.get(i));
-                
-            }
-            else{
+
+            } else {
                 continue;
             }
 
         }
- 
+
     }
+
     public void seeDonorRequests() throws SQLException {
 
         System.out.println("Please look into the blood donation requests you have");
@@ -132,7 +134,6 @@ public class DonorAppointmentController {
         System.out.println("Do you want to confirm this appointment");
         System.out.println("Press 1 to confirm ");
         System.out.println("Press 2 to decline");
-        Scanner sc = new Scanner(System.in);
         String choiceForDonation = sc.nextLine();
 
         if (choiceForDonation.equals("1")) {
@@ -158,15 +159,11 @@ public class DonorAppointmentController {
 
         System.out.println("Slot ID Start time");
         for (BloodDonationDetails bloodDonationDetails : donationList) {
-            System.out.println(bloodDonationDetails.getSlotNumber() +" "+bloodDonationDetails.getDonationTime());
+            System.out.println(bloodDonationDetails.getSlotNumber() + " " + bloodDonationDetails.getDonationTime());
         }
-        Scanner sc = new Scanner(System.in);
-        
-
     }
 
     public String bookDonationPlace() throws CustomException {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your choice");
         OrganizationRepository organizationRepository = new OrganizationRepository();
         List<Organisation> organisations = organizationRepository.getAllPlaces();
@@ -176,11 +173,11 @@ public class DonorAppointmentController {
 
         }
         String inputPlaceName = null;
-        inputPlaceName = scanner.nextLine();
+        inputPlaceName = sc.nextLine();
 
         String checkDonationPlace = null;
         checkDonationPlace = donationBooking.selectDonationPlace(inputPlaceName);
-        if(checkDonationPlace==null){
+        if (checkDonationPlace == null) {
             throw new CustomException("Invalid place");
         }
 
@@ -189,9 +186,7 @@ public class DonorAppointmentController {
 
     }
 
-    public void bookDate() throws UnsupportedEncodingException, MessagingException, CustomException{
-        
-        Scanner scanner = new Scanner(System.in);
+    public void bookDate() throws UnsupportedEncodingException, MessagingException, CustomException {
         String appointmentBookingChoice = null;
         String slotDonationIdInput = null;
         boolean dateAvailable;
@@ -201,7 +196,7 @@ public class DonorAppointmentController {
         System.out.println("1.Press one for booking an appointment");
         System.out.println("2.Press two for exiting");
 
-        appointmentBookingChoice = scanner.nextLine();
+        appointmentBookingChoice = sc.nextLine();
         do {
             System.out.println();
             System.out.println("Enter the Date in YYYY-MM-DD format you want to book an appointment");
@@ -209,9 +204,9 @@ public class DonorAppointmentController {
 
                 case "1":
                     System.out.println();
-                    String dateInput = scanner.nextLine();
+                    String dateInput = sc.nextLine();
                     System.out.println("Enter the Slot ID");
-                    slotDonationIdInput = scanner.nextLine();
+                    slotDonationIdInput = sc.nextLine();
                     System.out.println();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -232,34 +227,32 @@ public class DonorAppointmentController {
                         System.out.println();
                         System.out.println("Please enter a different date, this date is unavailable");
                         continue;
-                    }
-
-                    else {
+                    } else {
                         System.out.println();
                         System.out.println("Confirming this date");
                         System.out.println("Please press 1 for confirming this date");
                         System.out.println("Please press 2 for trying another date ");
-                        dateConfirmation = scanner.nextLine();
+                        dateConfirmation = sc.nextLine();
                         System.out.println("Please enter your email");
-                        String userName=scanner.nextLine();
+                        String userName = sc.nextLine();
                         String OTP = RandomString.make(8);
                         long issueTime = Instant.now().getEpochSecond();
-                        OTPDetails otpDetails = new OTPDetails(OTP,issueTime);
-                        Cache.getOtpMap().put(userName,otpDetails);
+                        OTPDetails otpDetails = new OTPDetails(OTP, issueTime);
+                        Cache.getOtpMap().put(userName, otpDetails);
                         user.setUserName(userName);
-                        boolean check = loginService.sendVerificationEmail(user,OTP);
+                        loginService.sendVerificationEmail(user, OTP);
                         System.out.println("Enter your OTP:-");
-                        String otpInput = scanner.nextLine();
-                        if(!OTP.equals(otpInput)) {
+                        String otpInput = sc.nextLine();
+                        if (!OTP.equals(otpInput)) {
                             System.out.println("Invalid OTP!");
                             continue;
                         }
-                        if(loginService.validateOTP(userName, otpInput)){
+                        if (loginService.validateOTP(userName, otpInput)) {
                             System.out.println("OTP Validated");
-                                
+
                         }
-                        
-                        
+
+
                         if (dateConfirmation.equals("1") && OTP.equals(otpInput)) {
                             System.out.println();
                             boolean confirmDate = false;
@@ -287,61 +280,58 @@ public class DonorAppointmentController {
         } while (!appointmentBookingChoice.equals("2"));
         getRouteToOrganisation();
     }
-    public void getRouteToOrganisation(){
-        Scanner sc= new Scanner(System.in);
+
+    public void getRouteToOrganisation() {
         System.out.println("Enter your pin code");
-        String pinCode1=sc.nextLine();
+        String pinCode1 = sc.nextLine();
         System.out.println("Enter your pin code");
-        String pinCode2=sc.nextLine();
-        String route=locationService.getShortestPath(pinCode1, pinCode2);
+        String pinCode2 = sc.nextLine();
+        String route = locationService.getShortestPath(pinCode1, pinCode2);
         System.out.println(route);
         sc.close();
     }
 
-    public void confirmDonation() throws SQLException, UnsupportedEncodingException, MessagingException, CustomException{
+    public void confirmDonation() throws SQLException, UnsupportedEncodingException, MessagingException, CustomException {
         bookDonationPlace();
         displayAppointmentTime();
         bookDate();
-        
+
     }
 
-    public void seePatientRequestStatus(){
+    public void seePatientRequestStatus() {
         PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
         List<PatientBloodRequest> patientBloodRequests = patientBloodRequestRepository.getAllDonorRequests();
-        for(PatientBloodRequest patientBloodRequest:patientBloodRequests){
-            if(patientBloodRequest.getPatientID().equals("5c256da3-3d82-11ec-917b-e2ed2ce588f5") && patientBloodRequest.getStatus()==0){
+        for (PatientBloodRequest patientBloodRequest : patientBloodRequests) {
+            if (patientBloodRequest.getPatientID().equals("5c256da3-3d82-11ec-917b-e2ed2ce588f5") && patientBloodRequest.getStatus() == 0) {
                 System.out.println("Request Pending");
-                
-            }
-            else{
+
+            } else {
                 System.out.println("Request done");
             }
         }
     }
 
-    public void todayPatientRequestConfirmation() throws CustomException{
+    public void todayPatientRequestConfirmation() throws CustomException {
         System.out.println("Today's Patient Blood Request: ");
         PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
-        ArrayList<String> todaysId= new ArrayList<String>();
-        todaysId=donationBooking.getTodayPatientRequest();
-        Scanner sc = new Scanner(System.in);
-        for(int i=0;i<todaysId.size();i++){
+        ArrayList<String> todaysId = new ArrayList<String>();
+        todaysId = donationBooking.getTodayPatientRequest();
+        for (int i = 0; i < todaysId.size(); i++) {
             System.out.println("Has the following donor done the blood donation");
             System.out.println(todaysId.get(i));
             System.out.println("Press 1 for accept 2. Reject");
-            String acceptFlag=sc.nextLine();
+            String acceptFlag = sc.nextLine();
 
-            if(acceptFlag.equals("1")){
-                String patientId="5c256da3-3d82-11ec-917b-e2ed2ce588f5";
+            if (acceptFlag.equals("1")) {
+                String patientId = "5c256da3-3d82-11ec-917b-e2ed2ce588f5";
                 patientBloodRequestRepository.addUpdateDonation(patientId, 1);
-                
-            }
-            else{
+
+            } else {
                 continue;
             }
 
         }
- 
+
     }
 
 

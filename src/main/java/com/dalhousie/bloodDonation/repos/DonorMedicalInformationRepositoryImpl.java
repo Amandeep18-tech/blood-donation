@@ -10,19 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DonorMedicalInformationRepositoryImpl implements DonorMedicalInformationRepository {
-    private static DonorMedicalInformationRepository donorMedicalInformationRepository = null;
-
-    public static DonorMedicalInformationRepository getInstance() {
-        if (donorMedicalInformationRepository == null) {
-            donorMedicalInformationRepository = new DonorMedicalInformationRepositoryImpl();
-        }
-        return donorMedicalInformationRepository;
-    }
-
     @Override
     public DonorInformation getMatchingBloodTypeDonorMedicalInformation(DonorInformation donorInfo) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "SELECT * FROM donor_medical_records WHERE donor_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, donorInfo.getDonorId());

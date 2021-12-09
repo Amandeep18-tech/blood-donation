@@ -3,6 +3,7 @@ package com.dalhousie.bloodDonation.service;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.Survey;
 import com.dalhousie.bloodDonation.repos.SurveyRepositoryImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,13 +12,14 @@ public class SurveyServiceImpl implements SurveyService {
     private String surveyTitle;
     private String surveyDescription;
     private String surveyType;
+    private final Scanner in;
 
     public SurveyServiceImpl() {
+        in = IOUtils.getInstance();
     }
 
     @Override
     public Survey getSurveyDetailsInput() {
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey Title: ");
         surveyTitle = in.nextLine();
         System.out.print("\nEnter Survey Description: ");
@@ -53,7 +55,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public void deleteSurvey() throws CustomException {
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Delete: ");
         int id = in.nextInt();
         SurveyRepositoryImpl surveyRepositoryImpl = new SurveyRepositoryImpl();
@@ -63,7 +64,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public void updateSurvey() throws CustomException {
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Update: ");
         int id = in.nextInt();
         in.nextLine();

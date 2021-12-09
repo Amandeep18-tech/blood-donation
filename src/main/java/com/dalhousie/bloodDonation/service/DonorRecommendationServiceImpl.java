@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DonorRecommendationServiceImpl implements DonorRecommendationService {
-    private final PatientMedicalInformationRepository patientMedicalInfoRepo;
-    private final DonorPersonalInformationRepository donorPersonalInfoRepo;
-    private final DonorMedicalInformationRepository donorMedicalInfoRepo;
+    private final PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo;
+    private final DonorPersonalInformationRepositoryImpl donorPersonalInfoRepo;
+    private final DonorMedicalInformationRepositoryImpl donorMedicalInfoRepo;
     private final CalculateDonorMatchingPercentageServiceImpl donorMatchingPercentage;
 
     public DonorRecommendationServiceImpl() {
-        patientMedicalInfoRepo = PatientMedicalInformationRepositoryImpl.getInstance();
-        donorPersonalInfoRepo = DonorPersonalInformationRepositoryImpl.getInstance();
-        donorMedicalInfoRepo = DonorMedicalInformationRepositoryImpl.getInstance();
+        patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
+        donorPersonalInfoRepo = new DonorPersonalInformationRepositoryImpl();
+        donorMedicalInfoRepo = new DonorMedicalInformationRepositoryImpl();
         donorMatchingPercentage = new CalculateDonorMatchingPercentageServiceImpl();
     }
 
@@ -47,7 +47,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
                 add(patientHemoglobin);
                 add(donorHemoglobin);
             }};
-            Double hemoglobinLevelDifference = Collections.max(hemoglobinLevelValues) - Collections.min(hemoglobinLevelValues);
+            double hemoglobinLevelDifference = Collections.max(hemoglobinLevelValues) - Collections.min(hemoglobinLevelValues);
 
             int patientRbcCount = patientMedicalInfo.getRbcCount();
             int donorRbcCount = donorInformation.getRbcCount();

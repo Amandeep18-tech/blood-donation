@@ -4,12 +4,11 @@ import com.dalhousie.bloodDonation.constants.UserType;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.service.SessionService;
 import com.dalhousie.bloodDonation.service.SessionServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;
 
 public class InitController {
-
-    private final Scanner sc;
     private final LoginController loginController;
     private final ListSuitableDonorController listSuitableDonorController;
     private final AppointmentController appointmentController;
@@ -22,9 +21,10 @@ public class InitController {
     private final DonorAppointmentController donorAppointmentController;
     private final DonorMedicalRecordController donorMedicalRecordController;
     private final SessionService sessionService;
+    private final Scanner sc;
 
     public InitController() {
-        sc = new Scanner(System.in);
+        sc = IOUtils.getInstance();
         loginController = new LoginController();
         listSuitableDonorController = new ListSuitableDonorController();
         appointmentController = new AppointmentController();

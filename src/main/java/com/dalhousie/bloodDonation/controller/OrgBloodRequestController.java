@@ -6,6 +6,7 @@ import com.dalhousie.bloodDonation.service.OrgBloodDonationService;
 import com.dalhousie.bloodDonation.service.OrgBloodDonationServiceImpl;
 import com.dalhousie.bloodDonation.service.SessionService;
 import com.dalhousie.bloodDonation.service.SessionServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class OrgBloodRequestController {
 
     public OrgBloodRequestController() {
         orgBloodDonationService = new OrgBloodDonationServiceImpl();
-        scanner = new Scanner(System.in);
+        scanner = IOUtils.getInstance();
         sessionService = new SessionServiceImpl();
     }
 

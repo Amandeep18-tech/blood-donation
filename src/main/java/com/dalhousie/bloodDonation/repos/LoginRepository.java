@@ -24,12 +24,11 @@ public class LoginRepository {
     PatientMedicalInformationRepository patientMedicalInformationRepository;
     LoginController loginController;
     SessionManagement session = new SessionManagement();
-    Scanner sc = new Scanner(System.in);
+
     public void checkExistingUser(String userName,String password){
         try {
             String resetpass;
-            DBUtils dbUtils = new DBUtils();
-            Connection con = dbUtils.getConnection();
+            Connection con= DBUtils.getInstance().getConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from user");
             while(rs.next()){
@@ -60,8 +59,7 @@ public class LoginRepository {
     public void checkExistingPatient(String userName,String password){
         try {
             String resetpass;
-            DBUtils dbUtils = new DBUtils();
-            Connection con = dbUtils.getConnection();
+            Connection con= DBUtils.getInstance().getConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from patient_login");
             while(rs.next()){
@@ -86,8 +84,7 @@ public class LoginRepository {
 
     public void checkExistingOrgansation(String userName,String password){
         try {
-            DBUtils dbUtils = new DBUtils();
-            Connection con = dbUtils.getConnection();
+            Connection con= DBUtils.getInstance().getConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from organisation");
             while(rs.next()){
@@ -114,21 +111,18 @@ public class LoginRepository {
         try {
             //DBUtils dbUtils = new DBUtils();
             //Connection con = dbUtils.getConnection();
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
+            Connection con= DBUtils.getInstance().getConnection();
             Statement st = con.createStatement();
             st.execute("INSERT INTO user(username,password,firstname,lastname,bloodgroup) VALUES('"+ user.getUserName()+"','"+ user.getPassword()+"','"+ user.getFirstname()+"','"+ user.getLastname()+"','"+ user.getBloodGroup()+"')");
             System.out.println("SignUp successfull");
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void addOrganization(Organisation organisation) throws CustomException {
         try {
-            DBUtils dbUtils = new DBUtils();
-            Connection con = dbUtils.getConnection();
+            Connection con= DBUtils.getInstance().getConnection();
             UUID uuid = UUID.randomUUID();
             String uuidAsString = uuid.toString();
             Statement st = con.createStatement();
@@ -144,9 +138,7 @@ public class LoginRepository {
     }
 
     public User forgetPass(String username) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con=DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
+        Connection con= DBUtils.getInstance().getConnection();
         String sql = "select * from user where userName=?";
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1, username);
@@ -174,9 +166,7 @@ public class LoginRepository {
     }
     public void updatePass(String username,String pwd,String OTP) throws Exception {
         loginController = new LoginController();
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con=DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
+        Connection con= DBUtils.getInstance().getConnection();
 
         String sql = "update user set password=? where userName=?";
         PreparedStatement stmt = con.prepareStatement(sql);
@@ -190,8 +180,7 @@ public class LoginRepository {
 
     public void addPerson(String contactNo, User user, String pinCode){
         try {
-            DBUtils dbUtils = new DBUtils();
-            Connection con = dbUtils.getConnection();
+            Connection con= DBUtils.getInstance().getConnection();
             UUID uuid = UUID.randomUUID();
             String uuidAsString = uuid.toString();
             Statement st = con.createStatement();

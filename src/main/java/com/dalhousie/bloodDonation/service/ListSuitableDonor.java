@@ -1,13 +1,9 @@
 package com.dalhousie.bloodDonation.service;
 
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
-import com.mysql.cj.result.SqlDateValueFactory;
-
 
 public interface ListSuitableDonor {
 

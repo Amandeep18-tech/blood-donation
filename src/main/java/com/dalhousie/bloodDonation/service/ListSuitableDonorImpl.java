@@ -1,8 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
@@ -33,11 +31,8 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
 
     @Override
     public DonorMedicalRecords getSuitableDonor(String donorId){
-        HashMap<Person,DonorMedicalRecords> suitableDonors = new HashMap<Person,DonorMedicalRecords>();
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
-        PersonRepository personRepository = new PersonRepository();
         List<DonorMedicalRecords> donorMedicalRecordsList= donorMedicalRecordsRepository.getAllDonorMedicalRecords();
-        List<Person> personList=personRepository.getPerson();
         
             for(DonorMedicalRecords donorMedicalRecords:donorMedicalRecordsList){
                 if((donorMedicalRecords.gethemoglobinLevel()>150) && donorMedicalRecords.getHIVFlag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.gethepatitisB().equals(0) && donorMedicalRecords.gethepatitisC().equals(0) && donorMedicalRecords.getdonorID().equals(donorId)){
