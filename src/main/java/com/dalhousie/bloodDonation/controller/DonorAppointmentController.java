@@ -297,8 +297,10 @@ public class DonorAppointmentController {
     }
 
     public void confirmDonation() throws SQLException, UnsupportedEncodingException, MessagingException, CustomException{
+        bookDonationPlace();
         displayAppointmentTime();
         bookDate();
+        
     }
 
     public void seePatientRequestStatus(){
