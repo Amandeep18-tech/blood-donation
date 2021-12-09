@@ -1,6 +1,8 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.controller.RewardsController;
+import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.utils.DBUtils;
 import net.bytebuddy.utility.RandomString;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -71,32 +73,34 @@ public class RewardsRepository {
            System.out.println("Something went wrong!");
        }
     }
-    public void displayCoupon(int donorId) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con= DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
-        String sql = "select coupon_code from rewards where donor_id=?";
-        PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setInt(1, donorId);
-        ResultSet rs = stmt.executeQuery();
-        String couponcode = null;
-        while(rs.next()){
-            couponcode = rs.getString(1);
-        }
-        System.out.println("*************************************");
-        System.out.print("|");
-        System.out.println("Your coupon code is:- " + couponcode + "|" );
-        System.out.println("*************************************");
-        System.out.println("Do you want to redeem/use this coupon?");
-        System.out.println("Press 1 to continue and 0 to return to main menue:");
-        int choice = sc.nextInt();
-        if(choice == 1){
-            //redeemCoupon(donorId);
-            System.out.println("hhj");
-        }
+    public void displayCoupon(int donorId) throws CustomException {
+        DBUtils dbUtils = new DBUtils();
+        try(Connection conn = dbUtils.getConnection()) {
+            String sql = "select coupon_code from rewards where donor_id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, donorId);
+            ResultSet rs = stmt.executeQuery();
+            String couponcode = null;
+            while (rs.next()) {
+                couponcode = rs.getString(1);
+            }
+            System.out.println("*************************************");
+            System.out.print("|");
+            System.out.println("Your coupon code is:- " + couponcode + "|");
+            System.out.println("*************************************");
+            System.out.println("Do you want to redeem/use this coupon?");
+            System.out.println("Press 1 to continue and 0 to return to main menue:");
+            int choice = sc.nextInt();
+            if (choice == 1) {
+                //redeemCoupon(donorId);
+                System.out.println("hhj");
+            }
 //        else{
 //            rewardsController.menu();
 //        }
+        }catch (SQLException e){
+            throw new CustomException("");
+        }
     }
 //    public void redeemCoupon(int donorId) throws Exception {
 //
