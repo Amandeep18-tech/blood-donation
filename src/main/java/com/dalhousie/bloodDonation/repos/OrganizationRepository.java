@@ -33,7 +33,7 @@ public class OrganizationRepository {
             while (rs.next()){
                 Organisation organisationDetails = new Organisation();
                 organisationDetails.setLocation(rs.getString("location"));
-                organisationDetails.setOrganisation_name(rs.getString("organisation_name"));
+                organisationDetails.setorganisationName(rs.getString("organisation_name"));
                 
         
                 organisationDetails.setorganisationID(rs.getString("organisation_id"));
