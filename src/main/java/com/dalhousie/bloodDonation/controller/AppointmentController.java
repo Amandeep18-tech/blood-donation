@@ -82,17 +82,17 @@ public class AppointmentController {
         System.out.println("Please enter your choice");
         System.out.println("1.Press one for booking an appointment");
         System.out.println("2.Press two for exiting");
-        appointmentBookingChoice = scanner.next();
+        appointmentBookingChoice = scanner.nextLine();
         do {
             System.out.println();
             System.out.println("Enter the Date in YYYY-MM-DD format you want to book an appointment");
             switch (appointmentBookingChoice) {
-                
+
             case "1":
                 System.out.println();
-                String dateInput = scanner.next();
+                String dateInput = scanner.nextLine();
                 System.out.println("Enter the Slot ID");
-                slotIdInput = scanner.next();
+                slotIdInput = scanner.nextLine();
                 System.out.println();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date dateInput2 = null;
@@ -115,7 +115,7 @@ public class AppointmentController {
                     System.out.println("Confirming this date");
                     System.out.println("Please press 1 for confirming this date");
                     System.out.println("Please press 2 for trying another date ");
-                    dateConfirmation = scanner.next();
+                    dateConfirmation = scanner.nextLine();
                     if (dateConfirmation.equals("1")) {
                         System.out.println();
                         boolean confirmDate = false;

@@ -49,6 +49,7 @@ public class DonorAppointmentController {
     private final User user;
     private final LoginService loginService;
     private final SessionService sessionService;
+
     public DonorAppointmentController() {
         donationBooking = new DonorDonationBookingImpl();
         patientBloodRequest = new PatientBloodRequest();
@@ -63,6 +64,7 @@ public class DonorAppointmentController {
         sessionService = new SessionServiceImpl();
 
     }
+    
     public void addPatientRequest(){
         Scanner sc= new Scanner(System.in);
         System.out.println("Please add patient id");
