@@ -2,11 +2,11 @@ package com.dalhousie.bloodDonation.model;
 
 public class DonorMedicalRecords {
     String id;
-    String donor_id;
-    Integer  hepatitis_B;
-    Integer hepatitis_C;
-    Integer HIV_flag;
-    Integer hemoglobin_level;
+    String donorID;
+    Integer  hepatitisB;
+    Integer hepatitisC;
+    Integer HIVFlag;
+    Integer hemoglobinLevel;
     Integer hemochromatosis;
     Integer rbcCount;
     Integer plateletCount;
@@ -29,35 +29,35 @@ public class DonorMedicalRecords {
     public void setId(String id) {
         this.id = id;
     }
-    public String getDonor_id() {
-        return donor_id;
+    public String getdonorID() {
+        return donorID;
     }
-    public void setDonor_id(String donor_id) {
-        this.donor_id = donor_id;
+    public void setdonorID(String donorID) {
+        this.donorID = donorID;
     }
-    public Integer getHepatitis_B() {
-        return hepatitis_B;
+    public Integer gethepatitisB() {
+        return hepatitisB;
     }
-    public void setHepatitis_B(Integer hepatitis_B) {
-        this.hepatitis_B = hepatitis_B;
+    public void sethepatitisB(Integer hepatitisB) {
+        this.hepatitisB = hepatitisB;
     }
-    public Integer getHepatitis_C() {
-        return hepatitis_C;
+    public Integer gethepatitisC() {
+        return hepatitisC;
     }
-    public void setHepatitis_C(Integer hepatitis_C) {
-        this.hepatitis_C = hepatitis_C;
+    public void sethepatitisC(Integer hepatitisC) {
+        this.hepatitisC = hepatitisC;
     }
-    public Integer getHIV_flag() {
-        return HIV_flag;
+    public Integer getHIVFlag() {
+        return HIVFlag;
     }
-    public void setHIV_flag(Integer hIV_flag) {
-        HIV_flag = hIV_flag;
+    public void setHIVFlag(Integer HIVFlag) {
+        this.HIVFlag = HIVFlag;
     }
-    public Integer getHemoglobin_level() {
-        return hemoglobin_level;
+    public Integer gethemoglobinLevel() {
+        return hemoglobinLevel;
     }
-    public void setHemoglobin_level(Integer hemoglobin_level) {
-        this.hemoglobin_level = hemoglobin_level;
+    public void sethemoglobinLevel(Integer hemoglobinLevel) {
+        this.hemoglobinLevel = hemoglobinLevel;
     }
     public Integer getHemochromatosis() {
         return hemochromatosis;

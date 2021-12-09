@@ -8,14 +8,15 @@ import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.Person;
 import com.dalhousie.bloodDonation.repos.DonorMedicalRecordsRepository;
 import com.dalhousie.bloodDonation.service.DonorMedicalRecordImpl;
+import com.dalhousie.bloodDonation.service.ManageAppointment;
 import com.dalhousie.bloodDonation.service.ManageAppointmentImpl;
 
 public class DonorMedicalRecordController {
-    private DonorMedicalRecords donorMedicalRecords = null;
-    private DonorMedicalRecordsRepository donorMedicalRecordsRepository = null;
-    private ManageAppointmentImpl manageAppointmentImpl = null;
-    private DonorMedicalRecordImpl donorMedicalRecordImpl=null;
-    private Person person=null;
+    private DonorMedicalRecords donorMedicalRecords;
+    private final DonorMedicalRecordsRepository donorMedicalRecordsRepository;
+    private final ManageAppointment manageAppointmentImpl;
+    private final DonorMedicalRecordImpl donorMedicalRecordImpl;
+    private final Person person;
 
     public DonorMedicalRecordController()  {
         donorMedicalRecords = new DonorMedicalRecords();
@@ -28,7 +29,7 @@ public class DonorMedicalRecordController {
     public ArrayList<String> confirmTodayMedicalApppointment() throws CustomException{
         System.out.println("Today's Medical Test: ");
         ArrayList<String> todaysId= new ArrayList<String>();
-        todaysId=donorMedicalRecordImpl.GetTodayMedicalRecord();
+        todaysId=donorMedicalRecordImpl.getTodayMedicalRecord();
         if(todaysId.size()==0){
             throw new CustomException("No appointment for today");
         }
@@ -46,24 +47,24 @@ public class DonorMedicalRecordController {
             System.out.println(donorId.get(i));
             
             System.out.println("Enter the whether the patient has hepatitis B ");
-            String hepatitis_b_flag = sc.nextLine();
-            donorMedicalRecords.setHepatitis_B(Integer.parseInt(hepatitis_b_flag));
+            String hepatitisB_flag = sc.nextLine();
+            donorMedicalRecords.sethepatitisB(Integer.parseInt(hepatitisB_flag));
 
             System.out.println("Enter the whether the patient has hepatitis C ");
-            String hepatitis_c_flag = sc.nextLine();
-            donorMedicalRecords.setHepatitis_C(Integer.parseInt(hepatitis_c_flag));
+            String hepatitisC_flag = sc.nextLine();
+            donorMedicalRecords.sethepatitisC(Integer.parseInt(hepatitisC_flag));
 
             System.out.println("Enter the whether the patient has  hemochromatosis");
             String hemochromatosis = sc.nextLine();
             donorMedicalRecords.setHemochromatosis(Integer.parseInt(hemochromatosis));
 
             System.out.println("Enter the whether the patient has  HIV");
-            String hiv_flag = sc.nextLine();
-            donorMedicalRecords.setHIV_flag(Integer.parseInt(hiv_flag));
+            String HIVFlag = sc.nextLine();
+            donorMedicalRecords.setHIVFlag(Integer.parseInt(HIVFlag));
 
             System.out.println("Enter hemoglobin count");
             String hemoglboin_count = sc.nextLine();
-            donorMedicalRecords.setHemoglobin_level(Integer.parseInt(hemoglboin_count));
+            donorMedicalRecords.sethemoglobinLevel(Integer.parseInt(hemoglboin_count));
 
             System.out.println("Enter RBC count");
             String rbcCount = sc.nextLine();
@@ -85,12 +86,12 @@ public class DonorMedicalRecordController {
 
             System.out.println("Enter the donor Id you want to edit details for :");
             String donorId = sc.nextLine();
-            boolean checkDonorID = manageAppointmentImpl.CheckDonorMedicalID(donorId);
+            boolean checkDonorID = manageAppointmentImpl.checkDonorMedicalID(donorId);
             if (checkDonorID) {
-                donorMedicalRecords = manageAppointmentImpl.GetDonorDetails(donorId);
-                System.out.println(" HIV :" + donorMedicalRecords.getHIV_flag() + " Hepatitis C: "
-                        + donorMedicalRecords.getHepatitis_C() + " Hepatitis B " + donorMedicalRecords.getHepatitis_C()
-                        + " Hemoglobin level " + donorMedicalRecords.getHemoglobin_level() + " Hemochromostatis: "
+                donorMedicalRecords = manageAppointmentImpl.getDonorDetails(donorId);
+                System.out.println(" HIV :" + donorMedicalRecords.getHIVFlag() + " Hepatitis C: "
+                        + donorMedicalRecords.gethepatitisC() + " Hepatitis B " + donorMedicalRecords.gethepatitisC()
+                        + " Hemoglobin level " + donorMedicalRecords.gethemoglobinLevel() + " Hemochromostatis: "
                         + donorMedicalRecords.getHemochromatosis()+" RBC count:"+donorMedicalRecords.getRbcCount()+" Platelet count:"+donorMedicalRecords.getPlateletCount());
 
                 System.out.println("Enter the whether the patient has hepatitis B ");
@@ -98,8 +99,8 @@ public class DonorMedicalRecordController {
                 System.out.println("Press 1. To change 2. To go to the next value");
                 String checkChange = sc.nextLine();
                 if (checkChange.equals("1")) {
-                    String hepatitis_b_flag = sc.nextLine();
-                    donorMedicalRecords.setHepatitis_B(Integer.parseInt(hepatitis_b_flag));
+                    String hepatitisB_flag = sc.nextLine();
+                    donorMedicalRecords.sethepatitisB(Integer.parseInt(hepatitisB_flag));
                 }
 
                 System.out.println("Enter the whether the patient has hepatitis C ");
@@ -107,8 +108,8 @@ public class DonorMedicalRecordController {
                 System.out.println("Press 1. To change 2. To go to the next value");
                 checkChange = sc.nextLine();
                 if (checkChange.equals("1")) {
-                    String hepatitis_c_flag = sc.nextLine();
-                    donorMedicalRecords.setHepatitis_C(Integer.parseInt(hepatitis_c_flag));
+                    String hepatitisC_flag = sc.nextLine();
+                    donorMedicalRecords.sethepatitisC(Integer.parseInt(hepatitisC_flag));
                 }
 
                 System.out.println("Enter the whether the patient has  hemochromatosis");
@@ -125,8 +126,8 @@ public class DonorMedicalRecordController {
                 System.out.println("Press 1. To change 2. To go to the next value");
                 checkChange = sc.nextLine();
                 if (checkChange.equals("1")) {
-                    String hiv_flag = sc.nextLine();
-                    donorMedicalRecords.setHIV_flag(Integer.parseInt(hiv_flag));
+                    String HIVFlag = sc.nextLine();
+                    donorMedicalRecords.setHIVFlag(Integer.parseInt(HIVFlag));
                 }
 
                 System.out.println("Enter hemoglobin count");
@@ -135,7 +136,7 @@ public class DonorMedicalRecordController {
                 checkChange = sc.nextLine();
                 if (checkChange.equals("1")) {
                     String hemoglboin_count = sc.nextLine();
-                    donorMedicalRecords.setHemoglobin_level(Integer.parseInt(hemoglboin_count));
+                    donorMedicalRecords.sethemoglobinLevel(Integer.parseInt(hemoglboin_count));
                 }
 
                 System.out.println("Enter RBC count");
@@ -153,7 +154,7 @@ public class DonorMedicalRecordController {
                 checkChange = sc.nextLine();
                 if (checkChange.equals("1")) {
                     String plateletCount = sc.nextLine();
-                    donorMedicalRecords.setHemoglobin_level(Integer.parseInt(plateletCount));
+                    donorMedicalRecords.sethemoglobinLevel(Integer.parseInt(plateletCount));
                 }
 
                 Boolean verifyMedicalDetails = donorMedicalRecordsRepository.updateMedicalRecord(donorMedicalRecords,

@@ -41,7 +41,7 @@ class DonorDonationBookingServiceTest {
     @DisplayName("Test for compareDate")
     void compareDateTest() throws SQLException, ParseException {
 
-        assertTrue(donationBookingImpl.CompareDonationDate("2021-12-17", "af02f0f7-3d82-11ec-917b-e2ed2ce588f5"));
+        assertTrue(donationBookingImpl.compareDonationDate("2021-12-17", "af02f0f7-3d82-11ec-917b-e2ed2ce588f5"));
     }
 
     @Test
@@ -49,7 +49,7 @@ class DonorDonationBookingServiceTest {
     void selectPlaceTest() throws SQLException {
 
         
-        assertEquals(donationBookingImpl.SelectDonationPlace("Dal"),"dcf53fed-3cfb-11ec-917b-e2ed2ce588f5");
+        assertEquals(donationBookingImpl.selectDonationPlace("Dal"),"dcf53fed-3cfb-11ec-917b-e2ed2ce588f5");
     }
 
     @Test
@@ -57,7 +57,7 @@ class DonorDonationBookingServiceTest {
     void getSlotIdTest() throws SQLException {
 
         
-        assertEquals(donationBookingImpl.GetDonationSlotId("1"),"c4e4bbfa-4d5f-11ec-917b-e2ed2ce588f5");
+        assertEquals(donationBookingImpl.getDonationSlotId("1"),"c4e4bbfa-4d5f-11ec-917b-e2ed2ce588f5");
     }
 
     @Test
@@ -65,7 +65,7 @@ class DonorDonationBookingServiceTest {
     void getSlotIdTestForIncorrectValue() throws SQLException {
 
         
-        assertEquals(donationBookingImpl.GetDonationSlotId("2"),"SLOT_UNAVAILABLE");
+        assertEquals(donationBookingImpl.getDonationSlotId("2"),"SLOT_UNAVAILABLE");
     }
 
     @Test
@@ -73,21 +73,21 @@ class DonorDonationBookingServiceTest {
     void getPatientRequestId() throws SQLException {
 
         
-        assertEquals(donationBookingImpl.GetPatientRequestId("5d9793a1-5213-11ec-917b-e2ed2ce588f5"),"5c256da3-3d82-11ec-917b-e2ed2ce588f5");
+        assertEquals(donationBookingImpl.getPatientRequestId("5d9793a1-5213-11ec-917b-e2ed2ce588f5"),"5c256da3-3d82-11ec-917b-e2ed2ce588f5");
     }
     @Test
     @DisplayName("Test Patient request wrong Id ")
     void getPatientRequestIdNull() throws SQLException {
 
         
-        assertEquals(donationBookingImpl.GetPatientRequestId("5d9793a1-5213-11ec-917b-e2ed2ce5"),null);
+        assertEquals(donationBookingImpl.getPatientRequestId("5d9793a1-5213-11ec-917b-e2ed2ce5"),null);
     }
 
     @Test
     @DisplayName("Get today Donation")
     void getTodayDonationExceptionTest() throws CustomException {
         Exception exception = assertThrows(CustomException.class, () -> {
-            donationBookingImpl.GetTodayDonation();
+            donationBookingImpl.getTodayDonation();
         });
     
         String expectedMessage = "No donation for today";
@@ -103,7 +103,7 @@ class DonorDonationBookingServiceTest {
     void getTodayDonationTest() throws CustomException {
         ArrayList<String> idList = new ArrayList<String>();
         idList.add("6c111307-4cbe-11ec-917b-e2ed2ce588f5");
-        assertEquals(donationBookingImpl.GetTodayDonation(),idList);
+        assertEquals(donationBookingImpl.getTodayDonation(),idList);
     }// test will fail if no donation for today
 
     @Test

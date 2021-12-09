@@ -40,14 +40,14 @@ class ManageAppointmentServiceTest {
     void compareDateTest() throws SQLException, ParseException {
 
         
-        assertTrue(manageAppointmentImpl.CompareDate("2021-12-17", "af02f0f7-3d82-11ec-917b-e2ed2ce588f5"));
+        assertTrue(manageAppointmentImpl.compareDate("2021-12-17", "af02f0f7-3d82-11ec-917b-e2ed2ce588f5"));
     }
     @Test
     @DisplayName("Test for Select Place")
     void selectPlaceTest() throws SQLException {
 
         
-        assertEquals(manageAppointmentImpl.SelectPlace("Dal"),"dcf53fed-3cfb-11ec-917b-e2ed2ce588f5");
+        assertEquals(manageAppointmentImpl.selectPlace("Dal"),"dcf53fed-3cfb-11ec-917b-e2ed2ce588f5");
     }
 
     @Test
@@ -55,7 +55,7 @@ class ManageAppointmentServiceTest {
     void getSlotIdTest() throws SQLException {
 
         
-        assertEquals(manageAppointmentImpl.GetSlotId("5"),"af02f0f7-3d82-11ec-917b-e2ed2ce588f5");
+        assertEquals(manageAppointmentImpl.getSlotId("5"),"af02f0f7-3d82-11ec-917b-e2ed2ce588f5");
     }
     @Test
     @DisplayName("Test for Get available time for wrong place")
@@ -66,7 +66,7 @@ class ManageAppointmentServiceTest {
         medicalAppointmentMaster.setslotNumber(5);
         
         
-        assertEquals(manageAppointmentImpl.GetAvailableTime(medicalAppointmentMaster, "Dal1"),null);
+        assertEquals(manageAppointmentImpl.getAvailableTime(medicalAppointmentMaster, "Dal1"),null);
     }
 
     @Test
@@ -94,14 +94,14 @@ class ManageAppointmentServiceTest {
         }
         medicalAppointmentMaster.setslotEndTime(timeValue2);
         
-        assertEquals(manageAppointmentImpl.GetAvailableTime(medicalAppointmentMaster, "dcf53fed-3cfb-11ec-917b-e2ed2ce588f5"),medicalAppointmentMaster.getslotNumber() + " " + medicalAppointmentMaster.getslotStartTime() + " "
+        assertEquals(manageAppointmentImpl.getAvailableTime(medicalAppointmentMaster, "dcf53fed-3cfb-11ec-917b-e2ed2ce588f5"),medicalAppointmentMaster.getslotNumber() + " " + medicalAppointmentMaster.getslotStartTime() + " "
         + medicalAppointmentMaster.getslotEndTime());
     }
     @Test
     @DisplayName("Test for Slot Id ")
     void getDonorID() throws SQLException {
         String donorID="5c256da3-3d82-11ec-917b-e2ed2ce588f5";
-        assertEquals(true,manageAppointmentImpl.CheckDonorMedicalID(donorID) );
+        assertEquals(true,manageAppointmentImpl.checkDonorMedicalID(donorID) );
         
         
     }
@@ -110,7 +110,7 @@ class ManageAppointmentServiceTest {
     @DisplayName("Test for Slot Id wrong value")
     void getDonorIDFalse() throws SQLException {
         String donorID="213";
-        assertEquals(false,manageAppointmentImpl.CheckDonorMedicalID(donorID) );
+        assertEquals(false,manageAppointmentImpl.checkDonorMedicalID(donorID) );
         
         
     }
@@ -120,9 +120,9 @@ class ManageAppointmentServiceTest {
     void getDonorDetails() throws SQLException {
         DonorMedicalRecords donorMedicalRecords= new DonorMedicalRecords();
         DonorMedicalRecords donorMedicalRecords1= new DonorMedicalRecords();
-        donorMedicalRecords.setDonor_id("5c256da3-3d82-11ec-917b-e2ed2ce588f5");
-        donorMedicalRecords1=manageAppointmentImpl.GetDonorDetails("5c256da3-3d82-11ec-917b-e2ed2ce588f5");
-        assertEquals(donorMedicalRecords1.getDonor_id(),donorMedicalRecords.getDonor_id());
+        donorMedicalRecords.setdonorID("5c256da3-3d82-11ec-917b-e2ed2ce588f5");
+        donorMedicalRecords1=manageAppointmentImpl.getDonorDetails("5c256da3-3d82-11ec-917b-e2ed2ce588f5");
+        assertEquals(donorMedicalRecords1.getdonorID(),donorMedicalRecords.getdonorID());
     }
     
 }

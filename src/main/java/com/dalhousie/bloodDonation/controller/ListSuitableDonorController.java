@@ -10,25 +10,19 @@ import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.Person;
-import com.dalhousie.bloodDonation.repos.DonorMedicalRecordsRepository;
 import com.dalhousie.bloodDonation.repos.PersonRepository;
+import com.dalhousie.bloodDonation.service.ListSuitableDonor;
 import com.dalhousie.bloodDonation.service.ListSuitableDonorImpl;
 import com.dalhousie.bloodDonation.service.LocationService;
 import com.dalhousie.bloodDonation.service.LocationServiceImpl;
 
 public class ListSuitableDonorController {
-    PersonRepository personRepository = null;
-    Person person = null;
-    DonorMedicalRecords donorMedicalRecords = null;
-    DonorMedicalRecordsRepository donorMedicalRecordsRepository = null;
-    ListSuitableDonorImpl listSuitableDonorImpl = null;
-    LocationService LocationService = null;
+    private final PersonRepository personRepository;
+    private final ListSuitableDonor listSuitableDonorImpl;
+    private final LocationService LocationService;
 
     public ListSuitableDonorController() throws CustomException {
         personRepository = new PersonRepository();
-        person = new Person();
-        donorMedicalRecords = new DonorMedicalRecords();
-        donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         listSuitableDonorImpl = new ListSuitableDonorImpl();
         LocationService = new LocationServiceImpl();
     }
@@ -40,9 +34,9 @@ public class ListSuitableDonorController {
         String currentId = "5d9b8b40-5213-11ec-917b-e2ed2ce588f5";
         for (Person person : personList) {
 
-            if (person.getPerson_id().equals(currentId)) {
+            if (person.getpersonId().equals(currentId)) {
 
-                personBloodType = person.getBlood_group();
+                personBloodType = person.getbloodGroup();
             }
 
         } // depends on the user login.
@@ -60,7 +54,7 @@ public class ListSuitableDonorController {
 
         }
         for (int i = 0; i < donorMedicalRecordsList.size(); i++) {
-            System.out.println(listSuitableDonorImpl.getDonorDetails(donorMedicalRecordsList.get(i).getDonor_id()));
+            System.out.println(listSuitableDonorImpl.getDonorDetails(donorMedicalRecordsList.get(i).getdonorID()));
         }
 
     }
@@ -109,7 +103,7 @@ public class ListSuitableDonorController {
             List<Person> personList = personRepository.getPerson();
             String getDonorId = null;
             for (Person person : personList) {
-                getDonorId = listSuitableDonorImpl.getBloodTypeId(bloodGroup.toString(), person.getPerson_id());
+                getDonorId = listSuitableDonorImpl.getBloodTypeId(bloodGroup.toString(), person.getpersonId());
                 if (getDonorId == null) {
                     continue;
                 }
@@ -202,6 +196,7 @@ public class ListSuitableDonorController {
             System.out.println(name);
             System.out.println(value);
         });
+        sc.close();
 
     }
 

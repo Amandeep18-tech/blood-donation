@@ -1,6 +1,5 @@
 package com.dalhousie.bloodDonation.service;
 
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,7 +24,7 @@ import com.dalhousie.bloodDonation.repos.PatientRequestMappingRepository;
 public class DonorDonationBookingImpl implements DonorDonationBooking {
 
     @Override
-    public String GetPatientRequestId(String donorID) {
+    public String getPatientRequestId(String donorID) {
 
         PatientRequestMappingRepository patientRequestMappingRepository = new PatientRequestMappingRepository();
         List<PatientRequestMapping> requestList = patientRequestMappingRepository.getAllDonorRequests();
@@ -42,7 +41,7 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
     }
 
     @Override
-    public PatientBloodRequest GetPatientRequestDetails(String patientRequestID) {
+    public PatientBloodRequest getPatientRequestDetails(String patientRequestID) {
 
         PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
         List<PatientBloodRequest> patientDetailsList = patientBloodRequestRepository.getAllDonorRequests();
@@ -57,12 +56,12 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
     }
 
     @Override
-    public String SelectDonationPlace(String placeName) {
+    public String selectDonationPlace(String placeName) {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         List<Organisation> placeList = organizationRepository.getAllPlaces();
 
         for (Organisation organisation : placeList) {
-            if (organisation.getOrganisation_name().equals(placeName)) {
+            if (organisation.getorganisationName().equals(placeName)) {
 
                 return organisation.getorganisationID();
             }
@@ -73,7 +72,7 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
     }
 
     @Override
-    public String GetDonationSlotId(String slotIdInput) {
+    public String getDonationSlotId(String slotIdInput) {
 
         BloodDonationDetailsRepository bloodDonationDetailsRepository = new BloodDonationDetailsRepository();
         List<BloodDonationDetails> donationList = bloodDonationDetailsRepository.getAllDonorAppointment();
@@ -89,7 +88,7 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
     }
 
     @Override
-    public boolean CompareDonationDate(String dateFormatInput, String slotIdInput) {
+    public boolean compareDonationDate(String dateFormatInput, String slotIdInput) {
         BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
         List<BloodDonationDetaisHistory> allDonationHistory = bloodDonationDetailsHistoryRepository.getAllDetails();
 
@@ -102,13 +101,13 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
             try {
                 Date todayDate = dateFormat.parse(todayDateToString);
                 Date dateByUser = dateFormat.parse(dateToString);
-                if (todayDate.before(dateByUser)) {
-                    return true;
-                }
+
+                
                 if ((bloodDonationDetaisHistory.getSlotId().equals(slotIdInput))
                         && dateToString.equals(dateFormatInput)) {
                     return true;
                 }
+                
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -119,7 +118,7 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
 
     }
 
-    public ArrayList<String> GetTodayDonation() throws CustomException {
+    public ArrayList<String> getTodayDonation() throws CustomException {
         BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
         List<BloodDonationDetaisHistory> bloodDonationDetailsHistoryList = bloodDonationDetailsHistoryRepository
                 .getAllDetails();

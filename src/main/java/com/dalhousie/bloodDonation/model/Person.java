@@ -4,9 +4,9 @@ public class Person {
 
     private String name;
     private int age;
-    private String person_id;
-    private String blood_group;
-    private String contact_number;
+    private String personId;
+    private String bloodGroup;
+    private String contactNumber;
    
     
 
@@ -18,28 +18,28 @@ public class Person {
         this.name = name;
     }
 
-    public String getContact_number() {
-        return contact_number;
+    public String getcontactNumber() {
+        return contactNumber;
     }
 
-    public void setContact_number(String contact_number) {
-        this.contact_number = contact_number;
+    public void setcontactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
-    public String getBlood_group() {
-        return blood_group;
+    public String getbloodGroup() {
+        return bloodGroup;
     }
 
-    public void setBlood_group(String blood_group) {
-        this.blood_group = blood_group;
+    public void setbloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 
-    public String getPerson_id() {
-        return person_id;
+    public String getpersonId() {
+        return personId;
     }
 
-    public void setPerson_id(String person_id) {
-        this.person_id = person_id;
+    public void setpersonId(String personId) {
+        this.personId = personId;
     }
 
 

@@ -115,8 +115,8 @@ public class LoginServiceImpl implements LoginService{
                 }
             }
         }
-
-        private boolean validateOTP(String username, String otp) {
+        @Override
+        public boolean validateOTP(String username, String otp) {
           OTPDetails otpDetails = Cache.getOtpMap().get(username);
           if(otpDetails == null) {
               System.out.println("User Invalid!");

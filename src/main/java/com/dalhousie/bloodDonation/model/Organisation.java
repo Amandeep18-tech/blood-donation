@@ -2,9 +2,9 @@ package com.dalhousie.bloodDonation.model;
 
 public class Organisation {
     private String organisationID;
-    private String organisation_name;
+    private String organisationName;
     private String location;
-    private String organisation_type;
+    private String organisationType;
     private String password;
     public String getorganisationID() {
         return organisationID;
@@ -12,11 +12,11 @@ public class Organisation {
     public void setorganisationID(String organisationID) {
         this.organisationID = organisationID;
     }
-    public String getOrganisation_name() {
-        return organisation_name;
+    public String getorganisationName() {
+        return organisationName;
     }
-    public void setOrganisation_name(String organisation_name) {
-        this.organisation_name = organisation_name;
+    public void setorganisationName(String organisationName) {
+        this.organisationName = organisationName;
     }
     public String getLocation() {
         return location;
@@ -24,11 +24,11 @@ public class Organisation {
     public void setLocation(String location) {
         this.location = location;
     }
-    public String getOrganisation_type() {
-        return organisation_type;
+    public String getorganisationType() {
+        return organisationType;
     }
-    public void setOrganisation_type(String organisation_type) {
-        this.organisation_type = organisation_type;
+    public void setorganisationType(String organisationType) {
+        this.organisationType = organisationType;
     }
     public String getPassword() {
         return password;

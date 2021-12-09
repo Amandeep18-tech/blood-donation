@@ -1,13 +1,5 @@
 package com.dalhousie.bloodDonation.service;
 
-import com.dalhousie.bloodDonation.repos.DonorMedicalRecordsRepository;
-import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
-import com.dalhousie.bloodDonation.repos.MedicalAppointmentMasterRespository;
-import com.dalhousie.bloodDonation.repos.OrganizationRepository;
-import com.dalhousie.bloodDonation.repos.PersonRepository;
-import com.dalhousie.bloodDonation.constants.SlotAvailableConstants;
-
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,13 +12,15 @@ import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
 import com.dalhousie.bloodDonation.model.MedicalAppointmentMaster;
 import com.dalhousie.bloodDonation.model.Organisation;
-import com.dalhousie.bloodDonation.model.Person;  
-import com.dalhousie.bloodDonation.model.Organisation;
+import com.dalhousie.bloodDonation.repos.DonorMedicalRecordsRepository;
+import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
+import com.dalhousie.bloodDonation.repos.MedicalAppointmentMasterRespository;
+import com.dalhousie.bloodDonation.repos.OrganizationRepository;
 
 public class ManageAppointmentImpl implements ManageAppointment {
 
     @Override
-    public String GetAvailableTime(MedicalAppointmentMaster medicalAppointmentMaster, String placeName){
+    public String getAvailableTime(MedicalAppointmentMaster medicalAppointmentMaster, String placeName){
         
         if (medicalAppointmentMaster.getorganisationID().equals(placeName)) {
             
@@ -38,7 +32,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
     }
 
     @Override
-    public String GetSlotId(String slotIdInput) {
+    public String getSlotId(String slotIdInput) {
 
         MedicalAppointmentMasterRespository medicalAppointmentMasterRespository = new MedicalAppointmentMasterRespository();
         List<MedicalAppointmentMaster> masterList = medicalAppointmentMasterRespository.getAllAppointment();
@@ -54,7 +48,7 @@ public class ManageAppointmentImpl implements ManageAppointment {
     }
 
     @Override
-    public boolean CompareDate(String dateFormatInput, String slotIdInput) {
+    public boolean compareDate(String dateFormatInput, String slotIdInput) {
         MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
 
         List<MedicalAppointmentDetails> detailList = medicalAppointmentDetailRepository.getAllDetails();
@@ -67,11 +61,6 @@ public class ManageAppointmentImpl implements ManageAppointment {
             Date today = Calendar.getInstance().getTime();
             String todayDateToString = dateFormat.format(today);
             Date todayDate = dateFormat.parse(todayDateToString);
-            
-            
-           if(todayDate.before(dateByUser)){
-               return true;
-           }
 
             if (medicalAppointmentDetail.getslotID().equals(slotIdInput) && dateToString.equals(dateFormatInput)) {
                 return true;
@@ -87,12 +76,12 @@ public class ManageAppointmentImpl implements ManageAppointment {
     }
 
     @Override
-    public String SelectPlace(String placeName) {
+    public String selectPlace(String placeName) {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         List<Organisation> placeList = organizationRepository.getAllPlaces();
 
         for (Organisation organisation : placeList) {
-            if (organisation.getOrganisation_name().equals(placeName)) {
+            if (organisation.getorganisationName().equals(placeName)) {
 
                 return organisation.getorganisationID();
 
@@ -105,13 +94,13 @@ public class ManageAppointmentImpl implements ManageAppointment {
 
 
     @Override
-    public boolean CheckDonorMedicalID(String donorId){
+    public boolean checkDonorMedicalID(String donorId){
 
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalList = donorMedicalRecordsRepository.getAllDonorMedicalRecords();
 
         for (DonorMedicalRecords donorMedicalRecords : donorMedicalList) {
-            if (donorMedicalRecords.getDonor_id().equals(donorId)) {
+            if (donorMedicalRecords.getdonorID().equals(donorId)) {
 
                 return true;
             }
@@ -120,13 +109,13 @@ public class ManageAppointmentImpl implements ManageAppointment {
         return false;
     }
 
-    public DonorMedicalRecords GetDonorDetails(String donorId) {
+    public DonorMedicalRecords getDonorDetails(String donorId) {
 
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalList = donorMedicalRecordsRepository.getAllDonorMedicalRecords();
 
         for (DonorMedicalRecords donorMedicalRecords : donorMedicalList) {
-            if (donorMedicalRecords.getDonor_id().equals(donorId)) {
+            if (donorMedicalRecords.getdonorID().equals(donorId)) {
 
                 return donorMedicalRecords;
 

@@ -29,10 +29,8 @@ public class PersonRepository {
         while (rs.next()){
             Person person = new Person();
             person.setName(rs.getString("person_first_name")); 
-            person.setPerson_id(rs.getString("person_id"));
-            person.setBlood_group(rs.getString("blood_group"));
-            person.setName(rs.getString("person_first_name"));
-            person.setPerson_id(rs.getString("person_id"));
+            person.setpersonId(rs.getString("person_id"));
+            person.setbloodGroup(rs.getString("blood_group"));
             personDetail.add(person);
         }
         }catch(SQLException e){

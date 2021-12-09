@@ -4,5 +4,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface DonorMedicalRecord {
-    public ArrayList<String> GetTodayMedicalRecord();
+    public ArrayList<String> getTodayMedicalRecord();
 }

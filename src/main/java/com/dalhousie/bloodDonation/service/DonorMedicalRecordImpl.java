@@ -1,6 +1,5 @@
 package com.dalhousie.bloodDonation.service;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,7 +12,7 @@ import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
 public class DonorMedicalRecordImpl implements DonorMedicalRecord{
     
     @Override
-    public ArrayList<String> GetTodayMedicalRecord(){
+    public ArrayList<String> getTodayMedicalRecord(){
         MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
         List<MedicalAppointmentDetails> medicalAppointmentDetailsList = medicalAppointmentDetailRepository.getAllDetails();
         ArrayList<String> medicalAppointmentId= new ArrayList<String>();

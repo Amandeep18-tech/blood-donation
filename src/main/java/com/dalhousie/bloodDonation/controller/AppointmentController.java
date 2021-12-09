@@ -13,18 +13,19 @@ import com.dalhousie.bloodDonation.repos.MedicalAppointmentMasterRespository;
 import com.dalhousie.bloodDonation.repos.OrganizationRepository;
 import com.dalhousie.bloodDonation.service.LocationService;
 import com.dalhousie.bloodDonation.service.LocationServiceImpl;
+import com.dalhousie.bloodDonation.service.ManageAppointment;
 import com.dalhousie.bloodDonation.service.ManageAppointmentImpl;
 import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
 
 public class AppointmentController {
-    private ManageAppointmentImpl manageAppointmentImpl = null;
-    private MedicalAppointmentDetails medicalAppointmentDetails = null;
-    private MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = null;
-    private LocationService locationService=null;
+    private final ManageAppointment manageAppointment;
+    private final MedicalAppointmentDetails medicalAppointmentDetails;
+    private final MedicalAppointmentDetailRepository medicalAppointmentDetailRepository;
+    private final LocationService locationService;
 
 
     public AppointmentController(){
-        manageAppointmentImpl = new ManageAppointmentImpl();
+        manageAppointment = new ManageAppointmentImpl();
         medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
         medicalAppointmentDetails = new MedicalAppointmentDetails();
         locationService = new LocationServiceImpl();
@@ -42,7 +43,7 @@ public class AppointmentController {
         String slotTime = null;
         System.out.println("Slot ID Start time  End Time");
         for (MedicalAppointmentMaster medical_appointment_available : appointmentList) {
-            slotTime = manageAppointmentImpl.GetAvailableTime(medical_appointment_available, storeCheckPlace);
+            slotTime = manageAppointment.getAvailableTime(medical_appointment_available, storeCheckPlace);
             System.out.println(slotTime);
         }
 
@@ -55,14 +56,14 @@ public class AppointmentController {
         List<Organisation> organisations = organizationRepository.getAllPlaces();
         System.out.println("Location   \t\tOrganisation name");
         for (Organisation organisation : organisations) {
-            System.out.println(organisation.getLocation() + "\t" + organisation.getOrganisation_name());
+            System.out.println(organisation.getLocation() + "\t" + organisation.getorganisationName());
 
         }
         String inputPlaceName = null;
         inputPlaceName = scanner.nextLine();
 
         String checkPlace = null;
-        checkPlace = manageAppointmentImpl.SelectPlace(inputPlaceName);
+        checkPlace = manageAppointment.selectPlace(inputPlaceName);
         if(checkPlace==null){
             throw new CustomException("Invalid place");
         }
@@ -100,7 +101,7 @@ public class AppointmentController {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
                 java.util.Date dateInput2 = null;
-                String getSlotId = manageAppointmentImpl.GetSlotId(slotIdInput);
+                String getSlotId = manageAppointment.getSlotId(slotIdInput);
 
                 try {
 
@@ -111,7 +112,7 @@ public class AppointmentController {
                 }
                 String dateFormat = simpleDateFormat.format(dateInput2);
 
-                dateAvailable = manageAppointmentImpl.CompareDate(dateFormat, getSlotId);
+                dateAvailable = manageAppointment.compareDate(dateFormat, getSlotId);
 
                 if (dateAvailable) {
                     System.out.println();

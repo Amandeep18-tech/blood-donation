@@ -20,8 +20,8 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         List<String> donorId= new ArrayList <String>();
         
         for(Person person:personList){
-            if(person.getBlood_group().equals(bloodType)){
-                 donorId.add(person.getPerson_id());
+            if(person.getbloodGroup().equals(bloodType)){
+                 donorId.add(person.getpersonId());
             }
         }
         if(donorId.size()==0){
@@ -40,7 +40,7 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         List<Person> personList=personRepository.getPerson();
         
             for(DonorMedicalRecords donorMedicalRecords:donorMedicalRecordsList){
-                if((donorMedicalRecords.getHemoglobin_level()>150) && donorMedicalRecords.getHIV_flag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.getHepatitis_B().equals(0) && donorMedicalRecords.getHepatitis_C().equals(0) && donorMedicalRecords.getDonor_id().equals(donorId)){
+                if((donorMedicalRecords.gethemoglobinLevel()>150) && donorMedicalRecords.getHIVFlag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.gethepatitisB().equals(0) && donorMedicalRecords.gethepatitisC().equals(0) && donorMedicalRecords.getdonorID().equals(donorId)){
                    
                     return donorMedicalRecords;    
                 }
@@ -55,7 +55,7 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         PersonRepository personRepository = new PersonRepository();
         List<Person> personList= personRepository.getPerson();
         for(Person person:personList){
-            if(person.getPerson_id().equals(donorId)){
+            if(person.getpersonId().equals(donorId)){
                 return person.getName();
             }
         }
@@ -69,11 +69,11 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalRecordsList= donorMedicalRecordsRepository.getAllDonorMedicalRecords();
         for(Person person:personList){
-            if(person.getPerson_id().equals(donorId)){
+            if(person.getpersonId().equals(donorId)){
                 for(DonorMedicalRecords donorMedicalRecords: donorMedicalRecordsList){
-                    System.out.println(person.getBlood_group());
+                    System.out.println(person.getbloodGroup());
                     System.out.println(bloodType);
-                if(person.getBlood_group().equals(bloodType) && donorMedicalRecords.getHIV_flag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.getHepatitis_B().equals(0) && donorMedicalRecords.getHepatitis_C().equals(0)){
+                if(person.getbloodGroup().equals(bloodType) && donorMedicalRecords.getHIVFlag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.gethepatitisB().equals(0) && donorMedicalRecords.gethepatitisC().equals(0)){
                     return donorId;
                 }
             }
@@ -86,7 +86,7 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalRecordsList= donorMedicalRecordsRepository.getAllDonorMedicalRecords();
         for(DonorMedicalRecords donorMedicalRecords: donorMedicalRecordsList ){
-            if(donorMedicalRecords.getDonor_id().equals(donorId) && donorMedicalRecords.getHemoglobin_level().equals(hemoglobinCount) && donorMedicalRecords.getHIV_flag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.getHepatitis_B().equals(0) && donorMedicalRecords.getHepatitis_C().equals(0)){
+            if(donorMedicalRecords.getdonorID().equals(donorId) && donorMedicalRecords.gethemoglobinLevel().equals(hemoglobinCount) && donorMedicalRecords.getHIVFlag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.gethepatitisB().equals(0) && donorMedicalRecords.gethepatitisC().equals(0)){
                 return true;
             }
 
@@ -98,7 +98,7 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalRecordsList= donorMedicalRecordsRepository.getAllDonorMedicalRecords();
         for(DonorMedicalRecords donorMedicalRecords: donorMedicalRecordsList ){
-            if(donorMedicalRecords.getDonor_id().equals(donorId) && donorMedicalRecords.getRbcCount().equals(rbcCount) && donorMedicalRecords.getHIV_flag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.getHepatitis_B().equals(0) && donorMedicalRecords.getHepatitis_C().equals(0)){
+            if(donorMedicalRecords.getdonorID().equals(donorId) && donorMedicalRecords.getRbcCount().equals(rbcCount) && donorMedicalRecords.getHIVFlag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.gethepatitisB().equals(0) && donorMedicalRecords.gethepatitisC().equals(0)){
                 return true;
             }
 
@@ -110,7 +110,7 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         DonorMedicalRecordsRepository donorMedicalRecordsRepository = new DonorMedicalRecordsRepository();
         List<DonorMedicalRecords> donorMedicalRecordsList= donorMedicalRecordsRepository.getAllDonorMedicalRecords();
         for(DonorMedicalRecords donorMedicalRecords: donorMedicalRecordsList ){
-            if(donorMedicalRecords.getDonor_id().equals(donorId) && donorMedicalRecords.getPlateletCount().equals(plateletCount) && donorMedicalRecords.getHIV_flag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.getHepatitis_B().equals(0) && donorMedicalRecords.getHepatitis_C().equals(0)){
+            if(donorMedicalRecords.getdonorID().equals(donorId) && donorMedicalRecords.getPlateletCount().equals(plateletCount) && donorMedicalRecords.getHIVFlag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.gethepatitisB().equals(0) && donorMedicalRecords.gethepatitisC().equals(0)){
                 return true;
             }
 
@@ -124,7 +124,7 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         List<Person> personList = personRepository.getPerson();
 
         for(Person person:personList){
-            if(person.getPerson_id().equals(donorID)){
+            if(person.getpersonId().equals(donorID)){
                 return person.getName();
             }
         }

@@ -13,4 +13,5 @@ public interface LoginService {
     void forgetPass(String username) throws Exception;
     boolean sendVerificationEmail(User user, String otp) throws MessagingException, UnsupportedEncodingException, CustomException;
     void userLogout() throws Exception;
+    boolean validateOTP(String username, String otp);
 }
