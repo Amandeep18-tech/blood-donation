@@ -12,14 +12,17 @@ import com.dalhousie.bloodDonation.exception.CustomException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import javax.mail.MessagingException;
+
 @SpringBootApplication
 public class BloodDonationSystemApplication {
 
-    public static void main(String[] args) throws SQLException, ParseException, CustomException {
+    public static void main(String[] args) throws SQLException, ParseException, CustomException, UnsupportedEncodingException, MessagingException {
         DBUtils dbUtils = new DBUtils();
         Connection conn = dbUtils.getConnection();
         
@@ -36,14 +39,15 @@ public class BloodDonationSystemApplication {
         // donorAppointmentController.seeDonorRequests();
         // donorAppointmentController.todayDonationConfirmation();
         // donorAppointmentController.confirmDonorRequests();
-        // donorAppointmentController.displayAppointmentTime();
-        // donorAppointmentController.bookDate();
+        donorAppointmentController.bookDonationPlace();
+        donorAppointmentController.displayAppointmentTime();
+        donorAppointmentController.bookDate();
         // listSuitableDonorController.patientDonorList();
         // listSuitableDonorController.organisationDonorSelection();
         // listSuitableDonorController.organisationDonorSelection();
         // MenuController menuController = new MenuController();
         // donorAppointmentController.seePatientRequestStatus();
-        donorAppointmentController.todayPatientRequestConfirmation();
+        // donorAppointmentController.todayPatientRequestConfirmation();
         // menuController.displayMenu();
         SpringApplication.run(BloodDonationSystemApplication.class, args);
     }

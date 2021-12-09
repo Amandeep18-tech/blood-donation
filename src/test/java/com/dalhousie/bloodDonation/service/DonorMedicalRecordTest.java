@@ -7,8 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
 import com.dalhousie.bloodDonation.model.PatientBloodRequest;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +31,20 @@ class DonorMedicalRecordTest {
     void DonorDonationBookingImplNotNull() {
        
         assertNotNull(donorMedicalRecord, "Donor Donation class Exist class exist");
+    }
+
+    @Test
+    @DisplayName("Get today Donation")
+    void getTodayPatientRequestTest() throws CustomException {
+        ArrayList<String> idList = new ArrayList<String>();
+        MedicalAppointmentDetails medicalAppointmentDetails= new MedicalAppointmentDetails();
+        Date today = Calendar.getInstance().getTime();
+        java.sql.Date sqlDate = new java.sql.Date(today.getTime());
+        medicalAppointmentDetails.setslotDate(sqlDate);
+        medicalAppointmentDetails.setmedicalAppointmentDetailsID("955ea362-ec6b-4c6c-a8c7-6a34607ca085");
+        idList.add("955ea362-ec6b-4c6c-a8c7-6a34607ca085");
+        
+        assertEquals(idList,donorMedicalRecord.getTodayMedicalRecord());
     }
 
 }
