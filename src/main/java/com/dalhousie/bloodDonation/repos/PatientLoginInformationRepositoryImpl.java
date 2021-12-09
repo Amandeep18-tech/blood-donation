@@ -9,11 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PatientLoginInformationRepositoryImpl implements PatientLoginInformationRepository {
-
     @Override
     public void storePatientLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "INSERT INTO patient_login (patient_id, " + "patient_name," + "patient_email_id, " + "patient_username, " + "patient_password) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientLoginInfo.getPatientId());

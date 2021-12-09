@@ -10,11 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PatientMedicalInformationRepositoryImpl implements PatientMedicalInformationRepository {
-
     @Override
     public void addPatientMedicalInformation(PatientMedicalInformation patientMedicalInfo) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "INSERT INTO patient_medical_information (patient_id, " + "blood_group, " + "current_location, " + "dr_reference, " + "requirement_reason, " + "priority, " + "has_hepatitis_B, " + "has_hepatitis_C," + "has_HIV, " + "has_hemochromatosis, " + "hemoglobin_level, " + "rbc_count, " + "platelet_count) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientMedicalInfo.getPatientId());
@@ -38,8 +36,7 @@ public class PatientMedicalInformationRepositoryImpl implements PatientMedicalIn
 
     @Override
     public void delete(int patientId) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "DELETE FROM patient_medical_information WHERE patient_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientId);
@@ -51,8 +48,7 @@ public class PatientMedicalInformationRepositoryImpl implements PatientMedicalIn
 
     @Override
     public PatientMedicalInformation getPatientMedicalInformation(int patientId) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "SELECT * FROM patient_medical_information WHERE patient_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientId);
@@ -88,8 +84,7 @@ public class PatientMedicalInformationRepositoryImpl implements PatientMedicalIn
 
     @Override
     public void update(PatientMedicalInformation patientMedicalInfo) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "UPDATE patient_medical_information SET blood_group= ?, " + "current_location= ?, " + "dr_reference= ?, " + "requirement_reason= ?, " + "priority= ?, " + "has_hepatitis_B= ?," + "has_hepatitis_C= ?," + "has_HIV= ?," + "hemoglobin_level= ?," + "has_hemochromatosis= ?," + "rbc_count= ?," + "platelet_count= ? " + "WHERE patient_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, patientMedicalInfo.getBloodGroup());

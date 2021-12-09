@@ -1,7 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,24 +94,11 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
         for (BloodDonationDetaisHistory bloodDonationDetaisHistory : allDonationHistory) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateToString = dateFormat.format(bloodDonationDetaisHistory.getSlotDate());
-
-            Date today = Calendar.getInstance().getTime();
-            String todayDateToString = dateFormat.format(today);
-            try {
-                Date todayDate = dateFormat.parse(todayDateToString);
-                Date dateByUser = dateFormat.parse(dateToString);
-
-                
                 if ((bloodDonationDetaisHistory.getSlotId().equals(slotIdInput))
                         && dateToString.equals(dateFormatInput)) {
                     return true;
                 }
                 
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-
-            }
         }
         return false;
 

@@ -10,11 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DonorMedicalInformationRepositoryImpl implements DonorMedicalInformationRepository {
-
     @Override
     public DonorInformation getMatchingBloodTypeDonorMedicalInformation(DonorInformation donorInfo) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "SELECT * FROM donor_medical_records WHERE donor_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, donorInfo.getDonorId());

@@ -14,8 +14,7 @@ import java.util.List;
 public class UserLoginRepositoryImpl implements UserLoginRepository {
     @Override
     public void storeUserLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "INSERT INTO user (username, " + "password," + "firstname, " + "lastname, " + "userId) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, patientLoginInfo.getUsername());
