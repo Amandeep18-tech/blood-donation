@@ -1,6 +1,8 @@
 package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.Organisation;
+import com.dalhousie.bloodDonation.model.Person;
 import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
 import com.dalhousie.bloodDonation.service.LoginService;
@@ -10,8 +12,9 @@ import java.util.Scanner;
 
 public class LoginController {
      User user;
+     Person person;
     private LoginService loginService;
-
+    Organisation organisation;
     Scanner sc = new Scanner(System.in);
     public LoginController() {
         loginService = new LoginServiceImpl();
@@ -22,10 +25,11 @@ public class LoginController {
             int choice;
             do {
                 System.out.println("1.Login");
-                System.out.println("2.Signup");
-                System.out.println("3.ForgetPassword");
-                System.out.println("4.Get rewards");
-                System.out.println("5.Exit");
+                System.out.println("2.Signup for organisation:-");
+                System.out.println("3.Signup for Donor:-");
+                System.out.println("4.ForgetPassword");
+                System.out.println("5.Get rewards");
+                System.out.println("6.Exit");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
                 switch (choice) {
@@ -38,16 +42,16 @@ public class LoginController {
                         break;
 
                     case 3:
-                        forgetPassword();
+                        //forgetPassword();
+                        organizationSignupMethod();
                         break;
-                    case 4:
-                        getRewards();
-                        break;
+
 
                 }
 
-            } while (choice != 5);
+            } while (choice != 4);
         }catch (CustomException e){
+            e.printStackTrace();
             throw new CustomException("Error caught while logging in");
         }
     }
@@ -58,25 +62,25 @@ public class LoginController {
             String userName = sc.next();
             System.out.println("Enter Password");
             String password = sc.next();
-            boolean check = isloggedin(userName);
-            if (check) {
+            //boolean check = isloggedin(userName);
+            //if (check) {
                 System.out.println("Welcome Again:- " + userName);
                 LoginController loginController = new LoginController();
                 loginController.menu();
-            } else {
+            //} else {
                 loginService.userLogin(userName, password);
-            }
+            //}
         }catch (Exception e){
             throw new CustomException("Error caught while login");
         }
     }
-    public boolean isloggedin(String userName){
-        SessionManagement session = new SessionManagement();
-        if(session.getSessionMap().containsKey(userName)) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean isloggedin(String userName){
+////        SessionManagement session = new SessionManagement();
+////      //  if(session.getUserId() ==  || session.getPatientId()) {
+////            return true;
+////        }
+////        //return false;
+//    }
     public void signupMethod() throws CustomException{
         try {
             System.out.println("Enter Firstname:-");
@@ -89,6 +93,8 @@ public class LoginController {
             String pass = sc.next();
             System.out.println("Enter your Blood Group:-");
             String bloodGroup = sc.next();
+            System.out.println("Enter your Contact number:-");
+            String contactNo = sc.next();
             user = new User();
             user.setBloodGroup(bloodGroup);
             user.setFirstname(fname);
@@ -97,6 +103,7 @@ public class LoginController {
             user.setPassword(pass);
             user.setLastname(lname);
             loginService.userSignup(user);
+            loginService.addPerson(contactNo,user);
         }catch (Exception e){
             throw new CustomException("Error caught while signing up");
         }
@@ -110,7 +117,47 @@ public class LoginController {
             throw new CustomException("Error caught while forget password");
         }
     }
-    public void getRewards(){
-
+//    public void organizationLogin() throws CustomException{
+//        try {
+//            System.out.println("Enter UserName:-");
+//            String userName = sc.next();
+//            System.out.println("Enter Password");
+//            String password = sc.next();
+////            boolean check = isloggedin(userName);
+////            if (check) {
+//                System.out.println("Welcome Again:- " + userName);
+//                LoginController loginController = new LoginController();
+//                loginController.menu();
+////            } else {
+//                loginService.organizationLogin(userName, password);
+//          //  }
+//        }catch (Exception e){
+//            throw new CustomException("Error caught while login");
+//        }
+//    }
+    public void organizationSignupMethod() throws CustomException{
+        try {
+            System.out.println("Enter organisation name");
+            String oname=sc.next();
+            System.out.println("Enter location:-");
+            String location = sc.next();
+            System.out.println("Organizatin type:-");
+            String type = sc.next();
+            System.out.println("Enter your password:-");
+            String password = sc.next();
+            System.out.println("Enter slots available:-");
+            String slots = sc.next();
+            organisation= new Organisation();
+            organisation.setorganisationName(oname);
+            organisation.setLocation(location);
+            organisation.setorganisationType(type);
+            organisation.setPassword(password);
+            organisation.setSlots_available(slots);
+            loginService.organizationSignup(organisation);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new CustomException("Error caught while signing up");
+        }
     }
+
 }
