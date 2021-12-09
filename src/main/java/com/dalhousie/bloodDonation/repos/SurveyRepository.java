@@ -15,5 +15,5 @@ public interface SurveyRepository {
 
     List<Survey> getAllSurvey() throws SQLException, CustomException;
 
-    void update(Survey survey) throws SQLException, CustomException;
+    Boolean update(Survey survey) throws SQLException, CustomException;
 }

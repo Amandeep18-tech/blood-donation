@@ -5,6 +5,7 @@ import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
+import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepository;
 import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepositoryImpl;
 
 import java.io.File;
@@ -21,6 +22,11 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     private String address;
     private String contactNumber;
     private String emailId;
+    private final PatientPersonalInformationRepository patientPersonalInformationRepository;
+
+    public PatientPersonalInformationServiceImpl() {
+        patientPersonalInformationRepository = PatientPersonalInformationRepositoryImpl.getInstance();
+    }
 
     @Override
     public void getPatientInformationInput() {
@@ -52,14 +58,12 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         patientInfo.setAddress(address);
         patientInfo.setContactNumber(contactNumber);
         patientInfo.setEmailId(emailId);
-        PatientPersonalInformationRepositoryImpl patientInfoRepo = new PatientPersonalInformationRepositoryImpl();
-        return patientInfoRepo.addPatient(patientInfo);
+        return patientPersonalInformationRepository.addPatient(patientInfo);
     }
 
     @Override
     public void viewAllPatients() throws CustomException {
-        PatientPersonalInformationRepositoryImpl patientInfoRepo = new PatientPersonalInformationRepositoryImpl();
-        List<PatientPersonalInformation> patientList = patientInfoRepo.getAllPatients();
+        List<PatientPersonalInformation> patientList = patientPersonalInformationRepository.getAllPatients();
         System.out.println();
         System.out.format("%5s%8s%25s%15s%12s%36s%13s", "Patient ID", "Name", "DOB", "Age", "Email ID", "Contact Number", "Address");
         System.out.println();
@@ -75,7 +79,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Delete: ");
         int id = in.nextInt();
-        PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        PatientPersonalInformationRepository patientPersonalInfoRepo = patientPersonalInformationRepository;
         patientPersonalInfoRepo.delete(id);
         System.out.println("\nPatient With ID- " + id + " Deleted Successfully!");
     }
@@ -87,7 +91,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         System.out.print("\nEnter Patient ID To Update: ");
         int id = in.nextInt();
         in.nextLine();
-        PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        PatientPersonalInformationRepository patientPersonalInfoRepo = patientPersonalInformationRepository;
         PatientPersonalInformation patientPersonalInfo = patientPersonalInfoRepo.getPatient(id);
         System.out.print("\nNote: Leave The Field Blank If You Do Not Want To Update");
         System.out.print("\nEnter Patient Name: ");
@@ -132,7 +136,6 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
 
     @Override
     public void importPatientsFromFile() throws CustomException {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Name Of The File From Which You Want To Import Patient Data: ");
         String fileName = in.nextLine();
@@ -146,16 +149,14 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         Scanner scan = null;
         try {
             scan = new Scanner(file);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException io) {
-            io.printStackTrace();
         }
         PatientPersonalInformation patientPersonalInfo;
         PatientMedicalInformation patientMedicalInfo;
         String headers = scan.nextLine();
         List<String> headerList = Arrays.asList(headers.split(","));
-        PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        PatientPersonalInformationRepository patientPersonalInfoRepo = patientPersonalInformationRepository;
         PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
         if (headerList.size() == 6) {
             while (scan.hasNextLine()) {
@@ -207,6 +208,5 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
                 System.out.println("Complete Information For Patient With ID-" + patientId + " Imported Successfully!");
             }
         }
-
     }
 }

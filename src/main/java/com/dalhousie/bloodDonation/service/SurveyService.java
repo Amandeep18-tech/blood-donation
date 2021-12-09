@@ -1,15 +1,16 @@
 package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.Survey;
 
-import java.sql.SQLException;
+import java.util.List;
 
 public interface SurveyService {
-    void getSurveyDetailsInput();
+    Survey getSurveyDetailsInput();
 
-    int storeSurveyDetails() throws CustomException;
+    int storeSurveyDetails(Survey survey) throws CustomException;
 
-    int viewAllSurvey() throws CustomException;
+    List<Survey> viewAllSurvey() throws CustomException;
 
     void deleteSurvey() throws CustomException;
 

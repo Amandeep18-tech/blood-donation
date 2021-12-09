@@ -3,9 +3,7 @@ package com.dalhousie.bloodDonation.service;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.DonorInformation;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
-import com.dalhousie.bloodDonation.repos.DonorMedicalInformationRepositoryImpl;
-import com.dalhousie.bloodDonation.repos.DonorPersonalInformationRepositoryImpl;
-import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
+import com.dalhousie.bloodDonation.repos.*;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -14,15 +12,15 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DonorRecommendationServiceImpl implements DonorRecommendationService {
-    private final PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo;
-    private final DonorPersonalInformationRepositoryImpl donorPersonalInfoRepo;
-    private final DonorMedicalInformationRepositoryImpl donorMedicalInfoRepo;
+    private final PatientMedicalInformationRepository patientMedicalInfoRepo;
+    private final DonorPersonalInformationRepository donorPersonalInfoRepo;
+    private final DonorMedicalInformationRepository donorMedicalInfoRepo;
     private final CalculateDonorMatchingPercentageServiceImpl donorMatchingPercentage;
 
     public DonorRecommendationServiceImpl() {
-        patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
-        donorPersonalInfoRepo = new DonorPersonalInformationRepositoryImpl();
-        donorMedicalInfoRepo = new DonorMedicalInformationRepositoryImpl();
+        patientMedicalInfoRepo = PatientMedicalInformationRepositoryImpl.getInstance();
+        donorPersonalInfoRepo = DonorPersonalInformationRepositoryImpl.getInstance();
+        donorMedicalInfoRepo = DonorMedicalInformationRepositoryImpl.getInstance();
         donorMatchingPercentage = new CalculateDonorMatchingPercentageServiceImpl();
     }
 
@@ -94,7 +92,6 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
             System.out.format("%-10s%-30s%-22s%-16s%-16s%-15s%-15s", donorInformation.getMatchingPercentage(), donorInformation.getDonorFirstName() + " " + donorInformation.getDonorLastName(), donorInformation.getDonorContactNumber(), donorInformation.getDonorBloodGroup(), donorInformation.getHemoglobinLevel(), donorInformation.getRbcCount(), donorInformation.getPlateletCount());
             System.out.println();
         }
-        int size = donorInformationListSortedByMaximumPercentage.size();
-        return size;
+        return donorInformationListSortedByMaximumPercentage.size();
     }
 }

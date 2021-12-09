@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface SurveyQuestionsRepository {
-    void add(SurveyQuestions surveyQuestion) throws CustomException;
+    Boolean add(SurveyQuestions surveyQuestion) throws CustomException;
 
     void delete(int id) throws CustomException;
 
@@ -15,5 +15,5 @@ public interface SurveyQuestionsRepository {
 
     List<SurveyQuestions> getAllSurveyQuestions(int surveyMasterId) throws CustomException;
 
-    void update(SurveyQuestions surveyQuestion) throws CustomException;
+    Boolean update(SurveyQuestions surveyQuestion) throws CustomException;
 }

@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DonorPersonalInformationRepositoryImpl implements DonorPersonalInformationRepository {
+    private static DonorPersonalInformationRepository donorPersonalInformationRepository = null;
+
+    public static DonorPersonalInformationRepository getInstance() {
+        if (donorPersonalInformationRepository == null) {
+            donorPersonalInformationRepository = new DonorPersonalInformationRepositoryImpl();
+        }
+        return donorPersonalInformationRepository;
+    }
 
     @Override
     public List<DonorInformation> getAllMatchingBloodTypeDonors(String bloodGroup) throws CustomException {
