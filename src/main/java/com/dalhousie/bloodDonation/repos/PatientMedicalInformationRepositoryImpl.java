@@ -10,8 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PatientMedicalInformationRepositoryImpl implements PatientMedicalInformationRepository {
+    private static PatientMedicalInformationRepository patientMedicalInformationRepository = null;
 
-    public PatientMedicalInformationRepositoryImpl() {
+    public static PatientMedicalInformationRepository getInstance() {
+        if (patientMedicalInformationRepository == null) {
+            patientMedicalInformationRepository = new PatientMedicalInformationRepositoryImpl();
+        }
+        return patientMedicalInformationRepository;
     }
 
     @Override

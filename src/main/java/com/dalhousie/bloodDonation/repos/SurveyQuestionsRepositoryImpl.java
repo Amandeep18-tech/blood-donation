@@ -14,7 +14,7 @@ import java.util.List;
 public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository {
 
     @Override
-    public void add(SurveyQuestions surveyQuestion) throws CustomException {
+    public Boolean add(SurveyQuestions surveyQuestion) throws CustomException {
         DBUtils dbUtils = new DBUtils();
         try (Connection conn = dbUtils.getConnection()) {
             String query = "INSERT INTO survey_questions (survey_master_id, " + "survey_question) VALUES (?, ?)";
@@ -22,6 +22,7 @@ public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository 
             ps.setInt(1, surveyQuestion.getSurveyMasterId());
             ps.setString(2, surveyQuestion.getSurveyQuestion());
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             throw new CustomException("Error: Unable To Add Survey Questions");
         }
@@ -90,7 +91,7 @@ public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository 
     }
 
     @Override
-    public void update(SurveyQuestions surveyQuestion) throws CustomException {
+    public Boolean update(SurveyQuestions surveyQuestion) throws CustomException {
         DBUtils dbUtils = new DBUtils();
         try (Connection conn = dbUtils.getConnection()) {
             String query = "UPDATE survey_questions SET survey_question= ? " + "WHERE id= ?";
@@ -98,6 +99,7 @@ public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository 
             ps.setString(1, surveyQuestion.getSurveyQuestion());
             ps.setInt(2, surveyQuestion.getId());
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             throw new CustomException("Error: Unable To Update Survey Question");
         }

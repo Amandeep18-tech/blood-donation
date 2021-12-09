@@ -98,7 +98,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     }
 
     @Override
-    public void update(Survey survey) throws CustomException {
+    public Boolean update(Survey survey) throws CustomException {
         DBUtils dbUtils = new DBUtils();
         try (Connection conn = dbUtils.getConnection()) {
             String query = "UPDATE survey_master SET survey_title= ?, " + "survey_desc= ?, " + "survey_type= ?" + "WHERE id= ?";
@@ -108,6 +108,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
             ps.setString(3, survey.getSurveyType());
             ps.setInt(4, survey.getId());
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             throw new CustomException("Error: Unable To Update Survey");
         }

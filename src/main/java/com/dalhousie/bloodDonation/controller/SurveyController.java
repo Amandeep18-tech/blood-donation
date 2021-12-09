@@ -1,6 +1,7 @@
 package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.Survey;
 import com.dalhousie.bloodDonation.model.SurveyQuestions;
 import com.dalhousie.bloodDonation.service.SurveyDetailsServiceImpl;
 import com.dalhousie.bloodDonation.service.SurveyQuestionsServiceImpl;
@@ -29,8 +30,8 @@ public class SurveyController {
         System.out.print("Select: ");
         switch (input.nextInt()) {
             case 1:
-                surveyService.getSurveyDetailsInput();
-                int survey_master_id = surveyService.storeSurveyDetails();
+                Survey survey = surveyService.getSurveyDetailsInput();
+                int survey_master_id = surveyService.storeSurveyDetails(survey);
                 List<SurveyQuestions> questionList = surveyQuestionsService.getSurveyQuestionsInput(survey_master_id);
                 surveyQuestionsService.storeSurveyQuestions(questionList);
                 break;

@@ -16,7 +16,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public void getSurveyDetailsInput() {
+    public Survey getSurveyDetailsInput() {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey Title: ");
         surveyTitle = in.nextLine();
@@ -24,20 +24,21 @@ public class SurveyServiceImpl implements SurveyService {
         surveyDescription = in.nextLine();
         System.out.print("\nEnter Survey Type: ");
         surveyType = in.nextLine();
-    }
-
-    @Override
-    public int storeSurveyDetails() throws CustomException {
         Survey survey = new Survey();
         survey.setSurveyTitle(surveyTitle);
         survey.setSurveyDesc(surveyDescription);
         survey.setSurveyType(surveyType);
+        return survey;
+    }
+
+    @Override
+    public int storeSurveyDetails(Survey survey) throws CustomException {
         SurveyRepositoryImpl surveyRepositoryImpl = new SurveyRepositoryImpl();
         return surveyRepositoryImpl.add(survey);
     }
 
     @Override
-    public int viewAllSurvey() throws CustomException {
+    public List<Survey> viewAllSurvey() throws CustomException {
         SurveyRepositoryImpl surveyRepositoryImpl = new SurveyRepositoryImpl();
         List<Survey> surveyList = surveyRepositoryImpl.getAllSurvey();
         System.out.println();
@@ -47,8 +48,7 @@ public class SurveyServiceImpl implements SurveyService {
             System.out.format("%-14s%-26s%-32s%-20s", survey.getId(), survey.getSurveyType(), survey.getSurveyTitle(), survey.getSurveyDesc());
             System.out.println();
         }
-        int size = surveyList.size();
-        return size;
+        return surveyList;
     }
 
     @Override

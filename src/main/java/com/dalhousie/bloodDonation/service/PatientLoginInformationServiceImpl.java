@@ -3,14 +3,20 @@ package com.dalhousie.bloodDonation.service;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientLoginInformation;
 import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
-import com.dalhousie.bloodDonation.repos.PatientLoginInformationRepositoryImpl;
-import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepositoryImpl;
-import com.dalhousie.bloodDonation.repos.UserLoginRepositoryImpl;
+import com.dalhousie.bloodDonation.repos.*;
 
 public class PatientLoginInformationServiceImpl implements PatientLoginInformationService {
+    private final PatientLoginInformationRepository patientLoginInformationRepository;
+    private final PatientPersonalInformationRepository patientPersonalInformationRepository;
+
+    public PatientLoginInformationServiceImpl() {
+        patientLoginInformationRepository = PatientLoginInformationRepositoryImpl.getInstance();
+        patientPersonalInformationRepository = PatientPersonalInformationRepositoryImpl.getInstance();
+    }
+
     @Override
     public PatientLoginInformation getPatientInformation(int patient_id) throws CustomException {
-        PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
+        PatientPersonalInformationRepository patientPersonalInfoRepo = patientPersonalInformationRepository;
         PatientPersonalInformation patientPersonalInfo = patientPersonalInfoRepo.getPatient(patient_id);
         PatientLoginInformation patientLoginInfo = new PatientLoginInformation();
         patientLoginInfo.setPatientId(patientPersonalInfo.getId());
@@ -23,7 +29,7 @@ public class PatientLoginInformationServiceImpl implements PatientLoginInformati
 
     @Override
     public void storePatientLoginInformation(PatientLoginInformation patientLoginInfo) throws CustomException {
-        PatientLoginInformationRepositoryImpl patientLoginInfoRepo = new PatientLoginInformationRepositoryImpl();
+        PatientLoginInformationRepository patientLoginInfoRepo = patientLoginInformationRepository;
         patientLoginInfoRepo.storePatientLoginInformationInDB(patientLoginInfo);
         UserLoginRepositoryImpl userLoginRepository = new UserLoginRepositoryImpl();
         userLoginRepository.storeUserLoginInformationInDB(patientLoginInfo);

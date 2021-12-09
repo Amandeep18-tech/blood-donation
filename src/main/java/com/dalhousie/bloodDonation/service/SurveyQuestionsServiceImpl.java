@@ -12,9 +12,6 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     private String surveyQuestion;
     private final List<SurveyQuestions> questionList = new ArrayList<>();
 
-    public SurveyQuestionsServiceImpl() {
-    }
-
     @Override
     public List<SurveyQuestions> getSurveyQuestionsInput(int surveyMasterId) {
         Scanner in = new Scanner(System.in);

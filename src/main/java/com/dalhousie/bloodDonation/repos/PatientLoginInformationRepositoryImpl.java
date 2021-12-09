@@ -9,6 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PatientLoginInformationRepositoryImpl implements PatientLoginInformationRepository {
+    private static PatientLoginInformationRepository patientLoginInformationRepository = null;
+
+    public static PatientLoginInformationRepository getInstance() {
+        if (patientLoginInformationRepository == null) {
+            patientLoginInformationRepository = new PatientLoginInformationRepositoryImpl();
+        }
+        return patientLoginInformationRepository;
+    }
 
     @Override
     public void storePatientLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws CustomException {

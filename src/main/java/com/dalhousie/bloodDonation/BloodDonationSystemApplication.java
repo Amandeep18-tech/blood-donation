@@ -1,12 +1,7 @@
 package com.dalhousie.bloodDonation;
 
-import com.dalhousie.bloodDonation.controller.FinancialDonationController;
-import com.dalhousie.bloodDonation.controller.AppointmentController;
-import com.dalhousie.bloodDonation.controller.DonorAppointmentController;
-import com.dalhousie.bloodDonation.controller.DonorMedicalRecordController;
-import com.dalhousie.bloodDonation.controller.ListSuitableDonorController;
+import com.dalhousie.bloodDonation.controller.*;
 import com.dalhousie.bloodDonation.utils.DBUtils;
-import com.dalhousie.bloodDonation.controller.MenuController;
 import com.dalhousie.bloodDonation.exception.CustomException;
 
 import org.springframework.boot.SpringApplication;
@@ -22,7 +17,7 @@ public class BloodDonationSystemApplication {
     public static void main(String[] args) throws SQLException, ParseException, CustomException {
         DBUtils dbUtils = new DBUtils();
         Connection conn = dbUtils.getConnection();
-        
+
         // AppointmentController appointmentController= new AppointmentController();
         // DonorMedicalRecordController donorMedicalRecordController = new DonorMedicalRecordController();
         DonorAppointmentController donorAppointmentController = new DonorAppointmentController();
@@ -43,8 +38,10 @@ public class BloodDonationSystemApplication {
         // listSuitableDonorController.organisationDonorSelection();
         // MenuController menuController = new MenuController();
         // donorAppointmentController.seePatientRequestStatus();
-        donorAppointmentController.todayPatientRequestConfirmation();
+        // donorAppointmentController.todayPatientRequestConfirmation();
         // menuController.displayMenu();
+        SurveyController surveyController = new SurveyController();
+        surveyController.displaySurveyMenuForOrganization();
         SpringApplication.run(BloodDonationSystemApplication.class, args);
     }
 

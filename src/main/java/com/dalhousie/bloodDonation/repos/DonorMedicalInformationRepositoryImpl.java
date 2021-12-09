@@ -10,6 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DonorMedicalInformationRepositoryImpl implements DonorMedicalInformationRepository {
+    private static DonorMedicalInformationRepository donorMedicalInformationRepository = null;
+
+    public static DonorMedicalInformationRepository getInstance() {
+        if (donorMedicalInformationRepository == null) {
+            donorMedicalInformationRepository = new DonorMedicalInformationRepositoryImpl();
+        }
+        return donorMedicalInformationRepository;
+    }
 
     @Override
     public DonorInformation getMatchingBloodTypeDonorMedicalInformation(DonorInformation donorInfo) throws CustomException {

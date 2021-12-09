@@ -9,6 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientPersonalInformationRepositoryImpl implements PatientPersonalInformationRepository {
+    private static PatientPersonalInformationRepository patientPersonalInformationRepository = null;
+
+    public static PatientPersonalInformationRepository getInstance() {
+        if (patientPersonalInformationRepository == null) {
+            patientPersonalInformationRepository = new PatientPersonalInformationRepositoryImpl();
+        }
+        return patientPersonalInformationRepository;
+    }
 
     @Override
     public int addPatient(PatientPersonalInformation patientInfo) throws CustomException {
