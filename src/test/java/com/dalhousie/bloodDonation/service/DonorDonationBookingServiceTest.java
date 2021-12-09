@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,7 +40,7 @@ class DonorDonationBookingServiceTest {
     @DisplayName("Test for compareDate")
     void compareDateTest() throws SQLException, ParseException {
 
-        assertTrue(donationBookingImpl.compareDonationDate("2021-12-17", "af02f0f7-3d82-11ec-917b-e2ed2ce588f5"));
+        assertFalse(donationBookingImpl.compareDonationDate("2021-12-15", "12354c38-30a1-4bed-ac86-3a1077352811"));
     }
 
     @Test
