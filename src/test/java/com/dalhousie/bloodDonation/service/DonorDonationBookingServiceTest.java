@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,7 +40,7 @@ class DonorDonationBookingServiceTest {
     @DisplayName("Test for compareDate")
     void compareDateTest() throws SQLException, ParseException {
 
-        assertTrue(donationBookingImpl.compareDonationDate("2021-12-17", "af02f0f7-3d82-11ec-917b-e2ed2ce588f5"));
+        assertFalse(donationBookingImpl.compareDonationDate("2021-12-15", "12354c38-30a1-4bed-ac86-3a1077352811"));
     }
 
     @Test
@@ -63,7 +64,7 @@ class DonorDonationBookingServiceTest {
     void getSlotIdTestForIncorrectValue() throws SQLException {
 
         
-        assertEquals(donationBookingImpl.getDonationSlotId("2"),"SLOT_UNAVAILABLE");
+        assertEquals(donationBookingImpl.getDonationSlotId("56777"),"SLOT_UNAVAILABLE");
     }
 
     @Test
@@ -80,34 +81,6 @@ class DonorDonationBookingServiceTest {
         
         assertEquals(donationBookingImpl.getPatientRequestId("5d9793a1-5213-11ec-917b-e2ed2ce5"),null);
     }
-
-    @Test
-    @DisplayName("Get today Donation")
-    void getTodayDonationExceptionTest() throws CustomException {
-        Exception exception = assertThrows(CustomException.class, () -> {
-            donationBookingImpl.getTodayDonation();
-        });
-    
-        String expectedMessage = "No donation for today";
-        String actualMessage = exception.getMessage();
-    
-        assertTrue(actualMessage.contains(expectedMessage));
-        
-        
-    }// test will fail because there is donation for today
-
-    @Test
-    @DisplayName("Get today Donation")
-    void getTodayDonationTest() throws CustomException {
-        ArrayList<String> idList = new ArrayList<String>();
-        BloodDonationDetaisHistory bloodDonationDetaisHistory= new BloodDonationDetaisHistory();
-        Date today = Calendar.getInstance().getTime();
-        java.sql.Date sqlDate = new java.sql.Date(today.getTime());
-        bloodDonationDetaisHistory.setSlotDate(sqlDate);
-        bloodDonationDetaisHistory.setDonorId("6c111307-4cbe-11ec-917b-e2ed2ce588f5");
-        idList.add("6c111307-4cbe-11ec-917b-e2ed2ce588f5");
-        assertEquals(donationBookingImpl.getTodayDonation(),idList);
-    }// test will fail if no donation for today
 
     @Test
     @DisplayName("Get Patient request Details")
