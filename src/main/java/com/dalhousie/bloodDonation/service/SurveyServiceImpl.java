@@ -46,10 +46,10 @@ public class SurveyServiceImpl implements SurveyService {
         System.out.println();
         System.out.format("%5s%9s%34s%38s", "Survey ID", "Type", "Survey Title", "Survey Description");
         System.out.println();
-        for (Survey survey : surveyList) {
+        surveyList.forEach(survey -> {
             System.out.format("%-14s%-26s%-32s%-20s", survey.getId(), survey.getSurveyType(), survey.getSurveyTitle(), survey.getSurveyDesc());
             System.out.println();
-        }
+        });
         return surveyList;
     }
 

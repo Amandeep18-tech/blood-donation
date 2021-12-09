@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.User;
 import com.dalhousie.bloodDonation.repos.LoginRepository;
 import org.junit.jupiter.api.Disabled;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class LoginTest {
    LoginRepository loginRepository = new LoginRepository();
     @Test
-    void signupTest(){
+    void signupTest() throws CustomException {
         User user =  new User();
         user.setLastname("Sonawane");
         user.setFirstname("Janhavi");
@@ -19,7 +20,7 @@ public class LoginTest {
     }
 
     @Test
-    void loginTest(){
+    void loginTest() throws CustomException {
         String username = "janhavisonawane33@gmail.com";
         String password = "janhavi@123";
         loginRepository.checkExistingUser(username,password);

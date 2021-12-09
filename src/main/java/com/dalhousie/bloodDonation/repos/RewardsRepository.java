@@ -94,27 +94,10 @@ public class RewardsRepository {
             System.out.println("Press 1 to continue and 0 to return to main menue:");
             int choice = sc.nextInt();
             if (choice == 1) {
-                //redeemCoupon(donorId);
                 System.out.println("hhj");
             }
-//        else{
-//            rewardsController.menu();
-//        }
         } catch (SQLException e) {
             throw new CustomException("");
         }
     }
-//    public void redeemCoupon(int donorId) throws Exception {
-//
-//        Class.forName("com.mysql.cj.jdbc.Driver");
-//        Connection con= DriverManager.getConnection(
-//                "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
-//        //String query = "update rewards set status = active where donorId = ?";
-//        String query = "selct * from rewards where donorId=?";
-//        PreparedStatement stmt = con.prepareStatement(query);
-//        stmt.setInt(1,donorId);
-//        stmt.executeUpdate();
-//        System.out.println("Your coupon is successfully redeemed!!!");
-//        rewardsController.menu();
-//    }
 }
