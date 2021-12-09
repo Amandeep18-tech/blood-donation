@@ -7,7 +7,15 @@ public class Person {
     private String personId;
     private String bloodGroup;
     private String contactNumber;
-   
+    private String pinCode;
+
+    public String getPinCode() {
+        return pinCode;
+    }
+
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
+    }
     
 
     public String getName() {

@@ -6,11 +6,10 @@ import com.dalhousie.bloodDonation.model.User;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
 
 public interface LoginService {
     void userLogin(String userName,String password)throws Exception;
-    void addPerson(String contactNo,User user);
+    void addPerson(String contactNo, User user, String pinCode);
     void organizationLogin(String userName,String password)throws Exception;
     void patientLogin(String userName,String password)throws Exception;
     void userSignup(User user) throws Exception;

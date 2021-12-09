@@ -6,6 +6,25 @@ public class Organisation {
     private String location;
     private String organisationType;
     private String password;
+    private String pinCode;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPinCode() {
+        return pinCode;
+    }
+
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
+    }
+
     public String getorganisationID() {
         return organisationID;
     }

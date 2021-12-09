@@ -8,7 +8,6 @@ import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 import org.mindrot.jbcrypt.BCrypt;
-import org.yaml.snakeyaml.scanner.Constant;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -129,10 +128,10 @@ public class LoginRepository {
             UUID uuid = UUID.randomUUID();
             String uuidAsString = uuid.toString();
             Statement st = con.createStatement();
-            st.execute("INSERT INTO organisation(organisation_id,organisation_name,location,organisation_type,password,slots_available) " +
+            st.execute("INSERT INTO organisation(organisation_id,organisation_name,location,organisation_type,password,slots_available,pin_code,email) " +
                     "VALUES('"+ uuidAsString +"','"+ organisation.getorganisationName()+"','"+ organisation.getLocation()+"','"+ organisation
-                    .getorganisationType()+"','"+ organisation.getPassword()+"','"+ organisation.getSlots_available()+"')");
-            st.execute("Insert into user(username,password,firstname,userId,userType) values ('"+organisation.getorganisationName()+"','"+organisation.getPassword()+"','"+organisation.getorganisationName()+"','"+uuidAsString+"','"+UserType.ORGANIZATION+"')");
+                    .getorganisationType()+"','"+ organisation.getPassword()+"','"+ organisation.getSlots_available()+"','"+ organisation.getPinCode()+"','"+ organisation.getEmail()+"')");
+            st.execute("Insert into user(username,password,firstname,userId,userType) values ('"+organisation.getEmail()+"','"+organisation.getPassword()+"','"+organisation.getorganisationName()+"','"+uuidAsString+"','"+UserType.ORGANIZATION+"')");
             System.out.println("SignUp successful");
         }catch (SQLException e) {
             e.printStackTrace();
@@ -185,14 +184,14 @@ public class LoginRepository {
         loginController.menu();
     }
 
-    public void addPerson(String contactNo,User user){
+    public void addPerson(String contactNo, User user, String pinCode){
         try {
             DBUtils dbUtils = new DBUtils();
             Connection con = dbUtils.getConnection();
             UUID uuid = UUID.randomUUID();
             String uuidAsString = uuid.toString();
             Statement st = con.createStatement();
-            st.execute("INSERT INTO Person(person_id,person_first_name,person_last_name,contact_number,blood_group) VALUES('"+ uuidAsString+"','"+ user.getFirstname()+"','"+ user.getLastname()+"','"+ contactNo+"','"+ user.getBloodGroup()+"')");
+            st.execute("INSERT INTO Person(person_id,person_first_name,person_last_name,contact_number,blood_group,pin_code) VALUES('"+ uuidAsString+"','"+ user.getFirstname()+"','"+ user.getLastname()+"','"+ contactNo+"','"+ user.getBloodGroup()+"','"+ pinCode +"')");
             st.execute("Insert into user (userId,username,password,firstname,lastname,bloodgroup,userType) values('"+uuidAsString+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getFirstname()+"','"+user.getLastname()+"','"+user.getBloodGroup()+"','"+ UserType.DONOR.toString() +"')");
             System.out.println("SignUp successfull");
         }catch (SQLException e) {
