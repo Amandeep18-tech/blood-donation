@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     private String surveyQuestion;
     private final List<SurveyQuestions> questionList = new ArrayList<>();
-    private SurveyQuestionsRepositoryImpl surveyQuestionsRepository;
+    private final SurveyQuestionsRepositoryImpl surveyQuestionsRepository;
     private final Scanner in;
 
     public SurveyQuestionsServiceImpl() {
