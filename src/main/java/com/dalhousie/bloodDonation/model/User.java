@@ -8,7 +8,7 @@ public class User {
     String firstname;
     String lastname;
     String bloodGroup;
-    String one_time_password;
+    String oneTimePassword;
 
     public String getUserId() {
         return userId;
@@ -58,11 +58,11 @@ public class User {
         this.bloodGroup = bloodGroup;
     }
 
-    public String getOne_time_password() {
-        return one_time_password;
+    public String getOneTimePassword() {
+        return oneTimePassword;
     }
 
-    public void setOne_time_password(String one_time_password) {
-        this.one_time_password = one_time_password;
+    public void setOneTimePassword(String one_time_password) {
+        this.oneTimePassword = one_time_password;
     }
 }

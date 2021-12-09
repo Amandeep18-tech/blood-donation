@@ -6,6 +6,7 @@ import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.*;
 import com.dalhousie.bloodDonation.repos.LoginRepository;
 import com.dalhousie.bloodDonation.utils.IOUtils;
+import com.dalhousie.bloodDonation.utils.MailBuilder;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -23,6 +24,7 @@ public class LoginServiceImpl implements LoginService {
     private Object NullPointerException;
     private LoginRepository loginRepository;
     public JavaMailSender mailSender;
+
     private final Scanner sc;
 
     public LoginServiceImpl() {
@@ -38,9 +40,15 @@ public class LoginServiceImpl implements LoginService {
                 throw new NullPointerException();
             }
             if (!userName.isEmpty() && !password.isEmpty()) {
-                loginRepository.checkExistingUser(userName, password);
+              boolean check =  loginRepository.checkExistingUser(userName, password);
+                if(check){
+                    System.out.println("login success");
+                }
             }
-        } catch (Exception e) {
+
+
+        }catch (Exception e){
+            e.printStackTrace();
             throw new CustomException("Error caugh while loggingin");
         }
     }
@@ -57,7 +65,10 @@ public class LoginServiceImpl implements LoginService {
                 throw new NullPointerException();
             }
             if (!userName.isEmpty() && !password.isEmpty()) {
-                loginRepository.checkExistingOrgansation(userName, password);
+                boolean check = loginRepository.checkExistingOrgansation(userName, password);
+                if(check){
+                    System.out.println("login success");
+                }
             }
         } catch (Exception e) {
             throw new CustomException("Error caugh while loggingin");
@@ -82,7 +93,6 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public void userSignup(User user) throws Exception {
         loginRepository.addUser(user);
-
     }
 
     @Override
@@ -97,7 +107,7 @@ public class LoginServiceImpl implements LoginService {
         generateAndSendOtp(user);
     }
 
-    public void generateAndSendOtp(User user) throws CustomException {
+    public void generateAndSendOtp(User user) throws  CustomException {
         String OTP = RandomString.make(8);
         long issueTime = Instant.now().getEpochSecond();
         OTPDetails otpDetails = new OTPDetails(OTP, issueTime);
@@ -121,16 +131,20 @@ public class LoginServiceImpl implements LoginService {
                         String confirmpass = sc.next();
                         if (newpass.equals(confirmpass)) {
                             System.out.println("Both password matches");
-                            loginRepository.updatePass(user.getUserName(), confirmpass, OTP);
+                            int count = loginRepository.updatePass(user.getUserName(), confirmpass, OTP);
+                            if (count > 0) {
+                                System.out.println("Password Updated Successfully");
+//                                    new LoginController().menu();
+                            } else {
+                                System.out.println("Error while updating password");
+                            }
                             break;
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
                         throw new CustomException("Something wrong with password");
                     }
-
                 }
-                break;
-
             } else {
                 System.out.println("OTP Expired!");
                 System.out.println("Do you want to continue:");
@@ -138,13 +152,11 @@ public class LoginServiceImpl implements LoginService {
                 int userInput = sc.nextInt();
                 if (userInput == 1)
                     generateAndSendOtp(user);
-
                 break;
-
-                //Exit;
             }
         }
     }
+
 
     @Override
     public boolean validateOTP(String username, String otp) {
@@ -161,58 +173,74 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
-
     @Override
-    public boolean sendVerificationEmail(User user, String OTP) throws CustomException {
-        final String username = "janhavisonawane33@gmail.com";
-        final String password = "onsgratwlvpddlim";
-
-        Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "465");
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.socketFactory.port", "465");
-        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
-        Session session = Session.getInstance(prop,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-
+    public boolean sendVerificationEmail(User user, String OTP) throws CustomException{
         try {
-
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(
-                    Message.RecipientType.TO,
-                    InternetAddress.parse(user.getUserName())
-            );
-            message.setSubject("Testing Gmail SSL");
-            message.setContent("<strong>" + OTP + "</strong>", "text/html");
-//            message.setText();
-
-            Transport.send(message);
-
-            System.out.println("Done");
+            MailBuilder.getMailInstance()
+                        .recipient(user.getUserName())
+                        .subject("Blood donation notification")
+                        .content("<strong>"+OTP+"</strong>")
+                        .send();
             return true;
-
-        } catch (MessagingException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new CustomException("Error in sending Verification mail");
         }
 
     }
 
+    /*
+    sendVerification {
+        {
+            final String username = "janhavisonawane33@gmail.com";
+            final String password = "onsgratwlvpddlim";
+
+            Properties prop = new Properties();
+            prop.put("mail.smtp.host", "smtp.gmail.com");
+            prop.put("mail.smtp.port", "465");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.socketFactory.port", "465");
+            prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+            Session session = Session.getInstance(prop,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+
+            try {
+
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(username));
+                message.setRecipients(
+                        Message.RecipientType.TO,
+                        InternetAddress.parse(user.getUserName())
+                );
+                message.setSubject("Testing Gmail SSL");
+                message.setContent("<strong>"+OTP+"</strong>" , "text/html" );
+                Transport.send(message);
+                System.out.println("Done");
+                return true;
+
+            } catch (MessagingException e) {
+                throw new CustomException("Error in sending Verification mail");
+            }
+
+        }
+    }*/
+
+
+
     @Override
     public void userLogout() throws CustomException {
         try {
             SessionManagement session = new SessionManagement();
-            // session.getSessionMap().clear();
+            session.getSessionMap().clear();
             LoginController loginController = new LoginController();
             loginController.menu();
-        } catch (CustomException e) {
-            throw new CustomException("Somethig went wrong while logging out");
+        }catch (CustomException e){
+            throw  new CustomException("Something went wrong while logging out");
         }
     }
 

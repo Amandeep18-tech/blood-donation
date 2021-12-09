@@ -5,15 +5,16 @@ import com.dalhousie.bloodDonation.model.Organisation;
 import com.dalhousie.bloodDonation.model.Person;
 import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
+import com.dalhousie.bloodDonation.repos.LoginRepository;
 import com.dalhousie.bloodDonation.service.LoginService;
 import com.dalhousie.bloodDonation.service.LoginServiceImpl;
 import com.dalhousie.bloodDonation.utils.IOUtils;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Scanner;
 
 public class LoginController {
     User user;
-    Person person;
     private LoginService loginService;
     Organisation organisation;
     private final Scanner sc;
@@ -45,10 +46,8 @@ public class LoginController {
                         break;
 
                     case 3:
-                        //forgetPassword();
                         organizationSignupMethod();
                         break;
-
 
                 }
 
@@ -65,26 +64,12 @@ public class LoginController {
             String userName = sc.next();
             System.out.println("Enter Password");
             String password = sc.next();
-            //boolean check = isloggedin(userName);
-            //if (check) {
-            System.out.println("Welcome Again:- " + userName);
-//                LoginController loginController = new LoginController();
-//                loginController.menu();
-            //} else {
             loginService.userLogin(userName, password);
-            //}
         } catch (Exception e) {
             throw new CustomException("Error caught while login");
         }
     }
 
-    //    public boolean isloggedin(String userName){
-////        SessionManagement session = new SessionManagement();
-////      //  if(session.getUserId() ==  || session.getPatientId()) {
-////            return true;
-////        }
-////        //return false;
-//    }
     public void signupMethod() throws CustomException {
         try {
             System.out.println("Enter Firstname:-");
@@ -105,8 +90,8 @@ public class LoginController {
             user.setBloodGroup(bloodGroup);
             user.setFirstname(fname);
             user.setUserName(uname);
-            //String encpt=BCrypt.hashpw(pass, BCrypt.gensalt());
-            user.setPassword(pass);
+            String encpt = BCrypt.hashpw(pass, BCrypt.gensalt());
+            user.setPassword(encpt);
             user.setLastname(lname);
             loginService.userSignup(user);
             loginService.addPerson(contactNo, user, pinCode);
@@ -121,28 +106,11 @@ public class LoginController {
             String email = sc.next();
             loginService.forgetPass(email);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CustomException("Error caught while forget password");
         }
     }
 
-    //    public void organizationLogin() throws CustomException{
-//        try {
-//            System.out.println("Enter UserName:-");
-//            String userName = sc.next();
-//            System.out.println("Enter Password");
-//            String password = sc.next();
-////            boolean check = isloggedin(userName);
-////            if (check) {
-//                System.out.println("Welcome Again:- " + userName);
-//                LoginController loginController = new LoginController();
-//                loginController.menu();
-////            } else {
-//                loginService.organizationLogin(userName, password);
-//          //  }
-//        }catch (Exception e){
-//            throw new CustomException("Error caught while login");
-//        }
-//    }
     public void organizationSignupMethod() throws CustomException {
         try {
             System.out.println("Enter organisation name");
@@ -163,7 +131,8 @@ public class LoginController {
             organisation.setorganisationName(oname);
             organisation.setLocation(location);
             organisation.setorganisationType(type);
-            organisation.setPassword(password);
+            String encpt = BCrypt.hashpw(password, BCrypt.gensalt());
+            organisation.setPassword(encpt);
             organisation.setSlots_available(slots);
             organisation.setPinCode(pinCode);
             organisation.setEmail(email);
