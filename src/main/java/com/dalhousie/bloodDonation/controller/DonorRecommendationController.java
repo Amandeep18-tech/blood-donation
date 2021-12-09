@@ -10,9 +10,9 @@ import com.dalhousie.bloodDonation.utils.IOUtils;
 import java.util.Scanner;
 
 public class DonorRecommendationController {
-    private DonorRecommendationServiceImpl donorRecommendationService;
-    private PatientPersonalInformationServiceImpl patientPersonalInformationService;
-    private Scanner input;
+    private final DonorRecommendationServiceImpl donorRecommendationService;
+    private final PatientPersonalInformationServiceImpl patientPersonalInformationService;
+    private final Scanner input;
     private final SessionService sessionService;
 
     public DonorRecommendationController() {
@@ -22,10 +22,9 @@ public class DonorRecommendationController {
         sessionService = new SessionServiceImpl();
     }
 
-    public int displayRecommendedDonorsToPatient() throws CustomException {
+    public void displayRecommendedDonorsToPatient() throws CustomException {
         int patientId = Integer.parseInt(sessionService.getUserId());
-        int size = donorRecommendationService.donorRecommendation(patientId);
-        return size;
+        donorRecommendationService.donorRecommendation(patientId);
     }
 
     public void displayRecommendedDonorsToOrganization() throws CustomException {
