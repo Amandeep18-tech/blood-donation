@@ -1,0 +1,5 @@
+﻿patient_name,date_of_birth,age,address,contact_number,email_id,blood_group,current_location,dr_reference,requirement_reason,priority,has_hepatitis_B,has_hepatitis_C,has_HIV,has_hemochromatosis,hemoglobin_level,rbc_count,platelet_count
+Ketul Patel,14-06-1999,23,Chainlake Drive,698795875,ketul99@gmail.com,O+,Spring Garden,Dr. Josemon,Accident,High,1,0,1,1,12,20000,10000
+Path Rathod,03-05-1998,24,Civic Drive,9568795799,rathod98@yahoo.com,O-,DSU Building,Dr. Dave,Blood Transfusion,Medium,0,1,1,0,10,300000,12939
+Asu Sanglani,03-06-1998,23,North Street,968795687,asu23@gmail.com,B+,IWK Hospital,Dr. Kishan,Surgery,High,1,0,0,0,8,130000,24252
+Rushi Patel,15-11-1999,23,Barrinton Street,96879576456,rushicr7@gmail.com,B-,Halifax City Hospital,Dr. Ketul,Accident,Low,1,1,1,1,11,210000,34321
