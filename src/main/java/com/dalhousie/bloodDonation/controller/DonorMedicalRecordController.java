@@ -81,7 +81,7 @@ public class DonorMedicalRecordController {
 
         }
 
-        public void editMedicalRecords() throws SQLException {
+        public void editMedicalRecords() {
             Scanner sc = new Scanner(System.in);
 
             System.out.println("Enter the donor Id you want to edit details for :");

@@ -85,7 +85,7 @@ public class NotificationServiceImpl implements NotificationService{
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sender));
             message.setHeader("X-Priority", "1");
-            List<String> recpList=new ArrayList<>(){{
+            List<String> recpList=new ArrayList<String>(){{
                 add("janhavisonawane33@gmail.com");
                 add("vivek.r.patel1998@gmail.com");
             }};

@@ -21,7 +21,7 @@ public class ListSuitableDonorController {
     private final ListSuitableDonor listSuitableDonorImpl;
     private final LocationService LocationService;
 
-    public ListSuitableDonorController() throws CustomException {
+    public ListSuitableDonorController() {
         personRepository = new PersonRepository();
         listSuitableDonorImpl = new ListSuitableDonorImpl();
         LocationService = new LocationServiceImpl();
