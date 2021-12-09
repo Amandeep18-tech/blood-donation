@@ -22,7 +22,7 @@ public class ListSuitableDonorController {
     ListSuitableDonorImpl listSuitableDonorImpl=null;
 
     
-    public ListSuitableDonorController() throws CustomException{
+    public ListSuitableDonorController() {
         personRepository= new PersonRepository();
         person = new Person();
         donorMedicalRecords = new DonorMedicalRecords();
