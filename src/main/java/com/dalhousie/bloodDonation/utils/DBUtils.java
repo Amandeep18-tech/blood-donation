@@ -6,15 +6,24 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBUtils {
+
+    private static DBUtils dbUtilsInstance = null;
     private String dbUserName;
     private String dbPassword;
     private String dbName;
 
-    public DBUtils() {
+    private DBUtils() {
         Properties properties = EnvironmentalProperties.getProperties("environment.properties");
         this.dbUserName = properties.getProperty("db.username");
         this.dbPassword = properties.getProperty("db.password");
         this.dbName = properties.getProperty("db.dbname");
+    }
+
+    public static DBUtils getInstance(){
+        if(dbUtilsInstance == null){
+            dbUtilsInstance = new DBUtils();
+        }
+        return dbUtilsInstance;
     }
 
     public Connection getConnection() throws SQLException {
