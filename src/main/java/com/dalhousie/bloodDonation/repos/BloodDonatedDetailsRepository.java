@@ -13,25 +13,15 @@ import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class BloodDonatedDetailsRepository {
-    Connection conn;
     
 
-    public BloodDonatedDetailsRepository() {
-        DBUtils dbUtils = new DBUtils();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            
-            e.printStackTrace();
-        }
-    }
-
     public boolean confirmDonation(String organisationId,String donorId)  {
+        try{Connection conn= DBUtils.getInstance().getConnection();
         String query = "INSERT INTO blood_donated_details (id, " + "donor_id, " + "blood_group,"+"donated_at,"+"status,"+"org_id) VALUES (?, ?, ?,?,?,?)";
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String todayToString = simpleDateFormat.format(today);
-        try{
+        
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
