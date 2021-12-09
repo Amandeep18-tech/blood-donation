@@ -5,6 +5,7 @@ import com.dalhousie.bloodDonation.service.DonorRecommendationServiceImpl;
 import com.dalhousie.bloodDonation.service.PatientPersonalInformationServiceImpl;
 import com.dalhousie.bloodDonation.service.SessionService;
 import com.dalhousie.bloodDonation.service.SessionServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class DonorRecommendationController {
     public DonorRecommendationController() {
         donorRecommendationService = new DonorRecommendationServiceImpl();
         patientPersonalInformationService = new PatientPersonalInformationServiceImpl();
-        input = new Scanner(System.in);
+        input = IOUtils.getInstance();
         sessionService = new SessionServiceImpl();
     }
 

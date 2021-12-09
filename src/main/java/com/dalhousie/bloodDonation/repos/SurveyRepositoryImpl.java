@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SurveyRepositoryImpl implements SurveyRepository {
-
     @Override
     public int add(Survey survey) throws CustomException {
         

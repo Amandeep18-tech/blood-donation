@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DonorMedicalInformationRepositoryImpl implements DonorMedicalInformationRepository {
-    
+
     @Override
     public DonorInformation getMatchingBloodTypeDonorMedicalInformation(DonorInformation donorInfo) throws CustomException {
         

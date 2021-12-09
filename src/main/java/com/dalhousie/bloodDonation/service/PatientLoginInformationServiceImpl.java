@@ -6,12 +6,12 @@ import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.repos.*;
 
 public class PatientLoginInformationServiceImpl implements PatientLoginInformationService {
-    private final PatientLoginInformationRepository patientLoginInformationRepository;
-    private final PatientPersonalInformationRepository patientPersonalInformationRepository;
+    private final PatientLoginInformationRepositoryImpl patientLoginInformationRepository;
+    private final PatientPersonalInformationRepositoryImpl patientPersonalInformationRepository;
 
     public PatientLoginInformationServiceImpl() {
-        patientLoginInformationRepository = PatientLoginInformationRepositoryImpl.getInstance();
-        patientPersonalInformationRepository = PatientPersonalInformationRepositoryImpl.getInstance();
+        patientLoginInformationRepository = new PatientLoginInformationRepositoryImpl();
+        patientPersonalInformationRepository = new PatientPersonalInformationRepositoryImpl();
     }
 
     @Override

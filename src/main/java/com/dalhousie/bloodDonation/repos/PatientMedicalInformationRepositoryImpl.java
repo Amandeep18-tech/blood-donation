@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PatientMedicalInformationRepositoryImpl implements PatientMedicalInformationRepository {
-    
+
     @Override
     public void addPatientMedicalInformation(PatientMedicalInformation patientMedicalInfo) throws CustomException {
         

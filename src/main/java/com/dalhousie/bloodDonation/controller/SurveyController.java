@@ -6,8 +6,8 @@ import com.dalhousie.bloodDonation.model.SurveyQuestions;
 import com.dalhousie.bloodDonation.service.SurveyDetailsServiceImpl;
 import com.dalhousie.bloodDonation.service.SurveyQuestionsServiceImpl;
 import com.dalhousie.bloodDonation.service.SurveyServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +18,7 @@ public class SurveyController {
     private final SurveyDetailsServiceImpl surveyDetailsService;
 
     public SurveyController() {
-        input = new Scanner(System.in);
+        input = IOUtils.getInstance();
         surveyService = new SurveyServiceImpl();
         surveyQuestionsService = new SurveyQuestionsServiceImpl();
         surveyDetailsService = new SurveyDetailsServiceImpl();

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DonorPersonalInformationRepositoryImpl implements DonorPersonalInformationRepository {
-    
 
     @Override
     public List<DonorInformation> getAllMatchingBloodTypeDonors(String bloodGroup) throws CustomException {

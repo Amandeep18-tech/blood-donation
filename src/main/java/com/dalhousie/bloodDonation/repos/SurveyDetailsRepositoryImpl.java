@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SurveyDetailsRepositoryImpl implements SurveyDetailsRepository {
-
     @Override
     public void add(SurveyDetails surveyDetails) throws CustomException {
         

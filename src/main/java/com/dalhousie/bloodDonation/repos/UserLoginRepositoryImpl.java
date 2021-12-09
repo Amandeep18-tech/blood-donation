@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserLoginRepositoryImpl implements UserLoginRepository {
-
     @Override
     public void storeUserLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws CustomException {
         

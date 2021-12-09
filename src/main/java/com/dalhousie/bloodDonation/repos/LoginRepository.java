@@ -24,7 +24,7 @@ public class LoginRepository {
     PatientMedicalInformationRepository patientMedicalInformationRepository;
     LoginController loginController;
     SessionManagement session = new SessionManagement();
-    Scanner sc = new Scanner(System.in);
+
     public void checkExistingUser(String userName,String password){
         try {
             String resetpass;

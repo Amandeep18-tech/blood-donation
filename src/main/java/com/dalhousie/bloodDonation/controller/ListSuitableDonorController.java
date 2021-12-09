@@ -17,18 +17,21 @@ import com.dalhousie.bloodDonation.service.LocationService;
 import com.dalhousie.bloodDonation.service.LocationServiceImpl;
 import com.dalhousie.bloodDonation.service.SessionService;
 import com.dalhousie.bloodDonation.service.SessionServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 public class ListSuitableDonorController {
     private final PersonRepository personRepository;
     private final ListSuitableDonor listSuitableDonorImpl;
     private final LocationService LocationService;
     private final SessionService sessionService;
+    private final Scanner sc;
 
     public ListSuitableDonorController() {
         personRepository = new PersonRepository();
         listSuitableDonorImpl = new ListSuitableDonorImpl();
         LocationService = new LocationServiceImpl();
-        sessionService= new SessionServiceImpl();
+        sessionService = new SessionServiceImpl();
+        sc = IOUtils.getInstance();
     }
 
     public void patientDonorList() throws CustomException {
@@ -43,7 +46,7 @@ public class ListSuitableDonorController {
                 personBloodType = person.getbloodGroup();
             }
 
-        } 
+        }
 
         List<String> donorId = new ArrayList<String>();
         donorId = listSuitableDonorImpl.getSuitableDonorID(personBloodType);
@@ -65,12 +68,10 @@ public class ListSuitableDonorController {
 
     public void organisationDonorSelection() throws CustomException {
         System.out.println("Do you want to select Donors according to various criteria Yes or No");
-        Scanner sc = new Scanner(System.in);
-        
         String selection = sc.nextLine();
         HashMap<String, List<String>> donorSelection = new HashMap<String, List<String>>();
         List<String> choicesByOrganization = new ArrayList<String>();
-        
+
         if (selection.toLowerCase().equals("yes")) {
             System.out.println("Which blood type you want to select?");
             System.out.println("1. A+ve");
@@ -112,14 +113,14 @@ public class ListSuitableDonorController {
                     continue;
                 }
                 donorSelection.put(getDonorId, choicesByOrganization);
-                
+
             }
             System.out.println(donorSelection);
         }
 
         String typeSelection = null;
         System.out.println("Do you want to choose hemologin level");
-        
+
         typeSelection = sc.nextLine();
         if (typeSelection.toLowerCase().equals("yes")) {
             System.out.println("Choose hemoglobin level between between 120-175 grams per litre");
@@ -194,7 +195,7 @@ public class ListSuitableDonorController {
                 }
             }
         }
-        if(donorSelection.isEmpty()){
+        if (donorSelection.isEmpty()) {
             sc.close();
             throw new CustomException("No suitable match");
         }

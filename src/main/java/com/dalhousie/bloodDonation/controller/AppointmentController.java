@@ -16,18 +16,21 @@ import com.dalhousie.bloodDonation.service.LocationServiceImpl;
 import com.dalhousie.bloodDonation.service.ManageAppointment;
 import com.dalhousie.bloodDonation.service.ManageAppointmentImpl;
 import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 public class AppointmentController {
     private final ManageAppointment manageAppointment;
     private final MedicalAppointmentDetails medicalAppointmentDetails;
     private final MedicalAppointmentDetailRepository medicalAppointmentDetailRepository;
     private final LocationService locationService;
+    private final Scanner scanner;
 
-    public AppointmentController(){
+    public AppointmentController() {
         manageAppointment = new ManageAppointmentImpl();
         medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
         medicalAppointmentDetails = new MedicalAppointmentDetails();
         locationService = new LocationServiceImpl();
+        scanner = IOUtils.getInstance();
 
     }
 
@@ -49,7 +52,6 @@ public class AppointmentController {
     }
 
     public String bookPlace() throws CustomException {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your choice");
         OrganizationRepository organizationRepository = new OrganizationRepository();
         List<Organisation> organisations = organizationRepository.getAllPlaces();
@@ -63,17 +65,15 @@ public class AppointmentController {
 
         String checkPlace = null;
         checkPlace = manageAppointment.selectPlace(inputPlaceName);
-        if(checkPlace==null){
+        if (checkPlace == null) {
             throw new CustomException("Invalid place");
         }
-       
+
         return checkPlace;
 
     }
 
-    public void bookDate()  {
-
-        Scanner scanner = new Scanner(System.in);
+    public void bookDate() {
         String appointmentBookingChoice = null;
         String slotIdInput = null;
         boolean dateAvailable;
@@ -88,77 +88,72 @@ public class AppointmentController {
             System.out.println("Enter the Date in YYYY-MM-DD format you want to book an appointment");
             switch (appointmentBookingChoice) {
 
-            case "1":
-                System.out.println();
-                String dateInput = scanner.nextLine();
-                System.out.println("Enter the Slot ID");
-                slotIdInput = scanner.nextLine();
-                System.out.println();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                java.util.Date dateInput2 = null;
-                String getSlotId = manageAppointment.getSlotId(slotIdInput);
-                try {
-
-                    dateInput2 = simpleDateFormat.parse(dateInput);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                String dateFormat = simpleDateFormat.format(dateInput2);
-                dateAvailable = manageAppointment.compareDate(dateFormat, getSlotId);
-                if (dateAvailable) {
+                case "1":
                     System.out.println();
-                    System.out.println("Please enter a different date, this date is unavailable");
-                    continue;
-                }
-                else {
+                    String dateInput = scanner.nextLine();
+                    System.out.println("Enter the Slot ID");
+                    slotIdInput = scanner.nextLine();
                     System.out.println();
-                    System.out.println("Confirming this date");
-                    System.out.println("Please press 1 for confirming this date");
-                    System.out.println("Please press 2 for trying another date ");
-                    dateConfirmation = scanner.nextLine();
-                    if (dateConfirmation.equals("1")) {
-                        System.out.println();
-                        boolean confirmDate = false;
-                        confirmDate = medicalAppointmentDetailRepository.saveDate(medicalAppointmentDetails, getSlotId,
-                                dateFormat);
-                        if (confirmDate == true) {
-                            System.out.println("Your appointment is booked");
-                            System.out.println("Thank you");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    java.util.Date dateInput2 = null;
+                    String getSlotId = manageAppointment.getSlotId(slotIdInput);
+                    try {
 
-                            appointmentBookingChoice = "2";
-                            break;
-                        }
-
+                        dateInput2 = simpleDateFormat.parse(dateInput);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                    continue;
-                }
+                    String dateFormat = simpleDateFormat.format(dateInput2);
+                    dateAvailable = manageAppointment.compareDate(dateFormat, getSlotId);
+                    if (dateAvailable) {
+                        System.out.println();
+                        System.out.println("Please enter a different date, this date is unavailable");
+                        continue;
+                    } else {
+                        System.out.println();
+                        System.out.println("Confirming this date");
+                        System.out.println("Please press 1 for confirming this date");
+                        System.out.println("Please press 2 for trying another date ");
+                        dateConfirmation = scanner.nextLine();
+                        if (dateConfirmation.equals("1")) {
+                            System.out.println();
+                            boolean confirmDate = false;
+                            confirmDate = medicalAppointmentDetailRepository.saveDate(medicalAppointmentDetails, getSlotId,
+                                    dateFormat);
+                            if (confirmDate == true) {
+                                System.out.println("Your appointment is booked");
+                                System.out.println("Thank you");
 
-            case "2":
-                System.out.println();
-                System.out.println("Thank you");
-                break;
+                                appointmentBookingChoice = "2";
+                                break;
+                            }
+
+                        }
+                        continue;
+                    }
+
+                case "2":
+                    System.out.println();
+                    System.out.println("Thank you");
+                    break;
             }
         } while (!appointmentBookingChoice.equals("2"));
-        
+
         getRouteToOrganisation();
     }
 
-    public void getRouteToOrganisation(){
-        Scanner sc= new Scanner(System.in);
+    public void getRouteToOrganisation() {
         System.out.println("Enter your pin code");
-        String pinCode1=sc.nextLine();
+        String pinCode1 = scanner.nextLine();
         System.out.println("Enter your pin code");
-        String pinCode2=sc.nextLine();
-        String route=locationService.getShortestPath(pinCode1, pinCode2);
+        String pinCode2 = scanner.nextLine();
+        String route = locationService.getShortestPath(pinCode1, pinCode2);
         System.out.println(route);
-        sc.close();
+        scanner.close();
     }
 
-    public void confirmMedicalAppointment() throws CustomException{
+    public void confirmMedicalAppointment() throws CustomException {
         displayAppointmentTime();
         bookDate();
-        
     }
-
-
 }

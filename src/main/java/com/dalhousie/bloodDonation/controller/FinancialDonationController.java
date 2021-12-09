@@ -4,6 +4,7 @@ import com.dalhousie.bloodDonation.constants.DonationType;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.service.FinancialDonationService;
 import com.dalhousie.bloodDonation.service.FinancialDonationServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class FinancialDonationController {
 
     public FinancialDonationController() {
         financialDonationService = new FinancialDonationServiceImpl();
-        scanner = new Scanner(System.in);
+        scanner = IOUtils.getInstance();
     }
 
     public void selectModeOfPayment() {

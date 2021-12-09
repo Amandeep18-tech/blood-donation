@@ -6,9 +6,8 @@ import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.service.PatientLoginInformationServiceImpl;
 import com.dalhousie.bloodDonation.service.PatientMedicalInformationServiceImpl;
 import com.dalhousie.bloodDonation.service.PatientPersonalInformationServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class PatientController {
@@ -18,7 +17,7 @@ public class PatientController {
     private final PatientLoginInformationServiceImpl patientLoginInfoService;
 
     public PatientController() {
-        input = new Scanner(System.in);
+        input = IOUtils.getInstance();
         patientPersonalInfoService = new PatientPersonalInformationServiceImpl();
         patientMedicalInfoService = new PatientMedicalInformationServiceImpl();
         patientLoginInfoService = new PatientLoginInformationServiceImpl();
@@ -41,9 +40,11 @@ public class PatientController {
                 patientPersonalInfoService.viewAllPatients();
                 break;
             case 3:
+                patientPersonalInfoService.viewAllPatients();
                 patientPersonalInfoService.deletePatient();
                 break;
             case 4:
+                patientPersonalInfoService.viewAllPatients();
                 patientPersonalInfoService.updatePatientPersonalInformation();
                 break;
             case 5:

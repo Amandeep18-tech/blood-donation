@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientPersonalInformationRepositoryImpl implements PatientPersonalInformationRepository {
-    
 
     @Override
     public int addPatient(PatientPersonalInformation patientInfo) throws CustomException {
