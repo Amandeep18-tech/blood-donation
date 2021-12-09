@@ -25,7 +25,7 @@ public class LocationRepository {
         try (Connection connection = dbUtils.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM location_distance_details");
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 LocationDetail locationDetail = new LocationDetail();
                 locationDetail.setPinCode1(resultSet.getString("pin_code1"));
                 locationDetail.setPinCode2(resultSet.getString("pin_code2"));
@@ -43,7 +43,7 @@ public class LocationRepository {
         try (Connection connection = dbUtils.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM location_details");
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 LocationName locationName = new LocationName();
                 locationName.setName(resultSet.getString("name"));
                 locationName.setPinCode(resultSet.getString("pin_code"));

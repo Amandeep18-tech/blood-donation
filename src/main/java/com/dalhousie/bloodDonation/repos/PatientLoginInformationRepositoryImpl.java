@@ -1,7 +1,6 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.model.PatientLoginInformation;
-import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
 import java.sql.Connection;

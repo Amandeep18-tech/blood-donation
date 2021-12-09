@@ -7,7 +7,7 @@ public interface SurveyService {
 
     int storeSurveyDetails() throws SQLException;
 
-    void viewAllSurvey() throws SQLException;
+    int viewAllSurvey() throws SQLException;
 
     void deleteSurvey() throws SQLException;
 

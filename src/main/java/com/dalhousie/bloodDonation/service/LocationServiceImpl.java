@@ -4,25 +4,26 @@ import com.dalhousie.bloodDonation.model.LocationDetail;
 import com.dalhousie.bloodDonation.model.LocationName;
 import com.dalhousie.bloodDonation.repos.LocationRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.dalhousie.bloodDonation.constants.BloodDonationConstants.DIRECTION_SYM;
 
-public class LocationServiceImpl implements LocationService{
+public class LocationServiceImpl implements LocationService {
 
     private List<LocationName> locationNames;
-    private float graph[][] = new float[][]{};
-    private LocationRepository locationRepository;
-    StringBuffer[] path;
-    float[] dist;
+    private float[][] graph = new float[][]{};
+    private final LocationRepository locationRepository;
+    private StringBuffer[] path;
+    private float[] dist;
 
-    public LocationServiceImpl(){
+    public LocationServiceImpl() {
         locationRepository = new LocationRepository();
     }
 
-    int minDistance(float[] dist, Boolean[] sptSet)
-    {
+    // Reference:  https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+    private int minDistance(float[] dist, Boolean[] sptSet) {
         float min = Float.MAX_VALUE;
         int min_index = -1;
         for (int v = 0; v < dist.length; v++)
@@ -33,20 +34,13 @@ public class LocationServiceImpl implements LocationService{
         return min_index;
     }
 
-    void printSolution(float[] dist, StringBuffer[] path)
-    {
-        System.out.println("Vertex \t\t Distance from Source");
-        for (int i = 0; i < dist.length; i++)
-            System.out.println(i + " \t\t " + dist[i] + " \t\t " + path[i]);
-    }
-
     void dijkstra(int src) {
         int size = this.locationNames.size();
         Boolean[] sptSet = new Boolean[size];
 
         for (int i = 0; i < size; i++) {
             dist[i] = Float.MAX_VALUE;
-            path[i] = new StringBuffer(""+i);
+            path[i] = new StringBuffer(this.locationNames.get(src).getName());
             sptSet[i] = false;
         }
         dist[src] = 0;
@@ -54,15 +48,13 @@ public class LocationServiceImpl implements LocationService{
         for (int count = 0; count < size - 1; count++) {
             int u = minDistance(dist, sptSet);
             sptSet[u] = true;
-            for (int v = 0; v < size; v++)
+            for (int v = 0; v < size; v++) {
                 if (!sptSet[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + graph[u][v] < dist[v]) {
                     dist[v] = dist[u] + graph[u][v];
-                    path[v] = path[u].append(DIRECTION_SYM).append(this.locationNames.get(v).getName());
+                    path[v] = new StringBuffer(path[u] + DIRECTION_SYM + this.locationNames.get(v).getName());
                 }
+            }
         }
-        //Todo remove
-        // print the constructed distance array
-        printSolution(dist, path);
     }
 
     @Override
@@ -70,11 +62,11 @@ public class LocationServiceImpl implements LocationService{
         initGraph();
         int src = 0;
         int dest = 0;
-        for(int i =0 ;i<this.locationNames.size();i++){
-            if(this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)){
+        for (int i = 0; i < this.locationNames.size(); i++) {
+            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)) {
                 src = i;
             }
-            if(this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)){
+            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode2)) {
                 dest = i;
             }
         }
@@ -87,11 +79,11 @@ public class LocationServiceImpl implements LocationService{
         initGraph();
         int src = 0;
         int dest = 0;
-        for(int i =0 ;i<this.locationNames.size();i++){
-            if(this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)){
+        for (int i = 0; i < this.locationNames.size(); i++) {
+            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)) {
                 src = i;
             }
-            if(this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)){
+            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode2)) {
                 dest = i;
             }
         }
@@ -106,22 +98,18 @@ public class LocationServiceImpl implements LocationService{
         this.graph = new float[size][size];
         for (int i = 0; i < this.locationNames.size(); i++) {
             for (int j = 0; j < this.locationNames.size(); j++) {
-                //Variable used in lambda expression should be final or effectively final
-                int finalI = i;
-                int finalJ = j;
+                String pinCode1 = this.locationNames.get(i).getPinCode();
+                String pinCode2 = this.locationNames.get(j).getPinCode();
                 LocationDetail locationDetail = locationDetails.stream()
                         .filter(x ->
-                                x.getPinCode1().equalsIgnoreCase(this.locationNames.get(finalI).getPinCode())
+                                x.getPinCode1().equalsIgnoreCase(pinCode1)
                                         &&
-                                        x.getPinCode1().equalsIgnoreCase(this.locationNames.get(finalJ).getPinCode())
+                                        x.getPinCode2().equalsIgnoreCase(pinCode2)
                         ).collect(Collectors.toList()).get(0);
                 this.graph[i][j] = locationDetail.getDistance();
             }
         }
         this.path = new StringBuffer[size];
         this.dist = new float[size];
-        //Todo Remove
-        System.out.println(this.graph);
-        System.out.println(this.locationNames);
     }
 }

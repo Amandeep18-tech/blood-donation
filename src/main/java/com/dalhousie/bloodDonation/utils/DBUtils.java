@@ -18,7 +18,6 @@ public class DBUtils {
     }
 
     public Connection getConnection() throws SQLException {
-        System.out.println(this.dbName);
         Connection connection = DriverManager.getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/" + this.dbName
                 , this.dbUserName, this.dbPassword);
         return connection;

@@ -13,9 +13,10 @@ public class InitController {
     private final ListSuitableDonorController listSuitableDonorController;
     private final AppointmentController appointmentController;
     private final RewardsController rewardsController;
-    private final MenuController menuController;
     private final FinancialDonationController financialDonationController;
     private final SurveyController surveyController;
+    private final DonorRecommendationController donorRecommendationController;
+    private final PatientController patientController;
 
     public InitController() throws SQLException {
         sc = new Scanner(System.in);
@@ -23,12 +24,13 @@ public class InitController {
         listSuitableDonorController = new ListSuitableDonorController();
         appointmentController = new AppointmentController();
         rewardsController = new RewardsController();
-        menuController = new MenuController();
         financialDonationController = new FinancialDonationController();
         surveyController = new SurveyController();
+        donorRecommendationController = new DonorRecommendationController();
+        patientController = new PatientController();
     }
 
-    public void mainMenu()  {
+    public void mainMenu() {
         int choice = 0;
         do {
             try {
@@ -53,7 +55,7 @@ public class InitController {
                     default:
                         System.out.println("Invalid option please retry!!");
                 }
-            }catch (CustomException e){
+            } catch (CustomException e) {
                 System.out.println(e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -65,7 +67,7 @@ public class InitController {
         } while (choice != 4);
     }
 
-    public void donor(){
+    public void donor() {
         int choice = 0;
         do {
             try {
@@ -102,7 +104,7 @@ public class InitController {
                     default:
                         System.out.println("Invalid option please retry!!");
                 }
-            }catch (CustomException e){
+            } catch (CustomException e) {
                 System.out.println(e.getMessage());
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -114,17 +116,16 @@ public class InitController {
         } while (choice != 4);
     }
 
-    public void patient(){
+    public void patient() {
         int choice = 0;
         do {
             try {
                 System.out.println("1.List of Donor");
                 System.out.println("2.List of Recommended Donor");
                 System.out.println("3.Request Status");
-                System.out.println("4.Profile");
-                System.out.println("5.Pending Survey");
-                System.out.println("6.Financial Donation");
-                System.out.println("7.Logout");
+                System.out.println("4.Pending Survey");
+                System.out.println("5.Financial Donation");
+                System.out.println("6.Logout");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
                 switch (choice) {
@@ -132,32 +133,29 @@ public class InitController {
                         listSuitableDonorController.patientDonorList();
                         break;
                     case 2:
-                        //Todo
+                        donorRecommendationController.displayRecommendedDonorsToPatient();
                         break;
                     case 3:
                         //Todo
                         break;
                     case 4:
-                        //Todo
-                        break;
-                    case 5:
                         surveyController.displayPendingSurveyToUser();
                         break;
-                    case 6:
+                    case 5:
                         financialDonationController.selectModeOfPayment();
                         break;
-                    case 7:
+                    case 6:
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
                 }
-            }catch (CustomException e){
+            } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
         } while (choice != 4);
     }
 
-    public void organization(){
+    public void organization() {
         int choice = 0;
         do {
             try {
@@ -181,13 +179,13 @@ public class InitController {
                         listSuitableDonorController.organisationDonorSelection();
                         break;
                     case 2:
-                        //Todo
+                        donorRecommendationController.displayRecommendedDonorsToOrganization();
                         break;
                     case 3:
                         surveyController.displaySurveyMenuForOrganization();
                         break;
                     case 4:
-                        menuController.displayMenu();
+                        patientController.displayPatientMenuForOrganization();
                         break;
                     case 5:
                         break;
@@ -208,7 +206,7 @@ public class InitController {
                     default:
                         System.out.println("Invalid option please retry!!");
                 }
-            }catch (CustomException e){
+            } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
         } while (choice != 4);

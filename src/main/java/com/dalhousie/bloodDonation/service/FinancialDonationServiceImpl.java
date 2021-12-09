@@ -10,6 +10,7 @@ import com.dalhousie.bloodDonation.repos.PendingFinancialDonationRepository;
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class FinancialDonationServiceImpl implements FinancialDonationService {
 
@@ -46,7 +47,7 @@ public class FinancialDonationServiceImpl implements FinancialDonationService {
         if (expiryDate.contains("/")) {
             String[] monthYear = expiryDate.split("/");
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Integer.valueOf(20+monthYear[1]), Integer.valueOf(monthYear[0]), 1);
+            calendar.set(Integer.valueOf(20 + monthYear[1]), Integer.valueOf(monthYear[0]), 1);
             if (calendar.compareTo(Calendar.getInstance()) < 0) {
                 throw new CustomException("Card Expired");
             }
@@ -96,6 +97,16 @@ public class FinancialDonationServiceImpl implements FinancialDonationService {
         if (!Pattern.matches("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$", mobileNumber)) {
             throw new CustomException("Invalid mobile number");
         }
+    }
+
+    @Override
+    public void makeDonation(String refNumber, DonationType donationType) {
+        List<PendingFinancialDonation> pendingFinancialDonations = pendingFinancialDonationRepository.getAllPendingFinancialDonations();
+        PendingFinancialDonation pendingFinancialDonation = pendingFinancialDonations.stream().filter(x ->
+                x.getDonationType() == donationType && x.getTpRefNum().equalsIgnoreCase(refNumber)
+        ).collect(Collectors.toList()).get(0);
+        FinancialDonation financialDonation = new FinancialDonation("", pendingFinancialDonation.getAmount(), generateRefNumber(), donationType);
+        financialDonationRepository.save(financialDonation);
     }
 
     @Override

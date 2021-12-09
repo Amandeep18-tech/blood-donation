@@ -2,8 +2,6 @@ package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.model.PatientLoginInformation;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
-import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
-import com.dalhousie.bloodDonation.service.PatientLoginInformationService;
 import com.dalhousie.bloodDonation.service.PatientLoginInformationServiceImpl;
 import com.dalhousie.bloodDonation.service.PatientMedicalInformationServiceImpl;
 import com.dalhousie.bloodDonation.service.PatientPersonalInformationServiceImpl;
@@ -26,7 +24,6 @@ public class PatientController {
     }
 
     public void displayPatientMenuForOrganization() throws SQLException {
-
         System.out.println("\nPatient Menu");
         System.out.println("1. Add Patient\n2. View Patients\n3. Delete Patient\n4. Update Patient Information\n5. Add Medical Information\n6. Delete Medical Information\n7. View Patient Medical Information\n8. Update Patient Medical Information\n9. Import Patients\n10. Go Back\n11. Exit");
         System.out.print("Select: ");

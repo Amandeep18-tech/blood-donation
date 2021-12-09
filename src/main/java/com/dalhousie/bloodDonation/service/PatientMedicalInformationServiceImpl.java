@@ -44,21 +44,21 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
         int bloodGroupSelected = in.nextInt();
         in.nextLine();
         if (bloodGroupSelected == 1) {
-            bloodGroup = BloodGroup.APos.type;
+            bloodGroup = BloodGroup.APos.toString();
         } else if (bloodGroupSelected == 2) {
-            bloodGroup = BloodGroup.ANeg.type;
+            bloodGroup = BloodGroup.ANeg.toString();
         } else if (bloodGroupSelected == 3) {
-            bloodGroup = BloodGroup.BPos.type;
+            bloodGroup = BloodGroup.BPos.toString();
         } else if (bloodGroupSelected == 4) {
-            bloodGroup = BloodGroup.BNeg.type;
+            bloodGroup = BloodGroup.BNeg.toString();
         } else if (bloodGroupSelected == 5) {
-            bloodGroup = BloodGroup.ABPos.type;
+            bloodGroup = BloodGroup.ABPos.toString();
         } else if (bloodGroupSelected == 6) {
-            bloodGroup = BloodGroup.ABNeg.type;
+            bloodGroup = BloodGroup.ABNeg.toString();
         } else if (bloodGroupSelected == 7) {
-            bloodGroup = BloodGroup.OPos.type;
+            bloodGroup = BloodGroup.OPos.toString();
         } else if (bloodGroupSelected == 8) {
-            bloodGroup = BloodGroup.ONeg.type;
+            bloodGroup = BloodGroup.ONeg.toString();
         } else {
             System.out.println("Invalid Option. Please retry");
         }
@@ -229,21 +229,21 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
         int bloodGroupSelected = in.nextInt();
         in.nextLine();
         if (bloodGroupSelected == 1) {
-            bloodGroup = BloodGroup.APos.type;
+            bloodGroup = BloodGroup.APos.toString();
         } else if (bloodGroupSelected == 2) {
-            bloodGroup = BloodGroup.ANeg.type;
+            bloodGroup = BloodGroup.ANeg.toString();
         } else if (bloodGroupSelected == 3) {
-            bloodGroup = BloodGroup.BPos.type;
+            bloodGroup = BloodGroup.BPos.toString();
         } else if (bloodGroupSelected == 4) {
-            bloodGroup = BloodGroup.BNeg.type;
+            bloodGroup = BloodGroup.BNeg.toString();
         } else if (bloodGroupSelected == 5) {
-            bloodGroup = BloodGroup.ABPos.type;
+            bloodGroup = BloodGroup.ABPos.toString();
         } else if (bloodGroupSelected == 6) {
-            bloodGroup = BloodGroup.ABNeg.type;
+            bloodGroup = BloodGroup.ABNeg.toString();
         } else if (bloodGroupSelected == 7) {
-            bloodGroup = BloodGroup.OPos.type;
+            bloodGroup = BloodGroup.OPos.toString();
         } else if (bloodGroupSelected == 8) {
-            bloodGroup = BloodGroup.ONeg.type;
+            bloodGroup = BloodGroup.ONeg.toString();
         } else {
             System.out.println("Invalid Option. Please retry");
         }

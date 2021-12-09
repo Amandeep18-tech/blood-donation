@@ -53,7 +53,7 @@ public class FinancialDonationController {
                     default:
                         System.out.println("Invalid option. Retry.");
                 }
-            }catch (CustomException e){
+            } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
         } while (modeOfPayment != 9);
@@ -65,6 +65,7 @@ public class FinancialDonationController {
         String transRefNum = scanner.next();
         try {
             financialDonationService.verifyDonation(transRefNum, DonationType.BANK_TRANSFER);
+            financialDonationService.makeDonation(transRefNum, DonationType.BANK_TRANSFER);
         } catch (CustomException e) {
             System.out.println("Invalid Details: " + e.getMessage());
         }
@@ -75,6 +76,7 @@ public class FinancialDonationController {
         String chequeNumber = scanner.next();
         try {
             financialDonationService.verifyDonation(chequeNumber, DonationType.CHEQUE);
+            financialDonationService.makeDonation(chequeNumber, DonationType.CHEQUE);
         } catch (CustomException e) {
             System.out.println("Invalid Details: " + e.getMessage());
         }
@@ -85,6 +87,7 @@ public class FinancialDonationController {
         String transRefNum = scanner.next();
         try {
             financialDonationService.verifyDonation(transRefNum, DonationType.CASH);
+            financialDonationService.makeDonation(transRefNum, DonationType.CASH);
         } catch (CustomException e) {
             System.out.println("Invalid Details: " + e.getMessage());
         }
@@ -94,13 +97,13 @@ public class FinancialDonationController {
         boolean transactionCompleted = false;
         System.out.println("Enter the amount to be donated:");
         Double amount = scanner.nextDouble();
-        while(!transactionCompleted) {
+        while (!transactionCompleted) {
             System.out.println("Enter UPI:");
             String upi = scanner.next();
             try {
                 transactionCompleted = financialDonationService.makeDonationByUPI(amount, upi);
-            }catch(CustomException e){
-                System.out.println("Invalid Card Details: "+e.getMessage());
+            } catch (CustomException e) {
+                System.out.println("Invalid Card Details: " + e.getMessage());
             }
         }
     }
@@ -109,7 +112,7 @@ public class FinancialDonationController {
         boolean transactionCompleted = false;
         System.out.println("Enter the amount to be donated:");
         Double amount = scanner.nextDouble();
-        while(!transactionCompleted) {
+        while (!transactionCompleted) {
             System.out.println("Enter Credit/Debit Card No:");
             String cardNo = scanner.next();
             System.out.println("Enter the Expiry date(MM/YY):");
@@ -118,8 +121,8 @@ public class FinancialDonationController {
             String cvv = scanner.next();
             try {
                 transactionCompleted = financialDonationService.makeDonationByCard(amount, cardNo, expiryDate, cvv);
-            }catch(CustomException e){
-                System.out.println("Invalid Card Details: "+e.getMessage());
+            } catch (CustomException e) {
+                System.out.println("Invalid Card Details: " + e.getMessage());
             }
         }
     }
@@ -128,7 +131,7 @@ public class FinancialDonationController {
         boolean transactionCompleted = false;
         System.out.println("Enter the amount to be donated:");
         Double amount = scanner.nextDouble();
-        while(!transactionCompleted) {
+        while (!transactionCompleted) {
             System.out.println("Enter Mobile No:");
             String mobileNumber = scanner.next();
             financialDonationService.validateAndSendLink(amount, mobileNumber);
@@ -136,9 +139,10 @@ public class FinancialDonationController {
             System.out.println("Enter the transaction reference number:");
             String transRefNumber = scanner.next();
             try {
-                transactionCompleted = financialDonationService.verifyDonation(transRefNumber,DonationType.MOBILE_BANKING);
-            }catch(CustomException e){
-                System.out.println("Invalid Card Details: "+e.getMessage());
+                transactionCompleted = financialDonationService.verifyDonation(transRefNumber, DonationType.MOBILE_BANKING);
+                financialDonationService.makeDonation(transRefNumber, DonationType.MOBILE_BANKING);
+            } catch (CustomException e) {
+                System.out.println("Invalid Card Details: " + e.getMessage());
             }
         }
     }

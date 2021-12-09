@@ -22,12 +22,14 @@ public class SurveyDetailsServiceImpl implements SurveyDetailsService {
         SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
         List<SurveyQuestions> questionList = questionRepo.getAllSurveyQuestions(surveyMasterId);
         List<SurveyDetails> surveyDetailsList = new ArrayList<>();
+        //String userId = String.valueOf() //Call Method To Get Current UserId
         for (SurveyQuestions questionObj : questionList) {
             System.out.println("Question: " + questionObj.getSurveyQuestion());
             System.out.print("Answer: ");
             String answer = in.nextLine();
             SurveyDetails surveyDetails = new SurveyDetails();
             surveyDetails.setQuestionId(questionObj.getId());
+            //surveyDetails.setUserId(userId);
             surveyDetails.setSurveyAnswer(answer);
             surveyDetailsList.add(surveyDetails);
             SurveyDetailsRepositoryImpl surveyDetailsRepositoryImpl = new SurveyDetailsRepositoryImpl();
