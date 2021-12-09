@@ -5,8 +5,12 @@ import com.dalhousie.bloodDonation.constants.BloodReqOrgStatus;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.BloodDonatedDetail;
 import com.dalhousie.bloodDonation.model.BloodRequestOrganisation;
+import com.dalhousie.bloodDonation.model.Organisation;
+import com.dalhousie.bloodDonation.model.Person;
 import com.dalhousie.bloodDonation.repos.BloodDonatedDetailRepository;
 import com.dalhousie.bloodDonation.repos.BloodRequestOrganisationRepository;
+import com.dalhousie.bloodDonation.repos.OrganizationRepository;
+import com.dalhousie.bloodDonation.repos.PersonRepository;
 import com.dalhousie.bloodDonation.utils.DateUtils;
 
 import java.util.*;
@@ -14,22 +18,27 @@ import java.util.stream.Collectors;
 
 public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
-    private static BloodRequestOrganisationRepository bloodRequestOrganisationRepository = null;
-    private static BloodDonatedDetailRepository bloodDonatedDetailRepository = null;
+    private final BloodRequestOrganisationRepository bloodRequestOrganisationRepository;
+    private final BloodDonatedDetailRepository bloodDonatedDetailRepository;
+    private final PersonRepository personRepository;
+    private final OrganizationRepository organizationRepository;
 
-    public OrgBloodDonationServiceImpl(){
+    public OrgBloodDonationServiceImpl() {
         bloodDonatedDetailRepository = new BloodDonatedDetailRepository();
         bloodRequestOrganisationRepository = new BloodRequestOrganisationRepository();
+        personRepository = new PersonRepository();
+        organizationRepository = new OrganizationRepository();
     }
 
     @Override
     public List<String[]> getListByDonorId(String orgId) throws CustomException {
-
         List<BloodDonatedDetail> bloodDonatedDetails = bloodDonatedDetailRepository.getAllRecords();
-        return (List<String[]>) bloodDonatedDetails.stream()
+        List<Person> personList = personRepository.getPerson();
+        return bloodDonatedDetails.stream()
                 .filter(bloodDonatedDetail -> bloodDonatedDetail.getOrgId().equalsIgnoreCase(orgId))
                 .map(bloodDonatedDetail -> {
-                    return new String[]{bloodDonatedDetail.getOrgId(), bloodDonatedDetail.getDonorID(), bloodDonatedDetail.getDonatedAt(), bloodDonatedDetail.getBloodGroup().toString()};
+                    Person person = personList.stream().filter(x -> x.getpersonId().equalsIgnoreCase(bloodDonatedDetail.getDonorID())).collect(Collectors.toList()).get(0);
+                    return new String[]{bloodDonatedDetail.getOrgId(), person.getName(), person.getcontactNumber(), bloodDonatedDetail.getDonatedAt(), bloodDonatedDetail.getBloodGroup().type};
                 }).collect(Collectors.toList());
     }
 
@@ -48,16 +57,24 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
     @Override
     public Map<Integer, String> getPendingRequests(String orgId) throws CustomException {
+        List<Organisation> organisations = organizationRepository.getAllPlaces();
         return bloodRequestOrganisationRepository.getAllRecords()
                 .stream().filter(bloodRequestOrganisation -> bloodRequestOrganisation.getOrgId().equalsIgnoreCase(orgId) && bloodRequestOrganisation.getStatus() == BloodReqOrgStatus.pending)
-                .collect(Collectors.toMap(BloodRequestOrganisation::getId,x->x.getOrgId()+"\t"+x.getBloodGroup()+"\t"+x.getUnitsRequired()+"\t"+x.getTimestamp()));
+                .collect(Collectors.toMap(BloodRequestOrganisation::getId, x -> {
+                    Organisation organisation = organisations.stream().filter(org -> org.getorganisationID().equalsIgnoreCase(x.getOrgId())).collect(Collectors.toList()).get(0);
+                    return String.format("%-20s%-20s%-20s%-20s", organisation.getorganisationName(), x.getBloodGroup().type, x.getUnitsRequired(), x.getTimestamp());
+                }));
     }
 
     @Override
     public void acceptBloodRequest(String optionSelected) throws CustomException {
-        BloodRequestOrganisation bloodRequestOrganisation = bloodRequestOrganisationRepository.getAllRecords().stream()
-                .filter(x -> x.getId() == Integer.valueOf(optionSelected))
-                .collect(Collectors.toList()).get(0);
+        List<BloodRequestOrganisation> bloodRequestOrganisations = bloodRequestOrganisationRepository.getAllRecords().stream()
+                .filter(x -> x.getId() == Integer.valueOf(optionSelected) && x.getStatus() == BloodReqOrgStatus.pending)
+                .collect(Collectors.toList());
+        if (bloodRequestOrganisations.size() != 1) {
+            throw new CustomException("Invalid Request ID. Kindly retry!");
+        }
+        BloodRequestOrganisation bloodRequestOrganisation = bloodRequestOrganisations.get(0);
 
         int bloodRequested = bloodRequestOrganisation.getUnitsRequired();
         BloodGroup bloodGroup = bloodRequestOrganisation.getBloodGroup();
@@ -67,8 +84,7 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
                 .filter(x -> x.getOrgId().equalsIgnoreCase(bloodRequestOrganisation.getOrgId()))
                 .collect(Collectors.groupingBy(BloodDonatedDetail::getBloodGroup))
                 .get(bloodGroup);
-        int bloodAvailable = availableBloodDonatedDetails.size();
-        if (bloodRequested > bloodAvailable) {
+        if (availableBloodDonatedDetails == null || bloodRequested > availableBloodDonatedDetails.size()) {
             throw new CustomException("You don't have sufficient blood available.");
         }
         availableBloodDonatedDetails.stream()
@@ -83,7 +99,6 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
 
     @Override
     public LinkedHashMap<String, String> getRecommendedOrganisation(int unitsNeeded, BloodGroup bloodGroup) throws CustomException {
-
         Map<String, List<BloodDonatedDetail>> collect = bloodDonatedDetailRepository.getAllRecords().stream()
                 .filter(x -> x.getBloodGroup() == bloodGroup)
                 .collect(Collectors.groupingBy(BloodDonatedDetail::getOrgId));
