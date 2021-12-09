@@ -65,8 +65,8 @@ public class LoginController {
             //boolean check = isloggedin(userName);
             //if (check) {
                 System.out.println("Welcome Again:- " + userName);
-                LoginController loginController = new LoginController();
-                loginController.menu();
+//                LoginController loginController = new LoginController();
+//                loginController.menu();
             //} else {
                 loginService.userLogin(userName, password);
             //}

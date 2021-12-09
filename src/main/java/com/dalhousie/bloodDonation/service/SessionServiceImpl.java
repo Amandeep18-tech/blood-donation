@@ -13,7 +13,7 @@ public class SessionServiceImpl implements SessionService{
 
     @Override
     public boolean isLoggedIn() {
-        return session.isEmpty();
+        return !session.isEmpty();
     }
 
     @Override

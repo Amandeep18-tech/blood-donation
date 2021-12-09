@@ -1,6 +1,9 @@
 package com.dalhousie.bloodDonation.controller;
 
+import com.dalhousie.bloodDonation.constants.UserType;
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 
 import java.util.Scanner;
 
@@ -18,6 +21,7 @@ public class InitController {
     private final OrgBloodRequestController orgBloodRequestController;
     private final DonorAppointmentController donorAppointmentController;
     private final DonorMedicalRecordController donorMedicalRecordController;
+    private final SessionService sessionService;
 
     public InitController() {
         sc = new Scanner(System.in);
@@ -32,6 +36,7 @@ public class InitController {
         orgBloodRequestController = new OrgBloodRequestController();
         donorAppointmentController = new DonorAppointmentController();
         donorMedicalRecordController = new DonorMedicalRecordController();
+        sessionService = new SessionServiceImpl();
     }
 
     public void mainMenu() {
@@ -39,9 +44,10 @@ public class InitController {
         do {
             try {
                 System.out.println("1.Login");
-                System.out.println("2.Signup");
-                System.out.println("3.ForgetPassword");
-                System.out.println("4.Exit");
+                System.out.println("2.Signup for Donor");
+                System.out.println("3.Signup for Organisation");
+                System.out.println("4.ForgetPassword");
+                System.out.println("5.Exit");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
                 switch (choice) {
@@ -52,9 +58,12 @@ public class InitController {
                         loginController.signupMethod();
                         break;
                     case 3:
-                        loginController.forgetPassword();
+                        loginController.organizationSignupMethod();
                         break;
                     case 4:
+                        loginController.forgetPassword();
+                        break;
+                    case 5:
 //                        loginController.
                         break;
                     default:
@@ -63,10 +72,16 @@ public class InitController {
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
-            //Todo If login success
-            donor();
-            organization();
-            patient();
+            if(sessionService.isLoggedIn()) {
+                UserType userType = sessionService.getUserType();
+                if (userType == UserType.DONOR) {
+                    donor();
+                } else if (userType == UserType.ORGANIZATION) {
+                    organization();
+                } else if (userType == UserType.PATIENT) {
+                    patient();
+                }
+            }
         } while (choice != 4);
     }
 

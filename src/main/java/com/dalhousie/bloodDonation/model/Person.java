@@ -16,7 +16,7 @@ public class Person {
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
     }
-    
+
 
     public String getName() {
         return name;
@@ -57,10 +57,7 @@ public class Person {
         return age;
     }
 
-    
-
     public void setAge(int age) {
         this.age = age;
     }
 }
-
