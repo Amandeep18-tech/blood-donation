@@ -15,23 +15,27 @@ import com.dalhousie.bloodDonation.service.ListSuitableDonor;
 import com.dalhousie.bloodDonation.service.ListSuitableDonorImpl;
 import com.dalhousie.bloodDonation.service.LocationService;
 import com.dalhousie.bloodDonation.service.LocationServiceImpl;
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 
 public class ListSuitableDonorController {
     private final PersonRepository personRepository;
     private final ListSuitableDonor listSuitableDonorImpl;
     private final LocationService LocationService;
+    private final SessionService sessionService;
 
     public ListSuitableDonorController() {
         personRepository = new PersonRepository();
         listSuitableDonorImpl = new ListSuitableDonorImpl();
         LocationService = new LocationServiceImpl();
+        sessionService= new SessionServiceImpl();
     }
 
     public void patientDonorList() throws CustomException {
         System.out.println("List of Suitable patient based on your profile");
         String personBloodType = null;
         List<Person> personList = personRepository.getPerson();
-        String currentId = "5d9b8b40-5213-11ec-917b-e2ed2ce588f5";
+        String currentId = sessionService.getUserId();
         for (Person person : personList) {
 
             if (person.getpersonId().equals(currentId)) {
@@ -39,7 +43,7 @@ public class ListSuitableDonorController {
                 personBloodType = person.getbloodGroup();
             }
 
-        } // depends on the user login.
+        } 
 
         List<String> donorId = new ArrayList<String>();
         donorId = listSuitableDonorImpl.getSuitableDonorID(personBloodType);
@@ -59,7 +63,7 @@ public class ListSuitableDonorController {
 
     }
 
-    public void organisationDonorSelection() {
+    public void organisationDonorSelection() throws CustomException {
         System.out.println("Do you want to select Donors according to various criteria Yes or No");
         Scanner sc = new Scanner(System.in);
         
@@ -190,7 +194,10 @@ public class ListSuitableDonorController {
                 }
             }
         }
-
+        if(donorSelection.isEmpty()){
+            sc.close();
+            throw new CustomException("No suitable match");
+        }
         donorSelection.forEach((key, value) -> {
             String name = listSuitableDonorImpl.getPersonName(key);
             System.out.println(name);

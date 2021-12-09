@@ -74,6 +74,7 @@ public class AppointmentController {
 
     public void bookDate()  {
 
+
         Scanner scanner = new Scanner(System.in);
         String appointmentBookingChoice = null;
         String slotIdInput = null;
@@ -168,6 +169,7 @@ public class AppointmentController {
     public void confirmMedicalAppointment() throws CustomException{
         displayAppointmentTime();
         bookDate();
+        
     }
 
 

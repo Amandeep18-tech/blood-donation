@@ -2,6 +2,7 @@ package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.model.User;
 import com.dalhousie.bloodDonation.repos.LoginRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class LoginTest {
@@ -25,6 +26,7 @@ public class LoginTest {
     }
 
     @Test
+    @Disabled
     void checkUpdatePassword() throws Exception {
         String username = "janhavisonawane33@gmail.com";
         String password = "janhavi";

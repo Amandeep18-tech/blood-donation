@@ -1,19 +1,20 @@
 package com.dalhousie.bloodDonation;
 
+<<<<<<< HEAD
 import com.dalhousie.bloodDonation.controller.*;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 import com.dalhousie.bloodDonation.exception.CustomException;
 
+=======
+import com.dalhousie.bloodDonation.controller.InitController;
+>>>>>>> d9e80a40e6c6497cbd59014dde8add1d8d69353f
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
 
 @SpringBootApplication
 public class BloodDonationSystemApplication {
 
+<<<<<<< HEAD
     public static void main(String[] args) throws SQLException, ParseException, CustomException {
         DBUtils dbUtils = new DBUtils();
         Connection conn = dbUtils.getConnection();
@@ -42,7 +43,11 @@ public class BloodDonationSystemApplication {
         // menuController.displayMenu();
         SurveyController surveyController = new SurveyController();
         surveyController.displaySurveyMenuForOrganization();
+=======
+    public static void main(String[] args) {
+>>>>>>> d9e80a40e6c6497cbd59014dde8add1d8d69353f
         SpringApplication.run(BloodDonationSystemApplication.class, args);
+        new InitController().mainMenu();
     }
 
 }

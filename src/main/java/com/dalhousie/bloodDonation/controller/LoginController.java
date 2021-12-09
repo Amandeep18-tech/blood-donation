@@ -95,6 +95,8 @@ public class LoginController {
             String bloodGroup = sc.next();
             System.out.println("Enter your Contact number:-");
             String contactNo = sc.next();
+            System.out.println("Enter your PinCode:-");
+            String pinCode = sc.next();
             user = new User();
             user.setBloodGroup(bloodGroup);
             user.setFirstname(fname);
@@ -103,7 +105,7 @@ public class LoginController {
             user.setPassword(pass);
             user.setLastname(lname);
             loginService.userSignup(user);
-            loginService.addPerson(contactNo,user);
+            loginService.addPerson(contactNo,user,pinCode);
         }catch (Exception e){
             throw new CustomException("Error caught while signing up");
         }
@@ -143,16 +145,22 @@ public class LoginController {
             String location = sc.next();
             System.out.println("Organizatin type:-");
             String type = sc.next();
+            System.out.println("Enter Email:-");
+            String email = sc.next();
             System.out.println("Enter your password:-");
             String password = sc.next();
             System.out.println("Enter slots available:-");
             String slots = sc.next();
+            System.out.println("Enter PinCode:-");
+            String pinCode = sc.next();
             organisation= new Organisation();
             organisation.setorganisationName(oname);
             organisation.setLocation(location);
             organisation.setorganisationType(type);
             organisation.setPassword(password);
             organisation.setSlots_available(slots);
+            organisation.setPinCode(pinCode);
+            organisation.setEmail(email);
             loginService.organizationSignup(organisation);
         }catch (Exception e){
             e.printStackTrace();

@@ -1,8 +1,8 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
-
-
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 import com.mysql.cj.xdevapi.Statement;
 import java.util.UUID;
@@ -20,9 +20,11 @@ import java.util.UUID;
 public class MedicalAppointmentDetailRepository {
     Connection conn;
     private int executeUpdate;
+    SessionService sessionService;
 
     public MedicalAppointmentDetailRepository(){
         DBUtils dbUtils = new DBUtils();
+        sessionService = new SessionServiceImpl();
         try {
             conn = dbUtils.getConnection();
         } catch (SQLException e) {
@@ -64,7 +66,7 @@ public class MedicalAppointmentDetailRepository {
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
         ps.setString(1, uuidAsString);
-        ps.setString(2,"5c256da3-3d82-11ec-917b-e2ed2ce588f5");
+        ps.setString(2,sessionService.getUserId());
         ps.setString(3,slotId );
         ps.setString(4,dateInput);
         executeUpdate = ps.executeUpdate();
