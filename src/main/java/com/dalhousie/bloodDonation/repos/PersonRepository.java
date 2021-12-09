@@ -10,19 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonRepository {
-    Connection conn;
-
-    public PersonRepository() {
-        DBUtils dbUtils = new DBUtils();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    
     public List<Person> getPerson(){
         List<Person> personDetail = new ArrayList();
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         String query="SELECT * FROM Person" ;
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
@@ -41,6 +33,7 @@ public class PersonRepository {
     }
     public void updatePersonStatus() {
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         String query = "UPDATE Person SET appointment_attended_flag= ? WHERE person_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         

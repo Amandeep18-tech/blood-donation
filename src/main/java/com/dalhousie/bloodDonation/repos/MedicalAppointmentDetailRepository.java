@@ -18,24 +18,17 @@ import java.util.List;
 import java.util.UUID;
 
 public class MedicalAppointmentDetailRepository {
-    Connection conn;
     private int executeUpdate;
     SessionService sessionService;
 
     public MedicalAppointmentDetailRepository(){
-        DBUtils dbUtils = new DBUtils();
         sessionService = new SessionServiceImpl();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            
-            e.printStackTrace();
-        }
     }
 
     public List<MedicalAppointmentDetails> getAllDetails() {
         List<MedicalAppointmentDetails> allDateList = new ArrayList();
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         String query="SELECT * FROM medical_appointment_details";
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
@@ -61,6 +54,7 @@ public class MedicalAppointmentDetailRepository {
 
     public boolean saveDate(MedicalAppointmentDetails medicalAppointmentDetails,String slotId, String dateInput){
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         String query = "INSERT INTO medical_appointment_details (medical_appointment_details_id, " + "patient_id, " + "slot_id,"+"slot_date) VALUES (?, ?, ?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();

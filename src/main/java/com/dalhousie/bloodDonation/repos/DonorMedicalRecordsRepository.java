@@ -12,20 +12,12 @@ import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class DonorMedicalRecordsRepository {
-    Connection conn;
-    private int executeUpdate;
-
-    public DonorMedicalRecordsRepository(){
-        DBUtils dbUtils = new DBUtils();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     public boolean addNewMedicalRecord(DonorMedicalRecords donorMedicalRecords) {
         try{
+        int executeUpdate;
+        Connection conn= DBUtils.getInstance().getConnection();
         String query = "INSERT INTO donor_medical_records(id, "+"donor_id," + "hepatitis_B," + "hepatitis_C,"+"HIV_flag,"+"hemoglobin_level,"+"hemochromatosis,"+"rbc_count,"+"platelet_count) VALUES (?, ?, ?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
@@ -50,6 +42,7 @@ public class DonorMedicalRecordsRepository {
     public List<DonorMedicalRecords> getAllDonorMedicalRecords(){
         List<DonorMedicalRecords> medicalRecordList = new ArrayList();
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         String query="SELECT * FROM donor_medical_records";
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
@@ -78,6 +71,8 @@ public class DonorMedicalRecordsRepository {
 
     public boolean updateMedicalRecord(DonorMedicalRecords donorMedicalRecords,String donorID){
         try{
+        int executeUpdate;
+        Connection conn= DBUtils.getInstance().getConnection();
         String query = "UPDATE donor_medical_records SET HIV_flag= ?,hepatitis_B=?,hepatitis_C=?,hemochromatosis=?,hemoglobin_level=?,rbc_count=?,platelet_count=? WHERE donor_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1,donorMedicalRecords.getHIVFlag());
