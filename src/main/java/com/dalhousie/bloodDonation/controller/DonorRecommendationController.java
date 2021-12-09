@@ -1,29 +1,33 @@
 package com.dalhousie.bloodDonation.controller;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.service.DonorRecommendationServiceImpl;
 import com.dalhousie.bloodDonation.service.PatientPersonalInformationServiceImpl;
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class DonorRecommendationController {
     private DonorRecommendationServiceImpl donorRecommendationService;
     private PatientPersonalInformationServiceImpl patientPersonalInformationService;
     private Scanner input;
+    private final SessionService sessionService;
 
-    public DonorRecommendationController() throws SQLException {
+    public DonorRecommendationController() {
         donorRecommendationService = new DonorRecommendationServiceImpl();
         patientPersonalInformationService = new PatientPersonalInformationServiceImpl();
         input = new Scanner(System.in);
+        sessionService = new SessionServiceImpl();
     }
 
-    public int displayRecommendedDonorsToPatient() throws SQLException {
-        int patientId=0;
+    public int displayRecommendedDonorsToPatient() throws CustomException {
+        int patientId = Integer.parseInt(sessionService.getUserId());
         int size = donorRecommendationService.donorRecommendation(patientId);
         return size;
     }
 
-    public void displayRecommendedDonorsToOrganization() throws SQLException {
+    public void displayRecommendedDonorsToOrganization() throws CustomException {
         patientPersonalInformationService.viewAllPatients();
         System.out.println();
         System.out.print("Enter Patient ID For Whom You Want Donor Recommendation: ");

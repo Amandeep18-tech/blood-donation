@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.SurveyDetails;
 import com.dalhousie.bloodDonation.model.SurveyQuestions;
 import com.dalhousie.bloodDonation.repos.SurveyDetailsRepositoryImpl;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 public class SurveyDetailsServiceImpl implements SurveyDetailsService {
 
     @Override
-    public void fillSurvey() throws SQLException {
+    public void fillSurvey() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID That You Received In Mail: ");
         int surveyMasterId = in.nextInt();

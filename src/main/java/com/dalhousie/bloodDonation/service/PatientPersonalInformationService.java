@@ -1,18 +1,20 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
 public interface PatientPersonalInformationService {
     void getPatientInformationInput();
 
-    int storePatientInformation() throws SQLException;
+    int storePatientInformation() throws CustomException;
 
-    void viewAllPatients() throws SQLException;
+    void viewAllPatients() throws CustomException;
 
-    void deletePatient() throws SQLException;
+    void deletePatient() throws CustomException;
 
-    void updatePatientPersonalInformation() throws SQLException;
+    void updatePatientPersonalInformation() throws CustomException;
 
-    void importPatientsFromFile() throws SQLException, IOException;
+    void importPatientsFromFile() throws CustomException;
 }

@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.DonorInformation;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.repos.DonorMedicalInformationRepositoryImpl;
@@ -19,7 +20,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
     private final DonorMedicalInformationRepositoryImpl donorMedicalInfoRepo;
     private final CalculateDonorMatchingPercentageServiceImpl donorMatchingPercentage;
 
-    public DonorRecommendationServiceImpl() throws SQLException {
+    public DonorRecommendationServiceImpl() {
         patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
         donorPersonalInfoRepo = new DonorPersonalInformationRepositoryImpl();
         donorMedicalInfoRepo = new DonorMedicalInformationRepositoryImpl();
@@ -27,7 +28,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
     }
 
     @Override
-    public int donorRecommendation(int patientId) throws SQLException {
+    public int donorRecommendation(int patientId) throws CustomException {
         PatientMedicalInformation patientMedicalInfo = patientMedicalInfoRepo.getPatientMedicalInformation(patientId);
         List<DonorInformation> donorListByMatchedBloodGroup = donorPersonalInfoRepo.getAllMatchingBloodTypeDonors(patientMedicalInfo.getBloodGroup());
         List<DonorInformation> completeDonorInfo = new ArrayList<>();
@@ -45,7 +46,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
             DecimalFormat df = new DecimalFormat("##.##");
             Double patientHemoglobin = Double.valueOf(df.format(patientMedicalInfo.getHemoglobinLevel()));
             Double donorHemoglobin = Double.valueOf(df.format(donorInformation.getHemoglobinLevel() / 10));
-            List<Double> hemoglobinLevelValues = new ArrayList<>() {{
+            List<Double> hemoglobinLevelValues = new ArrayList<Double>() {{
                 add(patientHemoglobin);
                 add(donorHemoglobin);
             }};
@@ -53,7 +54,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
 
             int patientRbcCount = patientMedicalInfo.getRbcCount();
             int donorRbcCount = donorInformation.getRbcCount();
-            List<Integer> rbcCountValues = new ArrayList<>() {{
+            List<Integer> rbcCountValues = new ArrayList<Integer>() {{
                 add(patientRbcCount);
                 add(donorRbcCount);
             }};
@@ -61,7 +62,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
 
             int patientPlateletCount = patientMedicalInfo.getPlateletCount();
             int donorPlateletCount = donorInformation.getPlateletCount();
-            List<Integer> plateletCountValues = new ArrayList<>() {{
+            List<Integer> plateletCountValues = new ArrayList<Integer>() {{
                 add(patientPlateletCount);
                 add(donorPlateletCount);
             }};

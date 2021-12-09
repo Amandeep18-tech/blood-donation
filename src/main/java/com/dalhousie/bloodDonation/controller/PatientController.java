@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.controller;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientLoginInformation;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.service.PatientLoginInformationServiceImpl;
@@ -23,7 +24,7 @@ public class PatientController {
         patientLoginInfoService = new PatientLoginInformationServiceImpl();
     }
 
-    public void displayPatientMenuForOrganization() throws SQLException {
+    public void displayPatientMenuForOrganization() throws CustomException {
         System.out.println("\nPatient Menu");
         System.out.println("1. Add Patient\n2. View Patients\n3. Delete Patient\n4. Update Patient Information\n5. Add Medical Information\n6. Delete Medical Information\n7. View Patient Medical Information\n8. Update Patient Medical Information\n9. Import Patients\n10. Go Back\n11. Exit");
         System.out.print("Select: ");
@@ -63,11 +64,7 @@ public class PatientController {
                 patientMedicalInfoService.updatePatientMedicalInformation();
                 break;
             case 9:
-                try {
-                    patientPersonalInfoService.importPatientsFromFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                patientPersonalInfoService.importPatientsFromFile();
                 break;
             case 10:
                 break;
