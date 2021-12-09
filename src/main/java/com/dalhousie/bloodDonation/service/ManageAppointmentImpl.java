@@ -20,13 +20,14 @@ import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
 import com.dalhousie.bloodDonation.model.MedicalAppointmentMaster;
 import com.dalhousie.bloodDonation.model.Organisation;
-import com.dalhousie.bloodDonation.model.Person;
+import com.dalhousie.bloodDonation.model.Person;  
 import com.dalhousie.bloodDonation.model.Organisation;
 
 public class ManageAppointmentImpl implements ManageAppointment {
 
     @Override
     public String GetAvailableTime(MedicalAppointmentMaster medicalAppointmentMaster, String placeName){
+        
         if (medicalAppointmentMaster.getorganisationID().equals(placeName)) {
             
             return medicalAppointmentMaster.getslotNumber() + " " + medicalAppointmentMaster.getslotStartTime() + " "

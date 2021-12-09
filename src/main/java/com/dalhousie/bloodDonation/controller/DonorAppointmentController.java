@@ -23,6 +23,8 @@ import com.dalhousie.bloodDonation.repos.OrganizationRepository;
 import com.dalhousie.bloodDonation.repos.PatientBloodRequestRepository;
 import com.dalhousie.bloodDonation.repos.PatientRequestMappingRepository;
 import com.dalhousie.bloodDonation.service.DonorDonationBookingImpl;
+import com.dalhousie.bloodDonation.service.LocationService;
+import com.dalhousie.bloodDonation.service.LocationServiceImpl;
 
 public class DonorAppointmentController {
     DonorDonationBookingImpl donationBookingImpl = null;
@@ -32,6 +34,8 @@ public class DonorAppointmentController {
     BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = null;
     BloodDonatedDetailsRepository bloodDonatedDetailsRepository=null;
     PatientBloodRequestRepository patientBloodRequestRepository=null;
+    LocationService locationService=null;
+
     public DonorAppointmentController() {
         donationBookingImpl = new DonorDonationBookingImpl();
         patientBloodRequest = new PatientBloodRequest();
@@ -40,6 +44,7 @@ public class DonorAppointmentController {
         bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
         bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
         bloodDonatedDetailsRepository= new BloodDonatedDetailsRepository();
+        locationService= new LocationServiceImpl();
 
     }
     public void addPatientRequest(){
@@ -240,7 +245,17 @@ public class DonorAppointmentController {
 
             }
         } while (!appointmentBookingChoice.equals("2"));
-
+        getRouteToOrganisation();
+    }
+    public void getRouteToOrganisation(){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Enter your pincode");
+        System.out.println("Enter your pin code");
+        String pinCode1=sc.nextLine();
+        System.out.println("Enter your pin code");
+        String pinCode2=sc.nextLine();
+        String route=locationService.getShortestPath(pinCode1, pinCode2);
+        sc.close();
     }
 
 }
