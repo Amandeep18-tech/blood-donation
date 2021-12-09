@@ -5,7 +5,6 @@ import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class PatientMedicalInformationServiceImpl implements PatientMedicalInformationService {

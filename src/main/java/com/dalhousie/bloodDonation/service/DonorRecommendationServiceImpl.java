@@ -7,7 +7,6 @@ import com.dalhousie.bloodDonation.repos.DonorMedicalInformationRepositoryImpl;
 import com.dalhousie.bloodDonation.repos.DonorPersonalInformationRepositoryImpl;
 import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
 
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;

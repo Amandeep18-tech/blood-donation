@@ -16,7 +16,7 @@ public class DonorPersonalInformationRepositoryImpl implements DonorPersonalInfo
     @Override
     public List<DonorInformation> getAllMatchingBloodTypeDonors(String bloodGroup) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM Person WHERE blood_group= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, bloodGroup);
@@ -33,8 +33,8 @@ public class DonorPersonalInformationRepositoryImpl implements DonorPersonalInfo
                 donorListByMatchedBloodGroup.add(donorPersonalInfo);
             }
             return donorListByMatchedBloodGroup;
-        } catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Find Any Matching Donor");
         }
     }
 }

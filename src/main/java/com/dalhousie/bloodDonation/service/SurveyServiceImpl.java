@@ -3,10 +3,7 @@ package com.dalhousie.bloodDonation.service;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.Survey;
 import com.dalhousie.bloodDonation.repos.SurveyRepositoryImpl;
-import com.dalhousie.bloodDonation.utils.DBUtils;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 

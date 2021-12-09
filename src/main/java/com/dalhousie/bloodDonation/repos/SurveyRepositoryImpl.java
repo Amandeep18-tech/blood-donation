@@ -13,7 +13,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     @Override
     public int add(Survey survey) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "INSERT INTO survey_master (survey_title, " + "survey_desc, " + "survey_type) VALUES (?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, survey.getSurveyTitle());
@@ -25,31 +25,29 @@ public class SurveyRepositoryImpl implements SurveyRepository {
             while ((rs.next())) {
                 surveyMasterId = rs.getInt(1);
             }
-            System.out.println("Survey Master ID: " + surveyMasterId);
-
             return surveyMasterId;
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Create Survey");
         }
     }
 
     @Override
     public void delete(int id) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "DELETE FROM survey_master WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Delete Survey");
         }
     }
 
     @Override
     public Survey getSurvey(int id) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
 
             String query = "SELECT * FROM survey_master WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
@@ -71,15 +69,15 @@ public class SurveyRepositoryImpl implements SurveyRepository {
             } else {
                 return null;
             }
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Fetch Survey");
         }
     }
 
     @Override
     public List<Survey> getAllSurvey() throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM survey_master";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -94,15 +92,15 @@ public class SurveyRepositoryImpl implements SurveyRepository {
                 surveyList.add(survey);
             }
             return surveyList;
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Fetch All Surveys");
         }
     }
 
     @Override
     public void update(Survey survey) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "UPDATE survey_master SET survey_title= ?, " + "survey_desc= ?, " + "survey_type= ?" + "WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, survey.getSurveyTitle());
@@ -110,8 +108,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
             ps.setString(3, survey.getSurveyType());
             ps.setInt(4, survey.getId());
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Update Survey");
         }
     }
 }

@@ -16,34 +16,34 @@ public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository 
     @Override
     public void add(SurveyQuestions surveyQuestion) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "INSERT INTO survey_questions (survey_master_id, " + "survey_question) VALUES (?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, surveyQuestion.getSurveyMasterId());
             ps.setString(2, surveyQuestion.getSurveyQuestion());
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Add Survey Questions");
         }
     }
 
     @Override
     public void delete(int id) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "DELETE FROM survey_questions WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Delete Survey Question");
         }
     }
 
     @Override
     public SurveyQuestions getSurveyQuestion(int id) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM survey_questions WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
@@ -61,8 +61,8 @@ public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository 
             } else {
                 return null;
             }
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Fetch Survey Question");
         }
     }
 
@@ -70,7 +70,7 @@ public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository 
     @Override
     public List<SurveyQuestions> getAllSurveyQuestions(int surveyMasterId) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM survey_questions WHERE survey_master_id = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, surveyMasterId);
@@ -84,22 +84,22 @@ public class SurveyQuestionsRepositoryImpl implements SurveyQuestionsRepository 
                 questionList.add(surveyQuestion);
             }
             return questionList;
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Fetch All Survey Questions");
         }
     }
 
     @Override
     public void update(SurveyQuestions surveyQuestion) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "UPDATE survey_questions SET survey_question= ? " + "WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, surveyQuestion.getSurveyQuestion());
             ps.setInt(2, surveyQuestion.getId());
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Update Survey Question");
         }
     }
 }

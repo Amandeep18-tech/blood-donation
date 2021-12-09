@@ -7,8 +7,6 @@ import com.dalhousie.bloodDonation.repos.PatientLoginInformationRepositoryImpl;
 import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepositoryImpl;
 import com.dalhousie.bloodDonation.repos.UserLoginRepositoryImpl;
 
-import java.sql.SQLException;
-
 public class PatientLoginInformationServiceImpl implements PatientLoginInformationService {
     @Override
     public PatientLoginInformation getPatientInformation(int patient_id) throws CustomException {

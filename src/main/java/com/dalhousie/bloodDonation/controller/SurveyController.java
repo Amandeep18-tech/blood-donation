@@ -57,10 +57,12 @@ public class SurveyController {
                 break;
             case 7:
                 surveyService.viewAllSurvey();
+                surveyQuestionsService.viewAllSurveyQuestions();
                 surveyQuestionsService.deleteSurveyQuestion();
                 break;
             case 8:
                 surveyService.viewAllSurvey();
+                surveyQuestionsService.viewAllSurveyQuestions();
                 surveyQuestionsService.updateSurveyQuestion();
                 break;
             case 9:

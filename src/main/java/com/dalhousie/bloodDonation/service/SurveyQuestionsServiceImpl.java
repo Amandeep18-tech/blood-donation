@@ -4,7 +4,6 @@ import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.SurveyQuestions;
 import com.dalhousie.bloodDonation.repos.SurveyQuestionsRepositoryImpl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
