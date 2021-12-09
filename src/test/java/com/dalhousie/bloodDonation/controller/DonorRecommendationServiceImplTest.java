@@ -1,6 +1,7 @@
-package com.dalhousie.bloodDonation.service;
+package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.service.DonorRecommendationServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

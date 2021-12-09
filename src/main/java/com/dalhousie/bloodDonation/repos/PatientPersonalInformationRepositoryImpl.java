@@ -13,7 +13,7 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
     @Override
     public int addPatient(PatientPersonalInformation patientInfo) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "INSERT INTO patient_personal_information (patient_name, " + "date_of_birth, " + "age, " + "address, " + "contact_number, " + "email_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, patientInfo.getPatientName());
@@ -30,15 +30,15 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
             }
             System.out.println("Patient ID: " + patientId);
             return patientId;
-        }catch (SQLException e){
-            throw new CustomException("Error: ");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Add Patient Personal Information");
         }
     }
 
     @Override
     public List<PatientPersonalInformation> getAllPatients() throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM patient_personal_information";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -56,28 +56,28 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
                 patientList.add(patientPersonalInfo);
             }
             return patientList;
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Fetch All Patient Personal Information");
         }
     }
 
     @Override
     public void delete(int id) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "DELETE FROM patient_personal_information WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Delete Patient's Personal Information");
         }
     }
 
     @Override
     public PatientPersonalInformation getPatient(int id) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM  patient_personal_information WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
@@ -100,15 +100,15 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
             } else {
                 return null;
             }
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Fetch Patient's Personal Information");
         }
     }
 
     @Override
     public void update(PatientPersonalInformation patientPersonalInfo) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "UPDATE patient_personal_information SET patient_name= ?, " + "date_of_birth= ?, " + "age= ?, " + "address= ?, " + "contact_number= ?, " + "email_id= ?" + "WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, patientPersonalInfo.getPatientName());
@@ -119,8 +119,8 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
             ps.setString(6, patientPersonalInfo.getEmailId());
             ps.setInt(7, patientPersonalInfo.getId());
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Update Patient's Personal Information");
         }
     }
 

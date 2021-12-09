@@ -16,7 +16,7 @@ public class UserLoginRepositoryImpl implements UserLoginRepository {
     @Override
     public void storeUserLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "INSERT INTO user (username, " + "password," + "firstname, " + "lastname, " + "userId) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, patientLoginInfo.getUsername());
@@ -26,8 +26,8 @@ public class UserLoginRepositoryImpl implements UserLoginRepository {
             ps.setString(4, nameToken.get(1));
             ps.setInt(5, patientLoginInfo.getPatientId());
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Store Patient Credentials");
         }
     }
 }

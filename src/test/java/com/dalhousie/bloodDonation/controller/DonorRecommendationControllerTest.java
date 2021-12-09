@@ -5,16 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class DonorRecommendationControllerTest {
     private static DonorRecommendationController donorRecommendationController;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    void setUp() {
         donorRecommendationController = new DonorRecommendationController();
     }
 
