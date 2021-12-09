@@ -10,6 +10,8 @@ import com.dalhousie.bloodDonation.repos.DonorMedicalRecordsRepository;
 import com.dalhousie.bloodDonation.service.DonorMedicalRecordImpl;
 import com.dalhousie.bloodDonation.service.ManageAppointment;
 import com.dalhousie.bloodDonation.service.ManageAppointmentImpl;
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 
 public class DonorMedicalRecordController {
     private DonorMedicalRecords donorMedicalRecords;
@@ -17,6 +19,7 @@ public class DonorMedicalRecordController {
     private final ManageAppointment manageAppointmentImpl;
     private final DonorMedicalRecordImpl donorMedicalRecordImpl;
     private final Person person;
+    private final SessionService sessionService;
 
     public DonorMedicalRecordController()  {
         donorMedicalRecords = new DonorMedicalRecords();
@@ -24,6 +27,7 @@ public class DonorMedicalRecordController {
         manageAppointmentImpl = new ManageAppointmentImpl();
         donorMedicalRecordImpl = new DonorMedicalRecordImpl();
         person= new Person();
+        sessionService= new SessionServiceImpl();
     }
 
     public ArrayList<String> confirmTodayMedicalApppointment() throws CustomException{
@@ -84,8 +88,8 @@ public class DonorMedicalRecordController {
         public void editMedicalRecords() {
             Scanner sc = new Scanner(System.in);
 
-            System.out.println("Enter the donor Id you want to edit details for :");
-            String donorId = sc.nextLine();
+            System.out.println("donor you want to edit details for :");
+            String donorId = sessionService.getUserId();
             boolean checkDonorID = manageAppointmentImpl.checkDonorMedicalID(donorId);
             if (checkDonorID) {
                 donorMedicalRecords = manageAppointmentImpl.getDonorDetails(donorId);

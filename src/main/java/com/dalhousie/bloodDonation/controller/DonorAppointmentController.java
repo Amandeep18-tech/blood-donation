@@ -32,6 +32,8 @@ import com.dalhousie.bloodDonation.service.LocationService;
 import com.dalhousie.bloodDonation.service.LocationServiceImpl;
 import com.dalhousie.bloodDonation.service.LoginService;
 import com.dalhousie.bloodDonation.service.LoginServiceImpl;
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 
 import net.bytebuddy.utility.RandomString;
 
@@ -46,7 +48,7 @@ public class DonorAppointmentController {
     private final LocationService locationService;
     private final User user;
     private final LoginService loginService;
-
+    private final SessionService sessionService;
     public DonorAppointmentController() {
         donationBooking = new DonorDonationBookingImpl();
         patientBloodRequest = new PatientBloodRequest();
@@ -58,6 +60,7 @@ public class DonorAppointmentController {
         locationService= new LocationServiceImpl();
         user= new User();
         loginService= new LoginServiceImpl();
+        sessionService = new SessionServiceImpl();
 
     }
     public void addPatientRequest(){
@@ -102,7 +105,7 @@ public class DonorAppointmentController {
             String acceptFlag=sc.nextLine();
 
             if(acceptFlag.equals("1")){
-                bloodDonatedDetailsRepository.confirmDonation("001", todaysId.get(i));
+                bloodDonatedDetailsRepository.confirmDonation(sessionService.getUserId(), todaysId.get(i));
                 
             }
             else{
@@ -115,7 +118,7 @@ public class DonorAppointmentController {
     public void seeDonorRequests() throws SQLException {
 
         System.out.println("Please look into the blood donation requests you have");
-        String donorId = "6c111307-4cbe-11ec-917b-e2ed2ce588f5";
+        String donorId = sessionService.getUserId();
         String getPatientId = donationBooking.getPatientRequestId(donorId);
 
         patientBloodRequest = donationBooking.getPatientRequestDetails(getPatientId);
@@ -132,7 +135,7 @@ public class DonorAppointmentController {
 
         if (choiceForDonation.equals("1")) {
 
-            boolean checkUpdate = patientRequestMappingRepository.updateRequest("6c111307-4cbe-11ec-917b-e2ed2ce588f5",
+            boolean checkUpdate = patientRequestMappingRepository.updateRequest(sessionService.getUserId(),
                     1);
             if (checkUpdate) {
                 System.out.println("Your appointment has been made");
