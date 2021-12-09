@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.repos.RewardsRepository;
 
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ public class RewardsServiceImpl implements RewardsService{
     }
 
     @Override
-    public void displayCoupon(int donorId) throws Exception {
+    public void displayCoupon(int donorId) throws CustomException {
         rewardsRepository.displayCoupon(donorId);
     }
 }

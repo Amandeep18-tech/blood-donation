@@ -3,10 +3,7 @@ package com.dalhousie.bloodDonation.service;
 import com.dalhousie.bloodDonation.constants.BloodDonationConstants;
 import com.dalhousie.bloodDonation.controller.LoginController;
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.Cache;
-import com.dalhousie.bloodDonation.model.OTPDetails;
-import com.dalhousie.bloodDonation.model.SessionManagement;
-import com.dalhousie.bloodDonation.model.User;
+import com.dalhousie.bloodDonation.model.*;
 import com.dalhousie.bloodDonation.repos.LoginRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -48,7 +45,40 @@ public class LoginServiceImpl implements LoginService{
                 loginRepository.checkExistingUser(userName, password);
             }
         }catch (Exception e){
-            throw new CustomException("Error caaugh while loggingin");
+            throw new CustomException("Error caugh while loggingin");
+        }
+    }
+
+    @Override
+    public void addPerson(String contactNo, User user) {
+        loginRepository.addPerson(contactNo,user);
+    }
+
+    @Override
+    public void organizationLogin(String userName, String password) throws Exception {
+        try {
+            if (userName.isEmpty() || password.isEmpty()) {
+                throw new NullPointerException();
+            }
+            if (!userName.isEmpty() && !password.isEmpty()) {
+                loginRepository.checkExistingOrgansation(userName, password);
+            }
+        }catch (Exception e){
+            throw new CustomException("Error caugh while loggingin");
+        }
+    }
+
+    @Override
+    public void patientLogin(String userName, String password) throws CustomException {
+        try {
+            if (userName.isEmpty() || password.isEmpty()) {
+                throw new NullPointerException();
+            }
+            if (!userName.isEmpty() && !password.isEmpty()) {
+                loginRepository.checkExistingPatient(userName, password);
+            }
+        }catch (Exception e){
+            throw new CustomException("Error caugh while patient is loggingin");
         }
     }
 
@@ -57,6 +87,11 @@ public class LoginServiceImpl implements LoginService{
     public void userSignup(User user) throws Exception {
            loginRepository.addUser(user);
 
+    }
+
+    @Override
+    public void organizationSignup(Organisation organisation) throws Exception {
+        loginRepository.addOrganization(organisation);
     }
 
     @Override
@@ -178,7 +213,7 @@ public class LoginServiceImpl implements LoginService{
     public void userLogout() throws CustomException {
         try {
             SessionManagement session = new SessionManagement();
-            session.getSessionMap().clear();
+           // session.getSessionMap().clear();
             LoginController loginController = new LoginController();
             loginController.menu();
         }catch (CustomException e){

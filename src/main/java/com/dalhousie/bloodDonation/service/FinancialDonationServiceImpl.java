@@ -14,12 +14,16 @@ import java.util.stream.Collectors;
 
 public class FinancialDonationServiceImpl implements FinancialDonationService {
 
-    private static FinancialDonationRepository financialDonationRepository = null;
-    private static PendingFinancialDonationRepository pendingFinancialDonationRepository = null;
+    private final FinancialDonationRepository financialDonationRepository;
+    private final PendingFinancialDonationRepository pendingFinancialDonationRepository;
+    private final SequenceGeneratorService sequenceGeneratorService;
+    private final SessionService sessionService;
 
     public FinancialDonationServiceImpl() {
         financialDonationRepository = new FinancialDonationRepository();
         pendingFinancialDonationRepository = new PendingFinancialDonationRepository();
+        sequenceGeneratorService = new SequenceGeneratorServiceImpl();
+        sessionService = new SessionServiceImpl();
     }
 
     @Override
@@ -68,7 +72,7 @@ public class FinancialDonationServiceImpl implements FinancialDonationService {
         validateCreditCard(cardNo);
         validateExpiryDate(expiryDate);
         validateCVV(cvv);
-        FinancialDonation financialDonation = new FinancialDonation("D001", amount, generateRefNumber(), DonationType.CARD);
+        FinancialDonation financialDonation = new FinancialDonation(sessionService.getUserId(), amount, generateRefNumber(), DonationType.CARD);
         financialDonationRepository.save(financialDonation);
         return true;
     }
@@ -76,7 +80,7 @@ public class FinancialDonationServiceImpl implements FinancialDonationService {
     @Override
     public boolean makeDonationByUPI(Double amount, String upi) throws CustomException {
         validateUPI(upi);
-        FinancialDonation financialDonation = new FinancialDonation("D001", amount, generateRefNumber(), DonationType.UPI);
+        FinancialDonation financialDonation = new FinancialDonation(sessionService.getUserId(), amount, generateRefNumber(), DonationType.UPI);
         financialDonationRepository.save(financialDonation);
         return true;
     }
@@ -105,7 +109,7 @@ public class FinancialDonationServiceImpl implements FinancialDonationService {
         PendingFinancialDonation pendingFinancialDonation = pendingFinancialDonations.stream().filter(x ->
                 x.getDonationType() == donationType && x.getTpRefNum().equalsIgnoreCase(refNumber)
         ).collect(Collectors.toList()).get(0);
-        FinancialDonation financialDonation = new FinancialDonation("", pendingFinancialDonation.getAmount(), generateRefNumber(), donationType);
+        FinancialDonation financialDonation = new FinancialDonation(sessionService.getUserId(), pendingFinancialDonation.getAmount(), generateRefNumber(), donationType);
         financialDonationRepository.save(financialDonation);
     }
 
@@ -117,6 +121,6 @@ public class FinancialDonationServiceImpl implements FinancialDonationService {
     }
 
     private String generateRefNumber() {
-        return "Ref-001";
+        return sequenceGeneratorService.getSequenceNumber("FIN_DON");
     }
 }

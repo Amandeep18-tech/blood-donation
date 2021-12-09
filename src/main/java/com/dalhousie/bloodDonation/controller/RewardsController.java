@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.controller;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.service.RewardsServiceImpl;
 
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 public class RewardsController {
 Scanner sc = new Scanner(System.in);
 RewardsServiceImpl rewardsServiceImpl = new RewardsServiceImpl();
-    public void menu() throws Exception {
+    public void menu() throws CustomException {
         int choice;
         do{
             System.out.println("Enter 1 if you have donated blood");
@@ -39,7 +40,7 @@ RewardsServiceImpl rewardsServiceImpl = new RewardsServiceImpl();
         rewardsServiceImpl.rewardCollection(donorId);
     }
 
-    public void displayCoupon() throws Exception {
+    public void displayCoupon() throws CustomException {
         System.out.println("Enter your donor ID:-");
         int donorId = sc.nextInt();
         rewardsServiceImpl.displayCoupon(donorId);

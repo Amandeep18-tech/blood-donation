@@ -4,18 +4,21 @@ import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.service.OrgBloodDonationService;
 import com.dalhousie.bloodDonation.service.OrgBloodDonationServiceImpl;
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 
 import java.util.*;
 
 public class OrgBloodRequestController {
 
-    private OrgBloodDonationService orgBloodDonationService;
-    private Scanner scanner;
-    private String ORG_ID = "O001";
+    private final OrgBloodDonationService orgBloodDonationService;
+    private final Scanner scanner;
+    private final SessionService sessionService;
 
     public OrgBloodRequestController() {
         orgBloodDonationService = new OrgBloodDonationServiceImpl();
         scanner = new Scanner(System.in);
+        sessionService = new SessionServiceImpl();
     }
 
     public void mainMenu() {
@@ -47,7 +50,7 @@ public class OrgBloodRequestController {
         System.out.println("Redirecting to previous menu.");
     }
 
-    private void requestBlood() throws CustomException {
+    public void requestBlood() throws CustomException {
         String orgSelected;
         do {
             System.out.println("Enter the units of blood needed:");
@@ -87,7 +90,7 @@ public class OrgBloodRequestController {
             System.out.println("Select the organisation to request(*-all/#-go back):");
             orgSelected = scanner.next();
             try {
-                orgBloodDonationService.requestBlood(ORG_ID, orgSelected, bloodGroup, unitsNeeded);
+                orgBloodDonationService.requestBlood(sessionService.getUserId(), orgSelected, bloodGroup, unitsNeeded);
                 System.out.println("Blood Requested!");
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
@@ -95,13 +98,15 @@ public class OrgBloodRequestController {
         } while (orgSelected != "#");
     }
 
-    private void pendingRequest() throws CustomException {
-        HashMap<Integer, String> pendingRequests = (HashMap<Integer, String>) orgBloodDonationService.getPendingRequests(ORG_ID);
+    public void pendingRequest() throws CustomException {
+        HashMap<Integer, String> pendingRequests = (HashMap<Integer, String>) orgBloodDonationService.getPendingRequests(sessionService.getUserId());
         String optionSelected;
         do {
-            pendingRequests.entrySet().forEach(System.out::println);
+            System.out.println(String.format("%-20s%-20s%-20s%-20s%-20s","Request ID","Organization Name","Blood Group","Units Requested","Time Requested"));
+            pendingRequests.entrySet().forEach(integerStringEntry -> System.out.println(String.format("%-20s%s",integerStringEntry.getKey(),integerStringEntry.getValue())));
             System.out.println("Select the request to approve(# to go back):");
             optionSelected = scanner.next();
+            if(optionSelected.equalsIgnoreCase("#"))break;
             try {
                 orgBloodDonationService.acceptBloodRequest(optionSelected);
                 System.out.println("Blood Donated!");
@@ -111,10 +116,10 @@ public class OrgBloodRequestController {
         } while (optionSelected != "#");
     }
 
-    private void listBloodAvailable() throws CustomException {
+    public void listBloodAvailable() throws CustomException {
         int optionSelected;
         do {
-            System.out.println("1. Show by Donor ID");
+            System.out.println("1. Show by Donor");
             System.out.println("2. Show by Blood Group");
             System.out.println("9. Return to Previous Menu");
             optionSelected = scanner.nextInt();
@@ -122,10 +127,12 @@ public class OrgBloodRequestController {
                 List<String[]> responses = new ArrayList<>();
                 switch (optionSelected) {
                     case 1:
-                        responses = orgBloodDonationService.getListByDonorId(ORG_ID);
+                        responses = orgBloodDonationService.getListByDonorId(sessionService.getUserId());
+                        System.out.println(String.format("%-20s%-20s%-20s%-20s%-20s","Organization ID","Donor Name","Donor Contact No","Donated Time","Donor Blood Group"));
                         break;
                     case 2:
-                        responses = orgBloodDonationService.getListByBloodGroup(ORG_ID);
+                        responses = orgBloodDonationService.getListByBloodGroup(sessionService.getUserId());
+                        System.out.println(String.format("%-20s %-20s","Blood Group","Units Available"));
                         break;
                     default:
                         System.out.println("Invalid Option. Please retry");
@@ -133,8 +140,9 @@ public class OrgBloodRequestController {
                 if (responses.size() > 0) {
                     for (String[] response : responses) {
                         for (int i = 0; i < response.length; i++) {
-                            System.out.print(response[i] + "|");
+                            System.out.print(String.format("%-20s", response[i] ));
                         }
+                        System.out.println();
                     }
                 }
             } catch (CustomException e) {
