@@ -12,16 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PendingFinancialDonationRepository {
-    private final DBUtils dbUtils;
-
-    public PendingFinancialDonationRepository() {
-        dbUtils = new DBUtils();
-    }
 
     public List<PendingFinancialDonation> getAllPendingFinancialDonations() {
         List<PendingFinancialDonation> pendingFinancialDonations = new ArrayList<>();
-        try {
-            Connection conn = dbUtils.getConnection();
+        try {Connection conn= DBUtils.getInstance().getConnection();
             Statement stmt = conn.createStatement();
             ResultSet resultSet = stmt.executeQuery("SELECT * FROM pending_financial_donations");
             while (resultSet.next()){

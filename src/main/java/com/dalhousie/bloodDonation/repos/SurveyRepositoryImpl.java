@@ -12,8 +12,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
 
     @Override
     public int add(Survey survey) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        
+        try (Connection conn= DBUtils.getInstance().getConnection();) {
             String query = "INSERT INTO survey_master (survey_title, " + "survey_desc, " + "survey_type) VALUES (?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, survey.getSurveyTitle());
@@ -33,8 +33,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
 
     @Override
     public void delete(int id) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        
+        try (Connection conn= DBUtils.getInstance().getConnection();) {
             String query = "DELETE FROM survey_master WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
@@ -46,8 +46,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
 
     @Override
     public Survey getSurvey(int id) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        
+        try (Connection conn= DBUtils.getInstance().getConnection();) {
 
             String query = "SELECT * FROM survey_master WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
@@ -76,8 +76,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
 
     @Override
     public List<Survey> getAllSurvey() throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        
+        try (Connection conn= DBUtils.getInstance().getConnection();) {
             String query = "SELECT * FROM survey_master";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -99,8 +99,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
 
     @Override
     public Boolean update(Survey survey) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        
+        try (Connection conn= DBUtils.getInstance().getConnection();) {
             String query = "UPDATE survey_master SET survey_title= ?, " + "survey_desc= ?, " + "survey_type= ?" + "WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, survey.getSurveyTitle());

@@ -14,15 +14,9 @@ import java.util.List;
 
 public class LocationRepository {
 
-    private DBUtils dbUtils;
-
-    public LocationRepository() {
-        dbUtils = new DBUtils();
-    }
-
     public List<LocationDetail> getAllRecordsLocationDistance() {
         List<LocationDetail> locationDetails = new ArrayList<>();
-        try (Connection connection = dbUtils.getConnection()) {
+        try (Connection connection= DBUtils.getInstance().getConnection();) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM location_distance_details");
             while (resultSet.next()) {
@@ -40,7 +34,7 @@ public class LocationRepository {
 
     public List<LocationName> getAllRecordsLocationName() {
         List<LocationName> locationNames = new ArrayList<>();
-        try (Connection connection = dbUtils.getConnection()) {
+        try (Connection connection= DBUtils.getInstance().getConnection();) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM location_details");
             while (resultSet.next()) {

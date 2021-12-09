@@ -13,16 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SeqNumMasterRepository {
-    private final DBUtils dbUtils;
-
-    public SeqNumMasterRepository() {
-        dbUtils = new DBUtils();
-    }
 
     public SeqNumMaster getSeqNumMaster(String seqName) {
         SeqNumMaster seqNumMaster = new SeqNumMaster();
         try {
-            Connection conn = dbUtils.getConnection();
+            Connection conn= DBUtils.getInstance().getConnection();
             Statement stmt = conn.createStatement();
             ResultSet resultSet = stmt.executeQuery("SELECT * FROM seq_num_master where seq_name='"+seqName+"'");
             if (resultSet.next()){
@@ -38,7 +33,7 @@ public class SeqNumMasterRepository {
 
     public void incr(String seqName) {
         try {
-            Connection conn = dbUtils.getConnection();
+            Connection conn= DBUtils.getInstance().getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("UPDATE seq_num_master SET seq_no=seq_no+1 where seq_name='"+seqName+"'");
         } catch (SQLException e) {

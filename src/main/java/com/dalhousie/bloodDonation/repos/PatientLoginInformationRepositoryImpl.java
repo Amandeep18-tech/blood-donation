@@ -9,19 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PatientLoginInformationRepositoryImpl implements PatientLoginInformationRepository {
-    private static PatientLoginInformationRepository patientLoginInformationRepository = null;
-
-    public static PatientLoginInformationRepository getInstance() {
-        if (patientLoginInformationRepository == null) {
-            patientLoginInformationRepository = new PatientLoginInformationRepositoryImpl();
-        }
-        return patientLoginInformationRepository;
-    }
 
     @Override
     public void storePatientLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        
+        try (Connection conn= DBUtils.getInstance().getConnection();) {
             String query = "INSERT INTO patient_login (patient_id, " + "patient_name," + "patient_email_id, " + "patient_username, " + "patient_password) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientLoginInfo.getPatientId());

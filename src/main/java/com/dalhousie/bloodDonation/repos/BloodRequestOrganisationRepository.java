@@ -13,16 +13,12 @@ import java.util.List;
 
 public class BloodRequestOrganisationRepository {
 
-    private final DBUtils dbUtils;
-
-    public BloodRequestOrganisationRepository() {
-        dbUtils = new DBUtils();
-    }
-
+    
     public List<BloodRequestOrganisation> getAllRecords() {
         List<BloodRequestOrganisation> bloodRequestOrganisations = new ArrayList<>();
         try {
-            Connection conn = dbUtils.getConnection();
+            Connection conn= DBUtils.getInstance().getConnection();
+            
             Statement stmt = conn.createStatement();
             ResultSet resultSet = stmt.executeQuery("SELECT * FROM blood_request_organisation");
             while (resultSet.next()){
@@ -44,7 +40,7 @@ public class BloodRequestOrganisationRepository {
 
     public void updateRecord(BloodRequestOrganisation bloodRequestOrganisation) {
         try{
-            Connection connection = dbUtils.getConnection();
+            Connection connection= DBUtils.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE blood_request_organisation SET status = ? WHERE id = ?");
             preparedStatement.setString(1, bloodRequestOrganisation.getStatus().toString());
             preparedStatement.setInt(2, bloodRequestOrganisation.getId());
@@ -56,7 +52,7 @@ public class BloodRequestOrganisationRepository {
 
     public void save(BloodRequestOrganisation bloodRequestOrganisation) {
         try {
-            Connection conn = dbUtils.getConnection();
+            Connection conn= DBUtils.getInstance().getConnection();
             Statement stmt = conn.createStatement();
             String query = "INSERT INTO blood_request_organisation(org_id,receiver_org_id,units_required,status,blood_group,timestamp)\n" +
                     "VALUES\n" +

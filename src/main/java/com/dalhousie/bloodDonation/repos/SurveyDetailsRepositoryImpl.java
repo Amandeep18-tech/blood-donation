@@ -12,8 +12,8 @@ public class SurveyDetailsRepositoryImpl implements SurveyDetailsRepository {
 
     @Override
     public void add(SurveyDetails surveyDetails) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        
+        try (Connection conn= DBUtils.getInstance().getConnection();) {
             String query = "INSERT INTO survey_details (survey_question_id, " + "user_id ," + "survey_answer) VALUES (?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, surveyDetails.getSurveyQuestionId());

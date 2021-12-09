@@ -19,9 +19,7 @@ public class RewardsRepository {
 //    RewardsController rewardsController = new RewardsController();
     public void rewards(int donorId){
        try{
-           Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection con= DriverManager.getConnection(
-                   "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
+            Connection con= DBUtils.getInstance().getConnection();
            String sql = "select * from rewards where donor_id=?";
            PreparedStatement stmt = con.prepareStatement(sql);
            stmt.setInt(1, donorId);
@@ -74,8 +72,8 @@ public class RewardsRepository {
        }
     }
     public void displayCoupon(int donorId) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        
+        try(Connection conn= DBUtils.getInstance().getConnection();) {
             String sql = "select coupon_code from rewards where donor_id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, donorId);
