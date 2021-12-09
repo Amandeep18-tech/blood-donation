@@ -4,11 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.BloodDonationDetaisHistory;
 import com.dalhousie.bloodDonation.model.PatientBloodRequest;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -96,6 +100,11 @@ class DonorDonationBookingServiceTest {
     @DisplayName("Get today Donation")
     void getTodayDonationTest() throws CustomException {
         ArrayList<String> idList = new ArrayList<String>();
+        BloodDonationDetaisHistory bloodDonationDetaisHistory= new BloodDonationDetaisHistory();
+        Date today = Calendar.getInstance().getTime();
+        java.sql.Date sqlDate = new java.sql.Date(today.getTime());
+        bloodDonationDetaisHistory.setSlotDate(sqlDate);
+        bloodDonationDetaisHistory.setDonorId("6c111307-4cbe-11ec-917b-e2ed2ce588f5");
         idList.add("6c111307-4cbe-11ec-917b-e2ed2ce588f5");
         assertEquals(donationBookingImpl.getTodayDonation(),idList);
     }// test will fail if no donation for today
@@ -113,7 +122,15 @@ class DonorDonationBookingServiceTest {
     @DisplayName("Get today Donation")
     void getTodayPatientRequestTest() throws CustomException {
         ArrayList<String> idList = new ArrayList<String>();
+       
+        PatientBloodRequest patientBloodRequest= new PatientBloodRequest();
+        Date today = Calendar.getInstance().getTime();
+        java.sql.Date sqlDate = new java.sql.Date(today.getTime());
+        patientBloodRequest.setAppointmentDate(sqlDate);
+        patientBloodRequest.setPatientID("5c256da3-3d82-11ec-917b-e2ed2ce588f5");
+        
         idList.add("5c256da3-3d82-11ec-917b-e2ed2ce588f5");
+
         assertEquals(donationBookingImpl.getTodayPatientRequest(),idList);
     }
 
