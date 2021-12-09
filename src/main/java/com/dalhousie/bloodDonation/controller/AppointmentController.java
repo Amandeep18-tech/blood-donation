@@ -165,6 +165,10 @@ public class AppointmentController {
         sc.close();
     }
 
+    public void confirmMedicalAppointment() throws CustomException{
+        displayAppointmentTime();
+        bookDate();
+    }
 
 
 }

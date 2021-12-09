@@ -289,4 +289,8 @@ public class DonorAppointmentController {
         sc.close();
     }
 
+    public void confirmDonation() throws SQLException, UnsupportedEncodingException, MessagingException, CustomException{
+        displayAppointmentTime();
+        bookDate();
+    }
 }
