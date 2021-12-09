@@ -1,19 +1,26 @@
 package com.dalhousie.bloodDonation.repos;
 
+import com.dalhousie.bloodDonation.constants.UserType;
 import com.dalhousie.bloodDonation.controller.LoginController;
+import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.Organisation;
 import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 import org.mindrot.jbcrypt.BCrypt;
+import org.yaml.snakeyaml.scanner.Constant;
 
 import java.sql.*;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class LoginRepository {
     User user;
     String username;
     String pass;
+    int patient_id;
     int flag=0;
+    PatientMedicalInformationRepository patientMedicalInformationRepository;
     LoginController loginController;
     SessionManagement session = new SessionManagement();
     Scanner sc = new Scanner(System.in);
@@ -22,9 +29,6 @@ public class LoginRepository {
             String resetpass;
             DBUtils dbUtils = new DBUtils();
             Connection con = dbUtils.getConnection();
-            //Class.forName("com.mysql.cj.jdbc.Driver");
-//            Connection con=DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from user");
             while(rs.next()){
@@ -33,10 +37,61 @@ public class LoginRepository {
                 if(userName.equals(username) && BCrypt.checkpw(password, pass)  ){
                     //  password.equals(pass)
                     System.out.println("Welcome: "+userName);
-                   // HttpSession session = request.getSession(true);
+                    //session.getSessionMap().put(userName,user);
+                   // session.getSessionMap().put(Constant.)
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){
+                System.out.println("Invalid UserName or Password:");
+            }
+            con.close();
 
-                    session.getSessionMap().put(userName,user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    public void checkExistingPatient(String userName,String password){
+        try {
+            String resetpass;
+            DBUtils dbUtils = new DBUtils();
+            Connection con = dbUtils.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from patient_login");
+            while(rs.next()){
+                patient_id = rs.getInt(1);
+                if(userName.equals(username) && password.equals(pass)  ){
+                    System.out.println("Welcome Patient: "+userName);
+                    //session.setPatientId(patient_id);
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){
+                System.out.println("Invalid UserName or Password:");
+            }
+            con.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void checkExistingOrgansation(String userName,String password){
+        try {
+            DBUtils dbUtils = new DBUtils();
+            Connection con = dbUtils.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from organisation");
+            while(rs.next()){
+                String organisationName = rs.getString(1);
+                String organisationPassword = rs.getString(2);
+                if(userName.equals(organisationName) && password.equals(organisationPassword)  ){
+                    System.out.println("Welcome Organisation: "+userName);
                     flag=1;
                     break;
                 }
@@ -64,6 +119,24 @@ public class LoginRepository {
             System.out.println("SignUp successfull");
         }catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void addOrganization(Organisation organisation) throws CustomException {
+        try {
+            DBUtils dbUtils = new DBUtils();
+            Connection con = dbUtils.getConnection();
+            UUID uuid = UUID.randomUUID();
+            String uuidAsString = uuid.toString();
+            Statement st = con.createStatement();
+            st.execute("INSERT INTO organisation(organisation_id,organisation_name,location,organisation_type,password,slots_available) " +
+                    "VALUES('"+ uuidAsString +"','"+ organisation.getorganisationName()+"','"+ organisation.getLocation()+"','"+ organisation
+                    .getorganisationType()+"','"+ organisation.getPassword()+"','"+ organisation.getSlots_available()+"')");
+            st.execute("Insert into user(username,password,firstname,userId,userType) values ('"+organisation.getorganisationName()+"','"+organisation.getPassword()+"','"+organisation.getorganisationName()+"','"+uuidAsString+"','"+UserType.ORGANIZATION+"')");
+            System.out.println("SignUp successful");
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new CustomException("something went wrong");
         }
     }
 
@@ -110,5 +183,20 @@ public class LoginRepository {
             stmt.executeUpdate();
         System.out.println("Password Updated Successfully");
         loginController.menu();
+    }
+
+    public void addPerson(String contactNo,User user){
+        try {
+            DBUtils dbUtils = new DBUtils();
+            Connection con = dbUtils.getConnection();
+            UUID uuid = UUID.randomUUID();
+            String uuidAsString = uuid.toString();
+            Statement st = con.createStatement();
+            st.execute("INSERT INTO Person(person_id,person_first_name,person_last_name,contact_number,blood_group) VALUES('"+ uuidAsString+"','"+ user.getFirstname()+"','"+ user.getLastname()+"','"+ contactNo+"','"+ user.getBloodGroup()+"')");
+            st.execute("Insert into user (userId,username,password,firstname,lastname,bloodgroup,userType) values('"+uuidAsString+"','"+user.getUserName()+"','"+user.getPassword()+"','"+user.getFirstname()+"','"+user.getLastname()+"','"+user.getBloodGroup()+"','"+ UserType.DONOR.toString() +"')");
+            System.out.println("SignUp successfull");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

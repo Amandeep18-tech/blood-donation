@@ -2,12 +2,21 @@ package com.dalhousie.bloodDonation.model;
 
 public class User {
 
+    String userId;
     String userName;
     String password;
     String firstname;
     String lastname;
     String bloodGroup;
     String one_time_password;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getUserName() {
         return userName;
