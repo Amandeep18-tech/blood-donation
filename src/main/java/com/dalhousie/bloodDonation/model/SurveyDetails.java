@@ -3,7 +3,16 @@ package com.dalhousie.bloodDonation.model;
 public class SurveyDetails {
     private int id;
     private int surveyQuestionId;
+    private String userId;
     private String surveyAnswer;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public int getId() {
         return id;

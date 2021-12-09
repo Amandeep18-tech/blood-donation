@@ -1,6 +1,5 @@
 package com.dalhousie.bloodDonation.service;
 
-import com.dalhousie.bloodDonation.model.PatientLoginInformation;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
@@ -52,7 +51,6 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         patientInfo.setContactNumber(contactNumber);
         patientInfo.setEmailId(emailId);
         PatientPersonalInformationRepositoryImpl patientInfoRepo = new PatientPersonalInformationRepositoryImpl();
-        PatientLoginInformation patientLoginInfo = new PatientLoginInformation();
         return patientInfoRepo.addPatient(patientInfo);
     }
 

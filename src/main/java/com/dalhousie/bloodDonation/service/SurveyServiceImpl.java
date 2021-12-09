@@ -37,7 +37,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public void viewAllSurvey() throws SQLException {
+    public int viewAllSurvey() throws SQLException {
         SurveyRepositoryImpl surveyRepositoryImpl = new SurveyRepositoryImpl();
         List<Survey> surveyList = surveyRepositoryImpl.getAllSurvey();
         System.out.println();
@@ -47,6 +47,8 @@ public class SurveyServiceImpl implements SurveyService {
             System.out.format("%-14s%-26s%-32s%-20s", survey.getId(), survey.getSurveyType(), survey.getSurveyTitle(), survey.getSurveyDesc());
             System.out.println();
         }
+        int size = surveyList.size();
+        return size;
     }
 
     @Override
