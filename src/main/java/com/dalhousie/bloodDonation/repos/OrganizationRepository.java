@@ -11,22 +11,11 @@ import com.dalhousie.bloodDonation.utils.DBUtils;
 import com.dalhousie.bloodDonation.model.Organisation;
 
 public class OrganizationRepository {
-    Connection conn;
-
-    public OrganizationRepository()  {
-        DBUtils dbUtils = new DBUtils();
-        try{
-        conn = dbUtils.getConnection();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-
     
     public List<Organisation> getAllPlaces(){
         List<Organisation> organisationList = new ArrayList();
         try{
+            Connection conn= DBUtils.getInstance().getConnection();
             String query="SELECT * FROM organisation";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();

@@ -16,23 +16,12 @@ import com.dalhousie.bloodDonation.utils.DBUtils;
 import org.springframework.beans.propertyeditors.PathEditor;
 
 public class PatientBloodRequestRepository {
-    
-    Connection conn;
     private int executeUpdate;
-
-    public PatientBloodRequestRepository(){
-        DBUtils dbUtils = new DBUtils();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 
     public List<PatientBloodRequest> getAllDonorRequests(){
         List<PatientBloodRequest> allDonorRequests = new ArrayList();
         try{
+            Connection conn= DBUtils.getInstance().getConnection();
             String query="SELECT * FROM patient_blood_request";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -58,6 +47,7 @@ public class PatientBloodRequestRepository {
         String query = "INSERT INTO patient_blood_request (id, " + "patient_id, " + "priority,"+"appointment_date,"+"appointment_time,"+"status) VALUES (?, ?, ?,?,?,?)";
         
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
@@ -78,6 +68,7 @@ public class PatientBloodRequestRepository {
 
     public boolean addUpdateDonation(String patientID,Integer status)  {
         try{
+            Connection conn= DBUtils.getInstance().getConnection();
             String query = "UPDATE patient_blood_request SET status=? WHERE patient_id=? ";
             PreparedStatement ps = conn.prepareStatement(query);
             

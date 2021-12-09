@@ -11,21 +11,13 @@ import java.util.ArrayList;
 import java.util.List; 
 
 public class MedicalAppointmentMasterRespository{
-    Connection conn;
-
-    public MedicalAppointmentMasterRespository()  {
-        DBUtils dbUtils = new DBUtils();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     
     public List<MedicalAppointmentMaster> getAllAppointment(){
         List<MedicalAppointmentMaster> appointmentList = new ArrayList();
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         String query="SELECT * FROM medical_appointment_master";
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();

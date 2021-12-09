@@ -12,21 +12,14 @@ import com.dalhousie.bloodDonation.model.PatientRequestMapping;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class PatientRequestMappingRepository {
-    Connection conn;
+    
     private int executeUpdate;
 
-    public PatientRequestMappingRepository() {
-        DBUtils dbUtils = new DBUtils();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+    
     public List<PatientRequestMapping> getAllDonorRequests(){
         List<PatientRequestMapping> allPatientMapping = new ArrayList();
         try{
+            Connection conn= DBUtils.getInstance().getConnection();
             String query="SELECT * FROM patient_request_mapping";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -49,6 +42,7 @@ public class PatientRequestMappingRepository {
 
     public boolean updateRequest(String donorID, Integer acceptFlag){
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         String query = "UPDATE patient_request_mapping SET accept_flag=? WHERE donor_or_organisation_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1,acceptFlag);
@@ -64,6 +58,7 @@ public class PatientRequestMappingRepository {
         String query = "INSERT INTO patient_request_mapping (id, " + "patient_blood_request_id, " + "donor_or_organisation_id,"+"accept_flag) VALUES (?, ?, ?,?)";
         
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
