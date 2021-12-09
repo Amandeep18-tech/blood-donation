@@ -11,6 +11,8 @@ import com.dalhousie.bloodDonation.model.MedicalAppointmentMaster;
 import com.dalhousie.bloodDonation.model.Organisation;
 import com.dalhousie.bloodDonation.repos.MedicalAppointmentMasterRespository;
 import com.dalhousie.bloodDonation.repos.OrganizationRepository;
+import com.dalhousie.bloodDonation.service.LocationService;
+import com.dalhousie.bloodDonation.service.LocationServiceImpl;
 import com.dalhousie.bloodDonation.service.ManageAppointmentImpl;
 import com.dalhousie.bloodDonation.repos.MedicalAppointmentDetailRepository;
 
@@ -18,13 +20,14 @@ public class AppointmentController {
     private ManageAppointmentImpl manageAppointmentImpl = null;
     private MedicalAppointmentDetails medicalAppointmentDetails = null;
     private MedicalAppointmentDetailRepository medicalAppointmentDetailRepository = null;
-    
+    private LocationService locationService=null;
 
 
     public AppointmentController(){
         manageAppointmentImpl = new ManageAppointmentImpl();
         medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
         medicalAppointmentDetails = new MedicalAppointmentDetails();
+        locationService = new LocationServiceImpl();
 
     }
 
@@ -71,7 +74,6 @@ public class AppointmentController {
     public void bookDate()  {
 
         Scanner scanner = new Scanner(System.in);
-
         String appointmentBookingChoice = null;
         String slotIdInput = null;
         boolean dateAvailable;
@@ -80,7 +82,6 @@ public class AppointmentController {
         System.out.println("Please enter your choice");
         System.out.println("1.Press one for booking an appointment");
         System.out.println("2.Press two for exiting");
-
         appointmentBookingChoice = scanner.next();
         do {
             System.out.println();
@@ -148,7 +149,19 @@ public class AppointmentController {
 
             }
         } while (!appointmentBookingChoice.equals("2"));
+        
+        getRouteToOrganisation();
+    }
 
+    public void getRouteToOrganisation(){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Enter your pincode");
+        System.out.println("Enter your pin code");
+        String pinCode1=sc.nextLine();
+        System.out.println("Enter your pin code");
+        String pinCode2=sc.nextLine();
+        String route=locationService.getShortestPath(pinCode1, pinCode2);
+        sc.close();
     }
 
 
