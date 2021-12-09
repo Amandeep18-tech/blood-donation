@@ -109,6 +109,14 @@ class DonorDonationBookingServiceTest {
        
     }
 
+    @Test
+    @DisplayName("Get today Donation")
+    void getTodayPatientRequestTest() throws CustomException {
+        ArrayList<String> idList = new ArrayList<String>();
+        idList.add("5c256da3-3d82-11ec-917b-e2ed2ce588f5");
+        assertEquals(donationBookingImpl.getTodayPatientRequest(),idList);
+    }
+
     
     
 

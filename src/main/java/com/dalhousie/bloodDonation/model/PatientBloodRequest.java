@@ -9,7 +9,7 @@ public class PatientBloodRequest {
     String priority;
     Date appointmentDate;
     Time appointmentTime;
-    String status;
+    Integer status;
     public String getId() {
         return id;
     }
@@ -40,10 +40,10 @@ public class PatientBloodRequest {
     public void setAppointmentTime(Time appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
     

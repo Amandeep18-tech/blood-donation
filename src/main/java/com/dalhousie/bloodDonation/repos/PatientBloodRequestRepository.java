@@ -13,6 +13,8 @@ import java.util.UUID;
 import com.dalhousie.bloodDonation.model.PatientBloodRequest;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
+import org.springframework.beans.propertyeditors.PathEditor;
+
 public class PatientBloodRequestRepository {
     
     Connection conn;
@@ -37,9 +39,10 @@ public class PatientBloodRequestRepository {
             while (rs.next()){
                 PatientBloodRequest patientBloodRequest = new PatientBloodRequest();
                 patientBloodRequest.setId(rs.getString("id"));
+                patientBloodRequest.setPatientID(rs.getString("patient_id"));
                 patientBloodRequest.setAppointmentDate(rs.getDate("appointment_date"));
                 patientBloodRequest.setAppointmentTime(rs.getTime("appointment_time"));
-                patientBloodRequest.setStatus(rs.getString("status"));
+                patientBloodRequest.setStatus(rs.getInt("status"));
                 
                 allDonorRequests.add(patientBloodRequest);
             }
@@ -72,4 +75,20 @@ public class PatientBloodRequestRepository {
         }
         return true;
     }
+
+    public boolean addUpdateDonation(String patientID,Integer status)  {
+        try{
+            String query = "UPDATE patient_blood_request SET status=? WHERE patient_id=? ";
+            PreparedStatement ps = conn.prepareStatement(query);
+            
+            ps.setInt(1, status);
+            ps.setString(2, patientID);
+            executeUpdate = ps.executeUpdate();
+            
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+            }
+            return true;
+        }
 }
