@@ -34,8 +34,8 @@ public class OrganizationRepository {
                 Organisation organisationDetails = new Organisation();
                 organisationDetails.setLocation(rs.getString("location"));
                 organisationDetails.setorganisationName(rs.getString("organisation_name"));
-                
-        
+                organisationDetails.setEmail(rs.getString("email"));
+                organisationDetails.setPinCode(rs.getString("pin_code"));
                 organisationDetails.setorganisationID(rs.getString("organisation_id"));
                 
                 organisationList.add(organisationDetails);

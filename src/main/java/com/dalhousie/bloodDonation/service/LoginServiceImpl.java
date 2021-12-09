@@ -13,14 +13,9 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LoginServiceImpl implements LoginService{
 
@@ -50,8 +45,8 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public void addPerson(String contactNo, User user) {
-        loginRepository.addPerson(contactNo,user);
+    public void addPerson(String contactNo, User user, String pinCode) {
+        loginRepository.addPerson(contactNo,user,pinCode);
     }
 
     @Override
