@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientPersonalInformationRepositoryImpl implements PatientPersonalInformationRepository {
-
     @Override
     public int addPatient(PatientPersonalInformation patientInfo) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "INSERT INTO patient_personal_information (patient_name, " + "date_of_birth, " + "age, " + "address, " + "contact_number, " + "email_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, patientInfo.getPatientName());
@@ -37,13 +35,11 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
 
     @Override
     public List<PatientPersonalInformation> getAllPatients() throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "SELECT * FROM patient_personal_information";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             List<PatientPersonalInformation> patientList = new ArrayList<>();
-
             while (rs.next()) {
                 PatientPersonalInformation patientPersonalInfo = new PatientPersonalInformation();
                 patientPersonalInfo.setId(rs.getInt("id"));
@@ -63,8 +59,7 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
 
     @Override
     public void delete(int id) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "DELETE FROM patient_personal_information WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
@@ -76,8 +71,7 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
 
     @Override
     public PatientPersonalInformation getPatient(int id) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "SELECT * FROM  patient_personal_information WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
@@ -94,7 +88,6 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
                 patientPersonalInfo.setContactNumber(rs.getString("contact_number"));
                 patientPersonalInfo.setEmailId(rs.getString("email_id"));
             }
-
             if (check) {
                 return patientPersonalInfo;
             } else {
@@ -107,8 +100,7 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
 
     @Override
     public void update(PatientPersonalInformation patientPersonalInfo) throws CustomException {
-        
-        try (Connection conn= DBUtils.getInstance().getConnection();) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "UPDATE patient_personal_information SET patient_name= ?, " + "date_of_birth= ?, " + "age= ?, " + "address= ?, " + "contact_number= ?, " + "email_id= ?" + "WHERE id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, patientPersonalInfo.getPatientName());
@@ -123,5 +115,4 @@ public class PatientPersonalInformationRepositoryImpl implements PatientPersonal
             throw new CustomException("Error: Unable To Update Patient's Personal Information");
         }
     }
-
 }
