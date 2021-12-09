@@ -12,6 +12,7 @@ import com.dalhousie.bloodDonation.utils.IOUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -25,10 +26,12 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     private String emailId;
     private final PatientPersonalInformationRepositoryImpl patientPersonalInformationRepository;
     private final Scanner in;
+    private final NotificationServiceImpl notificationService;
 
     public PatientPersonalInformationServiceImpl() {
         patientPersonalInformationRepository = new PatientPersonalInformationRepositoryImpl();
         in = IOUtils.getInstance();
+        notificationService = new NotificationServiceImpl();
     }
 
     @Override
@@ -60,7 +63,13 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         patientInfo.setAddress(address);
         patientInfo.setContactNumber(contactNumber);
         patientInfo.setEmailId(emailId);
-        return patientPersonalInformationRepository.addPatient(patientInfo);
+        int patientId = patientPersonalInformationRepository.addPatient(patientInfo);
+        String message = "Your Username & Password For Patient Login Is Username: " + patientInfo.getEmailId() + ", Password: " + patientInfo.getContactNumber();
+        List<String> recipients = new ArrayList<>() {{
+            add(patientInfo.getEmailId());
+        }};
+        notificationService.sendMailToMultipleUser(recipients, message);
+        return patientId;
     }
 
     @Override
