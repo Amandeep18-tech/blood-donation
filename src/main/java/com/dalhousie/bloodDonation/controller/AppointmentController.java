@@ -73,6 +73,7 @@ public class AppointmentController {
     }
 
     public void bookDate()  {
+        
 
         Scanner scanner = new Scanner(System.in);
         String appointmentBookingChoice = null;
