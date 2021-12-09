@@ -6,6 +6,8 @@ import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.Organisation;
 import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
+import com.dalhousie.bloodDonation.service.SessionService;
+import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -31,13 +33,15 @@ public class LoginRepository {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from user");
             while(rs.next()){
-                username = rs.getString(1);
-                pass = rs.getString(2);
-                if(userName.equals(username) && BCrypt.checkpw(password, pass)  ){
+                username = rs.getString(2);
+                pass = rs.getString(3);
+                if(userName.equals(username) && password.equals(pass)  ){
                     //  password.equals(pass)
                     System.out.println("Welcome: "+userName);
                     //session.getSessionMap().put(userName,user);
                    // session.getSessionMap().put(Constant.)
+                    SessionService sessionService = new SessionServiceImpl();
+                    sessionService.setSession(rs.getString("userId"),UserType.valueOf(rs.getString("userType")));
                     flag=1;
                     break;
                 }
