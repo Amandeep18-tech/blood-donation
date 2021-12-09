@@ -23,7 +23,6 @@ public class AppointmentController {
     private final MedicalAppointmentDetailRepository medicalAppointmentDetailRepository;
     private final LocationService locationService;
 
-
     public AppointmentController(){
         manageAppointment = new ManageAppointmentImpl();
         medicalAppointmentDetailRepository = new MedicalAppointmentDetailRepository();
@@ -74,7 +73,6 @@ public class AppointmentController {
 
     public void bookDate()  {
 
-
         Scanner scanner = new Scanner(System.in);
         String appointmentBookingChoice = null;
         String slotIdInput = null;
@@ -89,38 +87,29 @@ public class AppointmentController {
             System.out.println();
             System.out.println("Enter the Date in YYYY-MM-DD format you want to book an appointment");
             switch (appointmentBookingChoice) {
-
+                
             case "1":
                 System.out.println();
-
                 String dateInput = scanner.next();
-
                 System.out.println("Enter the Slot ID");
-
                 slotIdInput = scanner.next();
                 System.out.println();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
                 java.util.Date dateInput2 = null;
                 String getSlotId = manageAppointment.getSlotId(slotIdInput);
-
                 try {
 
                     dateInput2 = simpleDateFormat.parse(dateInput);
                 } catch (ParseException e) {
-
                     e.printStackTrace();
                 }
                 String dateFormat = simpleDateFormat.format(dateInput2);
-
                 dateAvailable = manageAppointment.compareDate(dateFormat, getSlotId);
-
                 if (dateAvailable) {
                     System.out.println();
                     System.out.println("Please enter a different date, this date is unavailable");
                     continue;
                 }
-
                 else {
                     System.out.println();
                     System.out.println("Confirming this date");
@@ -148,7 +137,6 @@ public class AppointmentController {
                 System.out.println();
                 System.out.println("Thank you");
                 break;
-
             }
         } while (!appointmentBookingChoice.equals("2"));
         
@@ -157,12 +145,12 @@ public class AppointmentController {
 
     public void getRouteToOrganisation(){
         Scanner sc= new Scanner(System.in);
-        System.out.println("Enter your pincode");
         System.out.println("Enter your pin code");
         String pinCode1=sc.nextLine();
         System.out.println("Enter your pin code");
         String pinCode2=sc.nextLine();
         String route=locationService.getShortestPath(pinCode1, pinCode2);
+        System.out.println(route);
         sc.close();
     }
 
