@@ -1,10 +1,7 @@
 package com.dalhousie.bloodDonation.service;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import com.dalhousie.bloodDonation.constants.SlotAvailableConstants;
@@ -56,18 +53,10 @@ public class ManageAppointmentImpl implements ManageAppointment {
         for (MedicalAppointmentDetails medicalAppointmentDetail : detailList) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateToString = dateFormat.format(medicalAppointmentDetail.getslotDate());
-            try{
-            Date dateByUser = dateFormat.parse(dateToString);
-            Date today = Calendar.getInstance().getTime();
-            String todayDateToString = dateFormat.format(today);
-            Date todayDate = dateFormat.parse(todayDateToString);
-
+            
             if (medicalAppointmentDetail.getslotID().equals(slotIdInput) && dateToString.equals(dateFormatInput)) {
                 return true;
             }
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
 
         }
 

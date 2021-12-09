@@ -240,7 +240,7 @@ public class DonorAppointmentController {
                         OTPDetails otpDetails = new OTPDetails(OTP, issueTime);
                         Cache.getOtpMap().put(userName, otpDetails);
                         user.setUserName(userName);
-                        boolean check = loginService.sendVerificationEmail(user, OTP);
+                        loginService.sendVerificationEmail(user, OTP);
                         System.out.println("Enter your OTP:-");
                         String otpInput = sc.nextLine();
                         if (!OTP.equals(otpInput)) {
