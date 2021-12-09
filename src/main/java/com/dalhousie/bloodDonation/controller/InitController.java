@@ -2,8 +2,6 @@ package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
 
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class InitController {
@@ -17,8 +15,11 @@ public class InitController {
     private final SurveyController surveyController;
     private final DonorRecommendationController donorRecommendationController;
     private final PatientController patientController;
+    private final OrgBloodRequestController orgBloodRequestController;
+    private final DonorAppointmentController donorAppointmentController;
+    private final DonorMedicalRecordController donorMedicalRecordController;
 
-    public InitController() throws SQLException {
+    public InitController() {
         sc = new Scanner(System.in);
         loginController = new LoginController();
         listSuitableDonorController = new ListSuitableDonorController();
@@ -28,6 +29,9 @@ public class InitController {
         surveyController = new SurveyController();
         donorRecommendationController = new DonorRecommendationController();
         patientController = new PatientController();
+        orgBloodRequestController = new OrgBloodRequestController();
+        donorAppointmentController = new DonorAppointmentController();
+        donorMedicalRecordController = new DonorMedicalRecordController();
     }
 
     public void mainMenu() {
@@ -51,14 +55,13 @@ public class InitController {
                         loginController.forgetPassword();
                         break;
                     case 4:
+//                        loginController.
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
                 }
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
-            } catch (Exception e) {
-                e.printStackTrace();
             }
             //Todo If login success
             donor();
@@ -106,12 +109,6 @@ public class InitController {
                 }
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         } while (choice != 4);
     }
@@ -188,20 +185,29 @@ public class InitController {
                         patientController.displayPatientMenuForOrganization();
                         break;
                     case 5:
+                        donorAppointmentController.addPatientRequest();
                         break;
                     case 6:
+                        orgBloodRequestController.requestBlood();
                         break;
                     case 7:
+                        orgBloodRequestController.pendingRequest();
                         break;
                     case 8:
+                        orgBloodRequestController.listBloodAvailable();
                         break;
                     case 9:
+                        donorMedicalRecordController.addMedicalRecords();
                         break;
                     case 10:
+                        donorAppointmentController.todayDonationConfirmation();
                         break;
                     case 11:
+                        donorMedicalRecordController.editMedicalRecords();
                         break;
-                    case 12:
+                    case 12: financialDonationController.selectModeOfPayment();
+                        break;
+                    case 13:
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
