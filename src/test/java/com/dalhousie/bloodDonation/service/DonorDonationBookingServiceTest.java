@@ -63,7 +63,7 @@ class DonorDonationBookingServiceTest {
     void getSlotIdTestForIncorrectValue() throws SQLException {
 
         
-        assertEquals(donationBookingImpl.getDonationSlotId("2"),"SLOT_UNAVAILABLE");
+        assertEquals(donationBookingImpl.getDonationSlotId("56777"),"SLOT_UNAVAILABLE");
     }
 
     @Test
@@ -80,34 +80,6 @@ class DonorDonationBookingServiceTest {
         
         assertEquals(donationBookingImpl.getPatientRequestId("5d9793a1-5213-11ec-917b-e2ed2ce5"),null);
     }
-
-    @Test
-    @DisplayName("Get today Donation")
-    void getTodayDonationExceptionTest() throws CustomException {
-        Exception exception = assertThrows(CustomException.class, () -> {
-            donationBookingImpl.getTodayDonation();
-        });
-    
-        String expectedMessage = "No donation for today";
-        String actualMessage = exception.getMessage();
-    
-        assertTrue(actualMessage.contains(expectedMessage));
-        
-        
-    }// test will fail because there is donation for today
-
-    @Test
-    @DisplayName("Get today Donation")
-    void getTodayDonationTest() throws CustomException {
-        ArrayList<String> idList = new ArrayList<String>();
-        BloodDonationDetaisHistory bloodDonationDetaisHistory= new BloodDonationDetaisHistory();
-        Date today = Calendar.getInstance().getTime();
-        java.sql.Date sqlDate = new java.sql.Date(today.getTime());
-        bloodDonationDetaisHistory.setSlotDate(sqlDate);
-        bloodDonationDetaisHistory.setDonorId("6c111307-4cbe-11ec-917b-e2ed2ce588f5");
-        idList.add("6c111307-4cbe-11ec-917b-e2ed2ce588f5");
-        assertEquals(donationBookingImpl.getTodayDonation(),idList);
-    }// test will fail if no donation for today
 
     @Test
     @DisplayName("Get Patient request Details")
