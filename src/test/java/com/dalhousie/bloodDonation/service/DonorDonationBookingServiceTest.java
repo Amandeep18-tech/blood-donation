@@ -108,8 +108,10 @@ class DonorDonationBookingServiceTest {
 
     @Test
     @DisplayName("Get Patient request Details")
-    void getPatientRequestDetails()  {
-        
+    void getPatientRequestDetails()  {  
+        PatientBloodRequest patientBloodRequest= new PatientBloodRequest();
+        patientBloodRequest =donationBookingImpl.getPatientRequestDetails("9bfb7085-2103-463f-b229-7bc6ef5b9371");
+        assertEquals("9bfb7085-2103-463f-b229-7bc6ef5b9371", patientBloodRequest.getId());
        
     }
 
