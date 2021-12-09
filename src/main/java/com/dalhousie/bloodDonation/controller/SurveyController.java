@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.controller;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.SurveyQuestions;
 import com.dalhousie.bloodDonation.service.SurveyDetailsServiceImpl;
 import com.dalhousie.bloodDonation.service.SurveyQuestionsServiceImpl;
@@ -22,7 +23,7 @@ public class SurveyController {
         surveyDetailsService = new SurveyDetailsServiceImpl();
     }
 
-    public void displaySurveyMenuForOrganization() throws SQLException {
+    public void displaySurveyMenuForOrganization() throws CustomException {
         System.out.println("\nSurvey Menu");
         System.out.println("1. Create Survey\n2. View Survey\n3. Delete Survey\n4. Update Survey\n5. Add Survey Question\n6. View Survey Questions\n7. Delete Survey Question\n8. Update Survey Questions\n9. Go Back\n10. Exit");
         System.out.print("Select: ");
@@ -72,7 +73,7 @@ public class SurveyController {
         }
     }
 
-    public void displayPendingSurveyToUser() throws SQLException {
+    public void displayPendingSurveyToUser() throws CustomException {
         surveyService.viewAllSurvey();
         surveyDetailsService.fillSurvey();
     }

@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.repos;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientLoginInformation;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
@@ -11,23 +12,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserLoginRepositoryImpl implements UserLoginRepository {
-    Connection conn;
-
-    public UserLoginRepositoryImpl() throws SQLException {
-        DBUtils dbUtils = new DBUtils();
-        conn = dbUtils.getConnection();
-    }
 
     @Override
-    public void storeUserLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws SQLException {
-        String query = "INSERT INTO user (username, " + "password," + "firstname, " + "lastname, " + "userId) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, patientLoginInfo.getUsername());
-        ps.setString(2, patientLoginInfo.getPassword());
-        List<String> nameToken = new ArrayList<>(Arrays.asList(patientLoginInfo.getPatientName().split(" ")));
-        ps.setString(3, nameToken.get(0));
-        ps.setString(4, nameToken.get(1));
-        ps.setInt(5, patientLoginInfo.getPatientId());
-        ps.executeUpdate();
+    public void storeUserLoginInformationInDB(PatientLoginInformation patientLoginInfo) throws CustomException {
+        DBUtils dbUtils = new DBUtils();
+        try(Connection conn = dbUtils.getConnection()) {
+            String query = "INSERT INTO user (username, " + "password," + "firstname, " + "lastname, " + "userId) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, patientLoginInfo.getUsername());
+            ps.setString(2, patientLoginInfo.getPassword());
+            List<String> nameToken = new ArrayList<>(Arrays.asList(patientLoginInfo.getPatientName().split(" ")));
+            ps.setString(3, nameToken.get(0));
+            ps.setString(4, nameToken.get(1));
+            ps.setInt(5, patientLoginInfo.getPatientId());
+            ps.executeUpdate();
+        }catch (SQLException e){
+            throw new CustomException("");
+        }
     }
 }

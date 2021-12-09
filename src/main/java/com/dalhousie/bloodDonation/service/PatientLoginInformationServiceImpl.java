@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientLoginInformation;
 import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.repos.PatientLoginInformationRepositoryImpl;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 
 public class PatientLoginInformationServiceImpl implements PatientLoginInformationService {
     @Override
-    public PatientLoginInformation getPatientInformation(int patient_id) throws SQLException {
+    public PatientLoginInformation getPatientInformation(int patient_id) throws CustomException {
         PatientPersonalInformationRepositoryImpl patientPersonalInfoRepo = new PatientPersonalInformationRepositoryImpl();
         PatientPersonalInformation patientPersonalInfo = patientPersonalInfoRepo.getPatient(patient_id);
         PatientLoginInformation patientLoginInfo = new PatientLoginInformation();
@@ -23,7 +24,7 @@ public class PatientLoginInformationServiceImpl implements PatientLoginInformati
     }
 
     @Override
-    public void storePatientLoginInformation(PatientLoginInformation patientLoginInfo) throws SQLException {
+    public void storePatientLoginInformation(PatientLoginInformation patientLoginInfo) throws CustomException {
         PatientLoginInformationRepositoryImpl patientLoginInfoRepo = new PatientLoginInformationRepositoryImpl();
         patientLoginInfoRepo.storePatientLoginInformationInDB(patientLoginInfo);
         UserLoginRepositoryImpl userLoginRepository = new UserLoginRepositoryImpl();

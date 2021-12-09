@@ -1,6 +1,7 @@
 package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.constants.BloodGroup;
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
 
@@ -143,7 +144,7 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
     }
 
     @Override
-    public void storePatientMedicalInformation(PatientMedicalInformation patientMedicalInfo) throws SQLException {
+    public void storePatientMedicalInformation(PatientMedicalInformation patientMedicalInfo) throws CustomException {
         PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
         patientMedicalInfoRepo.addPatientMedicalInformation(patientMedicalInfo);
         System.out.println("\nPatient Added Successfully!");
@@ -158,7 +159,7 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
     }
 
     @Override
-    public void deleteMedicalInformation() throws SQLException {
+    public void deleteMedicalInformation() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Delete Medical Information: ");
         int patientId = in.nextInt();
@@ -168,7 +169,7 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
     }
 
     @Override
-    public void viewPatientMedicalInformation() throws SQLException {
+    public void viewPatientMedicalInformation() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To View Patient's Medical Information: ");
         int patientId = in.nextInt();
@@ -203,7 +204,7 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
     }
 
     @Override
-    public void updatePatientMedicalInformation() throws SQLException {
+    public void updatePatientMedicalInformation() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Update Medical Information: ");
         int patientId = in.nextInt();

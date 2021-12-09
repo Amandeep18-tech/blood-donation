@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.SurveyQuestions;
 import com.dalhousie.bloodDonation.repos.SurveyQuestionsRepositoryImpl;
 
@@ -33,7 +34,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     }
 
     @Override
-    public void storeSurveyQuestions(List<SurveyQuestions> questionList) throws SQLException {
+    public void storeSurveyQuestions(List<SurveyQuestions> questionList) throws CustomException {
         SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
         for (SurveyQuestions questionObj : questionList) {
             questionRepo.add(questionObj);
@@ -42,7 +43,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     }
 
     @Override
-    public int addQuestionToExistingSurveyInput() throws SQLException {
+    public int addQuestionToExistingSurveyInput() {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
@@ -50,7 +51,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     }
 
     @Override
-    public void viewAllSurveyQuestions() throws SQLException {
+    public void viewAllSurveyQuestions() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
@@ -66,7 +67,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     }
 
     @Override
-    public void deleteSurveyQuestion() throws SQLException {
+    public void deleteSurveyQuestion() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Question ID To Delete: ");
         int id = in.nextInt();
@@ -76,7 +77,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     }
 
     @Override
-    public void updateSurveyQuestion() throws SQLException {
+    public void updateSurveyQuestion() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\n Enter Question ID To Update: ");
         int id = in.nextInt();

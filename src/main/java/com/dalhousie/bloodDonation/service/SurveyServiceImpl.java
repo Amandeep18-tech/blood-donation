@@ -1,8 +1,11 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.Survey;
 import com.dalhousie.bloodDonation.repos.SurveyRepositoryImpl;
+import com.dalhousie.bloodDonation.utils.DBUtils;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -27,7 +30,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public int storeSurveyDetails() throws SQLException {
+    public int storeSurveyDetails() throws CustomException {
         Survey survey = new Survey();
         survey.setSurveyTitle(surveyTitle);
         survey.setSurveyDesc(surveyDescription);
@@ -37,7 +40,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public int viewAllSurvey() throws SQLException {
+    public int viewAllSurvey() throws CustomException {
         SurveyRepositoryImpl surveyRepositoryImpl = new SurveyRepositoryImpl();
         List<Survey> surveyList = surveyRepositoryImpl.getAllSurvey();
         System.out.println();
@@ -52,7 +55,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public void deleteSurvey() throws SQLException {
+    public void deleteSurvey() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Delete: ");
         int id = in.nextInt();
@@ -62,7 +65,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public void updateSurvey() throws SQLException {
+    public void updateSurvey() throws CustomException {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To Update: ");
         int id = in.nextInt();

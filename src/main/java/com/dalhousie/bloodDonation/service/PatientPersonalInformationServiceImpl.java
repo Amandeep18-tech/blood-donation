@@ -1,11 +1,13 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
 import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepositoryImpl;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -42,7 +44,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     }
 
     @Override
-    public int storePatientInformation() throws SQLException {
+    public int storePatientInformation() throws CustomException {
         PatientPersonalInformation patientInfo = new PatientPersonalInformation();
         patientInfo.setPatientName(patientName);
         patientInfo.setDOB(dateOfBirth);
@@ -55,7 +57,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     }
 
     @Override
-    public void viewAllPatients() throws SQLException {
+    public void viewAllPatients() throws CustomException {
         PatientPersonalInformationRepositoryImpl patientInfoRepo = new PatientPersonalInformationRepositoryImpl();
         List<PatientPersonalInformation> patientList = patientInfoRepo.getAllPatients();
         System.out.println();
@@ -68,7 +70,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     }
 
     @Override
-    public void deletePatient() throws SQLException {
+    public void deletePatient() throws CustomException {
         viewAllPatients();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Delete: ");
@@ -79,7 +81,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     }
 
     @Override
-    public void updatePatientPersonalInformation() throws SQLException {
+    public void updatePatientPersonalInformation() throws CustomException {
         viewAllPatients();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Update: ");
@@ -129,13 +131,18 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     }
 
     @Override
-    public void importPatientsFromFile() throws SQLException, IOException {
+    public void importPatientsFromFile() throws CustomException {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Name Of The File From Which You Want To Import Patient Data: ");
         String fileName = in.nextLine();
         File file = new File(classloader.getResource(fileName).getFile());
-        Scanner scan = new Scanner(file);
+        Scanner scan = null;
+        try {
+            scan = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         PatientPersonalInformation patientPersonalInfo;
         PatientMedicalInformation patientMedicalInfo;
         String headers = scan.nextLine();
@@ -158,7 +165,11 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         }
         if (headerList.size() == 18) {
             scan.close();
-            scan = new Scanner(file);
+            try {
+                scan = new Scanner(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             scan.nextLine();
             while (scan.hasNextLine()) {
                 patientPersonalInfo = new PatientPersonalInformation();
