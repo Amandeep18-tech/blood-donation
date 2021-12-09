@@ -23,7 +23,7 @@ public class PatientLoginInformationRepositoryImpl implements PatientLoginInform
             ps.setString(5, patientLoginInfo.getPassword());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new CustomException("A Problem Was Encountered While Adding The Patient To The Database");
+            throw new CustomException("Error: Unable To Create The Patient");
         }
     }
 }

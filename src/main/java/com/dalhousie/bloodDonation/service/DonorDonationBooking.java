@@ -12,4 +12,5 @@ public interface DonorDonationBooking{
     public String getDonationSlotId(String slotIdInput) ;
     public boolean compareDonationDate(String dateFormatInput, String slotIdInput) ;
     public ArrayList<String> getTodayDonation() throws CustomException ;
+    public ArrayList<String> getTodayPatientRequest() throws CustomException ;
 }

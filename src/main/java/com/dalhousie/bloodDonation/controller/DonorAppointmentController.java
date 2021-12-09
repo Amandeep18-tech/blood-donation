@@ -89,6 +89,7 @@ public class DonorAppointmentController {
         patientRequestMappingRepository.addPatientDonation(patientId, suitableDonorId);
 
     }
+
     public void todayDonationConfirmation() throws CustomException{
         System.out.println("Today's Blood Request: ");
         ArrayList<String> todaysId= new ArrayList<String>();
@@ -293,4 +294,45 @@ public class DonorAppointmentController {
         displayAppointmentTime();
         bookDate();
     }
+
+    public void seePatientRequestStatus(){
+        PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
+        List<PatientBloodRequest> patientBloodRequests = patientBloodRequestRepository.getAllDonorRequests();
+        for(PatientBloodRequest patientBloodRequest:patientBloodRequests){
+            if(patientBloodRequest.getPatientID().equals("5c256da3-3d82-11ec-917b-e2ed2ce588f5") && patientBloodRequest.getStatus()==0){
+                System.out.println("Request Pending");
+                
+            }
+            else{
+                System.out.println("Request done");
+            }
+        }
+    }
+
+    public void todayPatientRequestConfirmation() throws CustomException{
+        System.out.println("Today's Patient Blood Request: ");
+        PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
+        ArrayList<String> todaysId= new ArrayList<String>();
+        todaysId=donationBooking.getTodayPatientRequest();
+        Scanner sc = new Scanner(System.in);
+        for(int i=0;i<todaysId.size();i++){
+            System.out.println("Has the following donor done the blood donation");
+            System.out.println(todaysId.get(i));
+            System.out.println("Press 1 for accept 2. Reject");
+            String acceptFlag=sc.nextLine();
+
+            if(acceptFlag.equals("1")){
+                String patientId="5c256da3-3d82-11ec-917b-e2ed2ce588f5";
+                patientBloodRequestRepository.addUpdateDonation(patientId, 1);
+                
+            }
+            else{
+                continue;
+            }
+
+        }
+ 
+    }
+
+
 }

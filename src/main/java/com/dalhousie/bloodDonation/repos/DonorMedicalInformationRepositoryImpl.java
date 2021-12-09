@@ -14,7 +14,7 @@ public class DonorMedicalInformationRepositoryImpl implements DonorMedicalInform
     @Override
     public DonorInformation getMatchingBloodTypeDonorMedicalInformation(DonorInformation donorInfo) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM donor_medical_records WHERE donor_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, donorInfo.getDonorId());
@@ -29,8 +29,8 @@ public class DonorMedicalInformationRepositoryImpl implements DonorMedicalInform
                 donorInfo.setPlateletCount(rs.getInt("platelet_count"));
             }
             return donorInfo;
-        }catch (SQLException e){
-            throw new CustomException("There Was A Problem In Finding The Matching Donors");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Find Information For Matching Donor");
         }
     }
 }

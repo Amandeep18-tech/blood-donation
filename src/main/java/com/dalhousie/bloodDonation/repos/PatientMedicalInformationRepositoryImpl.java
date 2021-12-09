@@ -17,7 +17,7 @@ public class PatientMedicalInformationRepositoryImpl implements PatientMedicalIn
     @Override
     public void addPatientMedicalInformation(PatientMedicalInformation patientMedicalInfo) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "INSERT INTO patient_medical_information (patient_id, " + "blood_group, " + "current_location, " + "dr_reference, " + "requirement_reason, " + "priority, " + "has_hepatitis_B, " + "has_hepatitis_C," + "has_HIV, " + "has_hemochromatosis, " + "hemoglobin_level, " + "rbc_count, " + "platelet_count) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientMedicalInfo.getPatientId());
@@ -34,28 +34,28 @@ public class PatientMedicalInformationRepositoryImpl implements PatientMedicalIn
             ps.setInt(12, patientMedicalInfo.getRbcCount());
             ps.setInt(13, patientMedicalInfo.getPlateletCount());
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("Error: Unable to ");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Store Patient Medical Information");
         }
     }
 
     @Override
     public void delete(int patientId) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "DELETE FROM patient_medical_information WHERE patient_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientId);
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Delete Patient Medical Information");
         }
     }
 
     @Override
     public PatientMedicalInformation getPatientMedicalInformation(int patientId) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "SELECT * FROM patient_medical_information WHERE patient_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, patientId);
@@ -84,15 +84,15 @@ public class PatientMedicalInformationRepositoryImpl implements PatientMedicalIn
             } else {
                 return null;
             }
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Find Patient Medical Information");
         }
     }
 
     @Override
     public void update(PatientMedicalInformation patientMedicalInfo) throws CustomException {
         DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = dbUtils.getConnection()) {
             String query = "UPDATE patient_medical_information SET blood_group= ?, " + "current_location= ?, " + "dr_reference= ?, " + "requirement_reason= ?, " + "priority= ?, " + "has_hepatitis_B= ?," + "has_hepatitis_C= ?," + "has_HIV= ?," + "hemoglobin_level= ?," + "has_hemochromatosis= ?," + "rbc_count= ?," + "platelet_count= ? " + "WHERE patient_id= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, patientMedicalInfo.getBloodGroup());
@@ -109,8 +109,8 @@ public class PatientMedicalInformationRepositoryImpl implements PatientMedicalIn
             ps.setInt(12, patientMedicalInfo.getPlateletCount());
             ps.setInt(13, patientMedicalInfo.getPatientId());
             ps.executeUpdate();
-        }catch (SQLException e){
-            throw new CustomException("");
+        } catch (SQLException e) {
+            throw new CustomException("Error: Unable To Update Patient Medical Information");
         }
     }
 }

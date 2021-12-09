@@ -128,7 +128,7 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
         String todayToString = simpleDateFormat.format(today);
     
         for (BloodDonationDetaisHistory bloodDonationDetaisHistory : bloodDonationDetailsHistoryList) {
-            System.out.println(bloodDonationDetaisHistory.getSlotDate());
+            
             String donorDate = simpleDateFormat.format(bloodDonationDetaisHistory.getSlotDate());
                 if (donorDate.equals(todayToString)) {
                     idList.add(bloodDonationDetaisHistory.getDonorId());
@@ -140,6 +140,29 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
             }
            
             return idList;
+        }
+
+        public ArrayList<String> getTodayPatientRequest() throws CustomException{
+            PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
+            List<PatientBloodRequest> patientBloodRequestsList= patientBloodRequestRepository.getAllDonorRequests();
+            ArrayList<String> idList = new ArrayList<String>();
+            Date today = Calendar.getInstance().getTime();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String todayToString = simpleDateFormat.format(today);
+            for (PatientBloodRequest patientBloodRequest: patientBloodRequestsList) {
+                
+                String donorDate = simpleDateFormat.format(patientBloodRequest.getAppointmentDate());
+                    if (donorDate.equals(todayToString)) {
+                        idList.add(patientBloodRequest.getPatientID());
+                    }
+    
+                }
+                if(idList.size()==0){
+                    throw new CustomException("No donation for today");
+                }
+               
+                return idList;
+
         }
         
 

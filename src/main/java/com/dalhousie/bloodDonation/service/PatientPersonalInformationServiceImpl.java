@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.constants.Directory;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientMedicalInformation;
 import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
@@ -9,7 +10,6 @@ import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepositoryImp
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -136,12 +136,20 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Name Of The File From Which You Want To Import Patient Data: ");
         String fileName = in.nextLine();
-        File file = new File(classloader.getResource(fileName).getFile());
+        File resourceDirectory = new File(Directory.RESOURCES_DIRECTORY);
+        File file = null;
+        try {
+            file = new File(resourceDirectory.getCanonicalPath() + "\\" + fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scanner scan = null;
         try {
             scan = new Scanner(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException io) {
+            io.printStackTrace();
         }
         PatientPersonalInformation patientPersonalInfo;
         PatientMedicalInformation patientMedicalInfo;
