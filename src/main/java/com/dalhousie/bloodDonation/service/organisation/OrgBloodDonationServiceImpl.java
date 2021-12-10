@@ -93,7 +93,6 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
         int bloodRequested = bloodRequestOrganisation.getUnitsRequired();
         BloodGroup bloodGroup = bloodRequestOrganisation.getBloodGroup();
 
-
         List<BloodDonatedDetail> availableBloodDonatedDetails = bloodDonatedDetailsRepository.getAllRecords().stream()
                 .filter(x -> x.getOrgId().equalsIgnoreCase(bloodRequestOrganisation.getOrgId()))
                 .collect(Collectors.groupingBy(BloodDonatedDetail::getBloodGroup))
@@ -116,16 +115,15 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
         List<Organisation> organisations = organizationRepository.getAllPlaces();
         String orgId = sessionService.getUserId();
         String currentPinCode = organisations.stream()
-                .filter(x->x.getorganisationID().equalsIgnoreCase(orgId))
+                .filter(x -> x.getorganisationID().equalsIgnoreCase(orgId))
                 .collect(Collectors.toList())
                 .get(0).getPinCode();
         Map<String, List<BloodDonatedDetail>> collect = bloodDonatedDetailsRepository.getAllRecords().stream()
                 .filter(x -> x.getBloodGroup() == bloodGroup)
                 .collect(Collectors.groupingBy(BloodDonatedDetail::getOrgId));
         List<String[]> recommendedOrgList = new ArrayList<>();
-        //Todo Added recommendation logics
         for (Map.Entry<String, List<BloodDonatedDetail>> entry : collect.entrySet()) {
-            if(entry.getValue().size()<unitsNeeded || entry.getKey().equalsIgnoreCase(orgId)) {
+            if (entry.getValue().size() < unitsNeeded || entry.getKey().equalsIgnoreCase(orgId)) {
                 continue;
             }
             Organisation organisation = organisations.stream()
@@ -136,11 +134,11 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
                     organisation.getorganisationName(),
                     String.valueOf(entry.getValue().size()),
                     organisation.getLocation(),
-                    locationService.getShortestPath(currentPinCode,organisation.getPinCode()),
-                    String.valueOf(locationService.getDistanceInMeters(currentPinCode,organisation.getPinCode())),
+                    locationService.getShortestPath(currentPinCode, organisation.getPinCode()),
+                    String.valueOf(locationService.getDistanceInMeters(currentPinCode, organisation.getPinCode())),
             });
         }
-        Collections.sort(recommendedOrgList,(strings1, strings2) -> {
+        Collections.sort(recommendedOrgList, (strings1, strings2) -> {
             return Integer.valueOf((int) (Double.valueOf(strings1[5]) - Double.valueOf(strings2[5])));
         });
         return recommendedOrgList;

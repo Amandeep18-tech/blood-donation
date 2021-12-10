@@ -12,28 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class NotificationServiceImpl implements NotificationService{
-   NotificationRepository notificationRepository = new NotificationRepository();
+public class NotificationServiceImpl implements NotificationService {
+    NotificationRepository notificationRepository = new NotificationRepository();
+
     @Override
     public boolean sendMailToSingleUser(String userName, String priority, String message_keyword) throws SQLException, ClassNotFoundException, CustomException {
         final String sender = "janhavisonawane33@gmail.com";
         final String password = "onsgratwlvpddlim";
         Notification notification = new Notification();
-              notification= notificationRepository.fetchData(priority);
+        notification = notificationRepository.fetchData(priority);
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "465");
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.socketFactory.port", "465");
         prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(sender, password);
                     }
                 });
-
         try {
 
             Message message = new MimeMessage(session);
@@ -44,12 +43,9 @@ public class NotificationServiceImpl implements NotificationService{
             );
             message.setSubject("Testing Gmail SSL");
             message.setText("Hello " + notification.getUserName() + notification.getMessage()
-                    );
+            );
             Transport.send(message);
-
-            System.out.println("Done");
             return true;
-
         } catch (MessagingException e) {
             throw new CustomException("You don't have sufficient blood available.");
         }
@@ -57,7 +53,7 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
-    public boolean sendMailToMultipleUser(List<String> recipientList,String msg) throws CustomException {
+    public boolean sendMailToMultipleUser(List<String> recipientList, String msg) throws CustomException {
         final String sender = "janhavisonawane33@gmail.com";
         final String password = "onsgratwlvpddlim";
         Properties prop = new Properties();
@@ -78,11 +74,11 @@ public class NotificationServiceImpl implements NotificationService{
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sender));
             message.setHeader("X-Priority", "1");
-            List<String> recpList=new ArrayList<String>(){{
+            List<String> recpList = new ArrayList<String>() {{
                 add("janhavisonawane33@gmail.com");
                 add("vivek.r.patel1998@gmail.com");
             }};
-            InternetAddress[] addresses=new InternetAddress[recpList.size()];
+            InternetAddress[] addresses = new InternetAddress[recpList.size()];
             int counter = 0;
             for (String recipient : recpList) {
                 addresses[counter] = new InternetAddress(recipient);
@@ -91,9 +87,7 @@ public class NotificationServiceImpl implements NotificationService{
             message.setRecipients(Message.RecipientType.TO, addresses);
             message.setSubject("Testing Gmail SSL");
             message.setText(msg);
-
             Transport.send(message);
-
             System.out.println("Done");
             return true;
         } catch (MessagingException e) {

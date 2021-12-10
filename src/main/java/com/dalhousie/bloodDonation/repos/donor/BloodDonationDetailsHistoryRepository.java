@@ -14,60 +14,51 @@ import java.util.List;
 import java.util.UUID;
 
 public class BloodDonationDetailsHistoryRepository {
-    private  final SessionService sessionService;
+    private final SessionService sessionService;
 
-    public BloodDonationDetailsHistoryRepository(){
-        sessionService= new SessionServiceImpl();
+    public BloodDonationDetailsHistoryRepository() {
+        sessionService = new SessionServiceImpl();
     }
 
     public List<BloodDonationDetaisHistory> getAllDetails() {
-        String query="SELECT * FROM blood_donation_details_history";
+        String query = "SELECT * FROM blood_donation_details_history";
         List<BloodDonationDetaisHistory> allDonationDetails = new ArrayList();
-        try{
-        Connection conn= DBUtils.getInstance().getConnection();
-        PreparedStatement ps = conn.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()){
-            BloodDonationDetaisHistory bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
-            bloodDonationDetaisHistory.setDonorId(rs.getString("donor_id"));
-            bloodDonationDetaisHistory.setSlotDate(rs.getDate("slot_date"));
-            bloodDonationDetaisHistory.setId(rs.getString("id"));
-            bloodDonationDetaisHistory.setSlotId(rs.getString("slot_id"));
-            // bloodDonationDetaisHistory.setBloodGroup(BloodGroup.valueOf(rs.getString("blood_group")));
-            allDonationDetails.add(bloodDonationDetaisHistory);
+        try {
+            Connection conn = DBUtils.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BloodDonationDetaisHistory bloodDonationDetaisHistory = new BloodDonationDetaisHistory();
+                bloodDonationDetaisHistory.setDonorId(rs.getString("donor_id"));
+                bloodDonationDetaisHistory.setSlotDate(rs.getDate("slot_date"));
+                bloodDonationDetaisHistory.setId(rs.getString("id"));
+                bloodDonationDetaisHistory.setSlotId(rs.getString("slot_id"));
+                allDonationDetails.add(bloodDonationDetaisHistory);
             }
-            
-        }
-        
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return allDonationDetails;
-
-
-        
     }
-    public boolean saveDonationDate(BloodDonationDetaisHistory bloodDonationDetaisHistory,String slotId, String dateInput) {
-        try{
-        int executeUpdate;
-        Connection conn= DBUtils.getInstance().getConnection();
-        String query = "INSERT INTO blood_donation_details_history (id, " + "donor_id, " + "slot_id,"+"slot_date) VALUES (?, ?, ?,?)";
 
-        PreparedStatement ps = conn.prepareStatement(query);
-        UUID uuid = UUID.randomUUID();
-        String uuidAsString = uuid.toString();
-        ps.setString(1, uuidAsString);
-        ps.setString(2,sessionService.getUserId());
-        ps.setString(3,slotId );
-        ps.setString(4,dateInput);
-        
-        executeUpdate = ps.executeUpdate();
-        }
-        catch(SQLException e){
+    public boolean saveDonationDate(BloodDonationDetaisHistory bloodDonationDetaisHistory, String slotId, String dateInput) {
+        try {
+            int executeUpdate;
+            Connection conn = DBUtils.getInstance().getConnection();
+            String query = "INSERT INTO blood_donation_details_history (id, " + "donor_id, " + "slot_id," + "slot_date) VALUES (?, ?, ?,?)";
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            UUID uuid = UUID.randomUUID();
+            String uuidAsString = uuid.toString();
+            ps.setString(1, uuidAsString);
+            ps.setString(2, sessionService.getUserId());
+            ps.setString(3, slotId);
+            ps.setString(4, dateInput);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
-    
 }
