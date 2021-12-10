@@ -1,9 +1,16 @@
 package com.dalhousie.bloodDonation.controller;
 
 import com.dalhousie.bloodDonation.constants.UserType;
+import com.dalhousie.bloodDonation.controller.common.FinancialDonationController;
+import com.dalhousie.bloodDonation.controller.common.LoginController;
+import com.dalhousie.bloodDonation.controller.common.RewardsController;
+import com.dalhousie.bloodDonation.controller.common.SurveyController;
+import com.dalhousie.bloodDonation.controller.donor.*;
+import com.dalhousie.bloodDonation.controller.organisation.OrgBloodRequestController;
+import com.dalhousie.bloodDonation.controller.patient.PatientController;
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.service.SessionService;
-import com.dalhousie.bloodDonation.service.SessionServiceImpl;
+import com.dalhousie.bloodDonation.service.common.SessionService;
+import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
 import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;

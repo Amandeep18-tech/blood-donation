@@ -1,6 +1,7 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.repos.donor.RewardsRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

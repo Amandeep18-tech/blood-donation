@@ -1,7 +1,8 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.Survey;
+import com.dalhousie.bloodDonation.model.common.Survey;
+import com.dalhousie.bloodDonation.repos.common.SurveyRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

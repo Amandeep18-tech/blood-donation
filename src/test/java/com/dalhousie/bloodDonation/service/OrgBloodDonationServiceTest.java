@@ -2,12 +2,12 @@ package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.service.organisation.OrgBloodDonationService;
+import com.dalhousie.bloodDonation.service.organisation.OrgBloodDonationServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class OrgBloodDonationServiceTest {
 

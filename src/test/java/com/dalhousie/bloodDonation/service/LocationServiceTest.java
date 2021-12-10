@@ -1,10 +1,10 @@
 package com.dalhousie.bloodDonation.service;
 
+import com.dalhousie.bloodDonation.service.common.LocationService;
+import com.dalhousie.bloodDonation.service.common.LocationServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class LocationServiceTest {
 

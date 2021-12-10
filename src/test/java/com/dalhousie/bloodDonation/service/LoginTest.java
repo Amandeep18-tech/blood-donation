@@ -1,8 +1,8 @@
 package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.User;
-import com.dalhousie.bloodDonation.repos.LoginRepository;
+import com.dalhousie.bloodDonation.model.common.User;
+import com.dalhousie.bloodDonation.repos.common.LoginRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.model;
 
+import com.dalhousie.bloodDonation.model.common.SurveyDetails;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

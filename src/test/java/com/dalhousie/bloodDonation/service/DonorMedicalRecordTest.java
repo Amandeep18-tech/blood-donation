@@ -4,16 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
-import com.dalhousie.bloodDonation.model.PatientBloodRequest;
-
+import com.dalhousie.bloodDonation.service.donor.DonorMedicalRecord;
+import com.dalhousie.bloodDonation.service.donor.DonorMedicalRecordImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

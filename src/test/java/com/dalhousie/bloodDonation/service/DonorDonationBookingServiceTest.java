@@ -13,9 +13,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.BloodDonationDetaisHistory;
-import com.dalhousie.bloodDonation.model.PatientBloodRequest;
+import com.dalhousie.bloodDonation.model.patient.PatientBloodRequest;
 
+import com.dalhousie.bloodDonation.service.donor.DonorDonationBookingImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;

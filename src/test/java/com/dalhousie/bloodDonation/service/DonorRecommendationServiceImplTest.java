@@ -1,6 +1,7 @@
 package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.service.donor.DonorRecommendationServiceImpl;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

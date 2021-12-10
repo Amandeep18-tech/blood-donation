@@ -10,15 +10,14 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
-import com.dalhousie.bloodDonation.model.DonorMedicalRecords;
-import com.dalhousie.bloodDonation.model.MedicalAppointmentDetails;
-import com.dalhousie.bloodDonation.model.MedicalAppointmentMaster;
-import com.dalhousie.bloodDonation.service.ManageAppointmentImpl;
-import java.sql.Time;
+import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
+import com.dalhousie.bloodDonation.model.donor.MedicalAppointmentMaster;
+import com.dalhousie.bloodDonation.service.donor.ManageAppointmentImpl;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+
 class ManageAppointmentServiceTest {
     
     private ManageAppointmentImpl manageAppointmentImpl;

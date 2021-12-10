@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.controller;
 
+import com.dalhousie.bloodDonation.controller.donor.DonorMedicalRecordController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

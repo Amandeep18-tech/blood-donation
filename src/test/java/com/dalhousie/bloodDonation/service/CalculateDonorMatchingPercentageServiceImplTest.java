@@ -1,6 +1,7 @@
 package com.dalhousie.bloodDonation.service;
 
-import com.dalhousie.bloodDonation.model.DonorInformation;
+import com.dalhousie.bloodDonation.model.donor.DonorInformation;
+import com.dalhousie.bloodDonation.service.donor.CalculateDonorMatchingPercentageServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,6 @@
 package com.dalhousie.bloodDonation.repos;
 
-import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.service.NotificationServiceImpl;
-import org.junit.jupiter.api.Test;
-
-import java.sql.SQLException;
+import com.dalhousie.bloodDonation.service.common.NotificationServiceImpl;
 
 public class NotificationTests {
     NotificationServiceImpl notificationService = new NotificationServiceImpl();
