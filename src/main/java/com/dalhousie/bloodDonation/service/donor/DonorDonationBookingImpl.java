@@ -1,12 +1,5 @@
 package com.dalhousie.bloodDonation.service.donor;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import com.dalhousie.bloodDonation.constants.SlotAvailableConstants;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.BloodDonationDetails;
@@ -19,6 +12,13 @@ import com.dalhousie.bloodDonation.repos.donor.BloodDonationDetailsRepository;
 import com.dalhousie.bloodDonation.repos.organisation.OrganizationRepository;
 import com.dalhousie.bloodDonation.repos.patient.PatientBloodRequestRepository;
 import com.dalhousie.bloodDonation.repos.patient.PatientRequestMappingRepository;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class DonorDonationBookingImpl implements DonorDonationBooking {
 

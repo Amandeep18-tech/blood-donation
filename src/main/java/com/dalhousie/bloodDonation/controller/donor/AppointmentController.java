@@ -1,22 +1,22 @@
 package com.dalhousie.bloodDonation.controller.donor;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Scanner;
-
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.MedicalAppointmentDetails;
 import com.dalhousie.bloodDonation.model.donor.MedicalAppointmentMaster;
 import com.dalhousie.bloodDonation.model.organisation.Organisation;
+import com.dalhousie.bloodDonation.repos.donor.MedicalAppointmentDetailRepository;
 import com.dalhousie.bloodDonation.repos.donor.MedicalAppointmentMasterRespository;
 import com.dalhousie.bloodDonation.repos.organisation.OrganizationRepository;
 import com.dalhousie.bloodDonation.service.common.LocationService;
 import com.dalhousie.bloodDonation.service.common.LocationServiceImpl;
 import com.dalhousie.bloodDonation.service.donor.ManageAppointment;
 import com.dalhousie.bloodDonation.service.donor.ManageAppointmentImpl;
-import com.dalhousie.bloodDonation.repos.donor.MedicalAppointmentDetailRepository;
 import com.dalhousie.bloodDonation.utils.IOUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Scanner;
 
 public class AppointmentController {
     private final ManageAppointment manageAppointment;

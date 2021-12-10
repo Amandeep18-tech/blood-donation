@@ -1,14 +1,14 @@
 package com.dalhousie.bloodDonation.repos.donor;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Date;
-
 import com.dalhousie.bloodDonation.constants.BloodDonationStatus;
 import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.model.donor.BloodDonatedDetail;
 import com.dalhousie.bloodDonation.utils.DBUtils;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.*;
 
 public class BloodDonatedDetailsRepository {
 

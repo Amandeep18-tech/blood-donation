@@ -1,9 +1,5 @@
 package com.dalhousie.bloodDonation.service.donor;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
 import com.dalhousie.bloodDonation.constants.SlotAvailableConstants;
 import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.donor.MedicalAppointmentDetails;
@@ -13,6 +9,10 @@ import com.dalhousie.bloodDonation.repos.donor.DonorMedicalRecordsRepository;
 import com.dalhousie.bloodDonation.repos.donor.MedicalAppointmentDetailRepository;
 import com.dalhousie.bloodDonation.repos.donor.MedicalAppointmentMasterRespository;
 import com.dalhousie.bloodDonation.repos.organisation.OrganizationRepository;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class ManageAppointmentImpl implements ManageAppointment {
 

@@ -1,18 +1,18 @@
 package com.dalhousie.bloodDonation.controller.donor;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.donor.Person;
 import com.dalhousie.bloodDonation.repos.donor.DonorMedicalRecordsRepository;
+import com.dalhousie.bloodDonation.service.common.SessionService;
+import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
 import com.dalhousie.bloodDonation.service.donor.DonorMedicalRecordImpl;
 import com.dalhousie.bloodDonation.service.donor.ManageAppointment;
 import com.dalhousie.bloodDonation.service.donor.ManageAppointmentImpl;
-import com.dalhousie.bloodDonation.service.common.SessionService;
-import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
 import com.dalhousie.bloodDonation.utils.IOUtils;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DonorMedicalRecordController {
     private DonorMedicalRecords donorMedicalRecords;

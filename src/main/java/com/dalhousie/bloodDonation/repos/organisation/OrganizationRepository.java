@@ -1,14 +1,14 @@
 package com.dalhousie.bloodDonation.repos.organisation;
 
+import com.dalhousie.bloodDonation.model.organisation.Organisation;
+import com.dalhousie.bloodDonation.utils.DBUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.dalhousie.bloodDonation.utils.DBUtils;
-import com.dalhousie.bloodDonation.model.organisation.Organisation;
 
 public class OrganizationRepository {
     

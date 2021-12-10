@@ -4,20 +4,23 @@ import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.constants.BloodReqOrgStatus;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.BloodDonatedDetail;
+import com.dalhousie.bloodDonation.model.donor.Person;
 import com.dalhousie.bloodDonation.model.organisation.BloodRequestOrganisation;
 import com.dalhousie.bloodDonation.model.organisation.Organisation;
-import com.dalhousie.bloodDonation.model.donor.Person;
 import com.dalhousie.bloodDonation.repos.donor.BloodDonatedDetailsRepository;
 import com.dalhousie.bloodDonation.repos.donor.PersonRepository;
 import com.dalhousie.bloodDonation.repos.organisation.BloodRequestOrganisationRepository;
 import com.dalhousie.bloodDonation.repos.organisation.OrganizationRepository;
-import com.dalhousie.bloodDonation.service.common.SessionService;
-import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
 import com.dalhousie.bloodDonation.service.common.LocationService;
 import com.dalhousie.bloodDonation.service.common.LocationServiceImpl;
+import com.dalhousie.bloodDonation.service.common.SessionService;
+import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
 import com.dalhousie.bloodDonation.utils.DateUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {

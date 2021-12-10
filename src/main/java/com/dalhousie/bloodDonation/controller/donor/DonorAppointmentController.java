@@ -1,5 +1,26 @@
 package com.dalhousie.bloodDonation.controller.donor;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.common.Cache;
+import com.dalhousie.bloodDonation.model.common.OTPDetails;
+import com.dalhousie.bloodDonation.model.common.User;
+import com.dalhousie.bloodDonation.model.donor.BloodDonationDetails;
+import com.dalhousie.bloodDonation.model.donor.BloodDonationDetaisHistory;
+import com.dalhousie.bloodDonation.model.organisation.Organisation;
+import com.dalhousie.bloodDonation.model.patient.PatientBloodRequest;
+import com.dalhousie.bloodDonation.repos.donor.BloodDonatedDetailsRepository;
+import com.dalhousie.bloodDonation.repos.donor.BloodDonationDetailsHistoryRepository;
+import com.dalhousie.bloodDonation.repos.donor.BloodDonationDetailsRepository;
+import com.dalhousie.bloodDonation.repos.organisation.OrganizationRepository;
+import com.dalhousie.bloodDonation.repos.patient.PatientBloodRequestRepository;
+import com.dalhousie.bloodDonation.repos.patient.PatientRequestMappingRepository;
+import com.dalhousie.bloodDonation.service.common.*;
+import com.dalhousie.bloodDonation.service.donor.DonorDonationBooking;
+import com.dalhousie.bloodDonation.service.donor.DonorDonationBookingImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
+import net.bytebuddy.utility.RandomString;
+
+import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -10,34 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.mail.MessagingException;
-
-import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.donor.BloodDonationDetails;
-import com.dalhousie.bloodDonation.model.donor.BloodDonationDetaisHistory;
-import com.dalhousie.bloodDonation.model.common.Cache;
-import com.dalhousie.bloodDonation.model.common.OTPDetails;
-import com.dalhousie.bloodDonation.model.organisation.Organisation;
-import com.dalhousie.bloodDonation.model.patient.PatientBloodRequest;
-import com.dalhousie.bloodDonation.model.common.User;
-import com.dalhousie.bloodDonation.repos.donor.BloodDonatedDetailsRepository;
-import com.dalhousie.bloodDonation.repos.donor.BloodDonationDetailsHistoryRepository;
-import com.dalhousie.bloodDonation.repos.donor.BloodDonationDetailsRepository;
-import com.dalhousie.bloodDonation.repos.organisation.OrganizationRepository;
-import com.dalhousie.bloodDonation.repos.patient.PatientBloodRequestRepository;
-import com.dalhousie.bloodDonation.repos.patient.PatientRequestMappingRepository;
-import com.dalhousie.bloodDonation.service.donor.DonorDonationBooking;
-import com.dalhousie.bloodDonation.service.donor.DonorDonationBookingImpl;
-import com.dalhousie.bloodDonation.service.common.LocationService;
-import com.dalhousie.bloodDonation.service.common.LocationServiceImpl;
-import com.dalhousie.bloodDonation.service.common.LoginService;
-import com.dalhousie.bloodDonation.service.common.LoginServiceImpl;
-import com.dalhousie.bloodDonation.service.common.SessionService;
-import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
-
-import com.dalhousie.bloodDonation.utils.IOUtils;
-import net.bytebuddy.utility.RandomString;
 
 public class DonorAppointmentController {
     private final DonorDonationBooking donationBooking;

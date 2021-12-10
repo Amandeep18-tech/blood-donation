@@ -1,8 +1,8 @@
 package com.dalhousie.bloodDonation.controller.common;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.organisation.Organisation;
 import com.dalhousie.bloodDonation.model.common.User;
+import com.dalhousie.bloodDonation.model.organisation.Organisation;
 import com.dalhousie.bloodDonation.service.common.LoginService;
 import com.dalhousie.bloodDonation.service.common.LoginServiceImpl;
 import com.dalhousie.bloodDonation.utils.IOUtils;

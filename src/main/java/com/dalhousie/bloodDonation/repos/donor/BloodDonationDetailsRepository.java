@@ -1,14 +1,14 @@
 package com.dalhousie.bloodDonation.repos.donor;
 
+import com.dalhousie.bloodDonation.model.donor.BloodDonationDetails;
+import com.dalhousie.bloodDonation.utils.DBUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.dalhousie.bloodDonation.model.donor.BloodDonationDetails;
-import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class BloodDonationDetailsRepository {
     

@@ -2,9 +2,6 @@ package com.dalhousie.bloodDonation.service.patient;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 public interface PatientPersonalInformationService {
     void getPatientInformationInput();
 

@@ -1,8 +1,8 @@
 package com.dalhousie.bloodDonation.model.donor;
 
-import java.util.Date;
-
 import com.dalhousie.bloodDonation.constants.BloodGroup;
+
+import java.util.Date;
 
 public class BloodDonationDetaisHistory {
     String id;

@@ -1,14 +1,14 @@
 package com.dalhousie.bloodDonation.service.donor;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
+import com.dalhousie.bloodDonation.model.donor.MedicalAppointmentDetails;
+import com.dalhousie.bloodDonation.repos.donor.MedicalAppointmentDetailRepository;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.donor.MedicalAppointmentDetails;
-import com.dalhousie.bloodDonation.repos.donor.MedicalAppointmentDetailRepository;
 
 public class DonorMedicalRecordImpl implements DonorMedicalRecord{
     

@@ -1,9 +1,9 @@
 package com.dalhousie.bloodDonation.service.donor;
 
-import java.util.List;
-
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
+
+import java.util.List;
 
 public interface ListSuitableDonor {
 
