@@ -15,22 +15,12 @@ import com.dalhousie.bloodDonation.model.BloodRequestOrganisation;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class BloodDonationDetailsRepository {
-    Connection conn;
-
-    public BloodDonationDetailsRepository(){
-        DBUtils dbUtils = new DBUtils();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     
     public List<BloodDonationDetails> getAllDonorAppointment() {
         String query="SELECT * FROM blood_donation_details";
         List<BloodDonationDetails> donorSlotList = new ArrayList();
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
         while (rs.next()){

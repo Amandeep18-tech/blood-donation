@@ -4,12 +4,11 @@ import com.dalhousie.bloodDonation.constants.UserType;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.service.SessionService;
 import com.dalhousie.bloodDonation.service.SessionServiceImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;
 
 public class InitController {
-
-    private final Scanner sc;
     private final LoginController loginController;
     private final ListSuitableDonorController listSuitableDonorController;
     private final AppointmentController appointmentController;
@@ -22,9 +21,10 @@ public class InitController {
     private final DonorAppointmentController donorAppointmentController;
     private final DonorMedicalRecordController donorMedicalRecordController;
     private final SessionService sessionService;
+    private Scanner sc;
 
     public InitController() {
-        sc = new Scanner(System.in);
+        sc = IOUtils.getInstance();
         loginController = new LoginController();
         listSuitableDonorController = new ListSuitableDonorController();
         appointmentController = new AppointmentController();
@@ -50,6 +50,7 @@ public class InitController {
                 System.out.println("5.Exit");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
                         loginController.loginMethod();
@@ -64,7 +65,6 @@ public class InitController {
                         loginController.forgetPassword();
                         break;
                     case 5:
-//                        loginController.
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
@@ -82,7 +82,7 @@ public class InitController {
                     patient();
                 }
             }
-        } while (choice != 4);
+        } while (choice != 5);
     }
 
     public void donor() {
@@ -98,15 +98,16 @@ public class InitController {
                 System.out.println("7.Logout");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
-                        listSuitableDonorController.patientDonorList();
+                        donorAppointmentController.confirmDonorRequests();
                         break;
                     case 2:
-                        appointmentController.bookPlace();
+                        appointmentController.confirmMedicalAppointment();
                         break;
                     case 3:
-                        appointmentController.bookDate();
+                        donorAppointmentController.confirmDonation();
                         break;
                     case 4:
                         rewardsController.menu();
@@ -118,6 +119,7 @@ public class InitController {
                         financialDonationController.selectModeOfPayment();
                         break;
                     case 7:
+                        loginController.userLogout();
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
@@ -125,7 +127,7 @@ public class InitController {
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
-        } while (choice != 4);
+        } while (choice != 7);
     }
 
     public void patient() {
@@ -140,6 +142,7 @@ public class InitController {
                 System.out.println("6.Logout");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
                         listSuitableDonorController.patientDonorList();
@@ -157,6 +160,7 @@ public class InitController {
                         financialDonationController.selectModeOfPayment();
                         break;
                     case 6:
+                        loginController.userLogout();
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
@@ -164,7 +168,7 @@ public class InitController {
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
-        } while (choice != 4);
+        } while (choice != 6);
     }
 
     public void organization() {
@@ -186,6 +190,7 @@ public class InitController {
                 System.out.println("13.Logout");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
                         listSuitableDonorController.organisationDonorSelection();
@@ -223,6 +228,7 @@ public class InitController {
                     case 12: financialDonationController.selectModeOfPayment();
                         break;
                     case 13:
+                        loginController.userLogout();
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
@@ -230,6 +236,6 @@ public class InitController {
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
-        } while (choice != 4);
+        } while (choice != 13);
     }
 }

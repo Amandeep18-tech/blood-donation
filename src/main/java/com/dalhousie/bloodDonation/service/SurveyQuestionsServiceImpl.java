@@ -2,7 +2,9 @@ package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.SurveyQuestions;
+import com.dalhousie.bloodDonation.repos.SurveyQuestionsRepository;
 import com.dalhousie.bloodDonation.repos.SurveyQuestionsRepositoryImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +13,16 @@ import java.util.Scanner;
 public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     private String surveyQuestion;
     private final List<SurveyQuestions> questionList = new ArrayList<>();
+    private final SurveyQuestionsRepositoryImpl surveyQuestionsRepository;
+    private final Scanner in;
+
+    public SurveyQuestionsServiceImpl() {
+        surveyQuestionsRepository = new SurveyQuestionsRepositoryImpl();
+        in = IOUtils.getInstance();
+    }
 
     @Override
     public List<SurveyQuestions> getSurveyQuestionsInput(int surveyMasterId) {
-        Scanner in = new Scanner(System.in);
         System.out.print("How Many Questions? ");
         int totalQuestions = in.nextInt();
         in.nextLine();
@@ -31,7 +39,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void storeSurveyQuestions(List<SurveyQuestions> questionList) throws CustomException {
-        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
         for (SurveyQuestions questionObj : questionList) {
             questionRepo.add(questionObj);
         }
@@ -40,7 +48,6 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public int addQuestionToExistingSurveyInput() {
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
         return surveyMasterId;
@@ -48,10 +55,9 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void viewAllSurveyQuestions() throws CustomException {
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
-        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
         List<SurveyQuestions> questionList = questionRepo.getAllSurveyQuestions(surveyMasterId);
         System.out.println();
         System.out.print("Question ID\t\tSurvey ID\t\tQuestion");
@@ -64,21 +70,19 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void deleteSurveyQuestion() throws CustomException {
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Question ID To Delete: ");
         int id = in.nextInt();
-        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
         questionRepo.delete(id);
         System.out.println("\nQuestion With ID- " + id + " Deleted Successfully!");
     }
 
     @Override
     public void updateSurveyQuestion() throws CustomException {
-        Scanner in = new Scanner(System.in);
         System.out.print("\n Enter Question ID To Update: ");
         int id = in.nextInt();
         in.nextLine();
-        SurveyQuestionsRepositoryImpl questionRepo = new SurveyQuestionsRepositoryImpl();
+        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
         SurveyQuestions surveyQuestion = questionRepo.getSurveyQuestion(id);
         System.out.print("\nNote: Leave The Field Blank If You Do Not Want To Update");
         System.out.print("\nEnter Survey Question: ");

@@ -13,23 +13,17 @@ import com.dalhousie.bloodDonation.service.SessionServiceImpl;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class BloodDonationDetailsHistoryRepository {
-    Connection conn;
-    private int executeUpdate;
-    SessionService sessionService;
-    public BloodDonationDetailsHistoryRepository()  {
-        DBUtils dbUtils = new DBUtils();
+    private  final SessionService sessionService;
+
+    public BloodDonationDetailsHistoryRepository(){
         sessionService= new SessionServiceImpl();
-        try {
-            conn = dbUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public List<BloodDonationDetaisHistory> getAllDetails() {
         String query="SELECT * FROM blood_donation_details_history";
         List<BloodDonationDetaisHistory> allDonationDetails = new ArrayList();
         try{
+        Connection conn= DBUtils.getInstance().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
         
@@ -55,8 +49,9 @@ public class BloodDonationDetailsHistoryRepository {
     }
     public boolean saveDonationDate(BloodDonationDetaisHistory bloodDonationDetaisHistory,String slotId, String dateInput) {
         try{
+        int executeUpdate;
+        Connection conn= DBUtils.getInstance().getConnection();
         String query = "INSERT INTO blood_donation_details_history (id, " + "donor_id, " + "slot_id,"+"slot_date) VALUES (?, ?, ?,?)";
-        
 
         PreparedStatement ps = conn.prepareStatement(query);
         UUID uuid = UUID.randomUUID();

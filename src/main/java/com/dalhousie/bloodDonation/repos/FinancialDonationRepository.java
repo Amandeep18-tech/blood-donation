@@ -12,15 +12,8 @@ import java.util.List;
 
 public class FinancialDonationRepository {
 
-    private final DBUtils dbUtils;
-
-    public FinancialDonationRepository() {
-        dbUtils = new DBUtils();
-    }
-
     public void save(FinancialDonation financialDonation) {
-        try {
-            Connection conn = dbUtils.getConnection();
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             Statement stmt = conn.createStatement();
             String query = "INSERT INTO financial_donation(donor_id,amount,donation_type,trans_ref_number)\n" +
                     "VALUES\n" +
@@ -30,7 +23,6 @@ public class FinancialDonationRepository {
                     + financialDonation.getDonationType().type + "','"
                     + financialDonation.getTransRefNumber()
                     + "')";
-            System.out.println(query);
             stmt.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -6,11 +6,10 @@ public class CalculateDonorMatchingPercentageServiceImpl implements CalculateDon
     private int hemoglobinWeightage;
     private int rbcCountWeightage;
     private int plateletCountWeightage;
-    private int overallMatchingPoints;
 
     @Override
     public DonorInformation getMatchingPercentage(DonorInformation donorInfo) {
-        Double hemoglobinLevelDifference = donorInfo.getHemoglobinLevelDifference();
+        double hemoglobinLevelDifference = donorInfo.getHemoglobinLevelDifference();
         int rbcCountDifference = donorInfo.getRbcCountDifference();
         int plateletCountDifference = donorInfo.getPlateletCountDifference();
         if (hemoglobinLevelDifference >= 0 && hemoglobinLevelDifference <= 1) {
@@ -62,7 +61,7 @@ public class CalculateDonorMatchingPercentageServiceImpl implements CalculateDon
         } else if (plateletCountDifference > 400000) {
             plateletCountWeightage = 0;
         }
-        overallMatchingPoints = hemoglobinWeightage + rbcCountWeightage + plateletCountWeightage;
+        int overallMatchingPoints = hemoglobinWeightage + rbcCountWeightage + plateletCountWeightage;
         donorInfo.setMatchingPercentage(overallMatchingPoints);
         return donorInfo;
     }
