@@ -30,11 +30,5 @@ class ListSuitableDonorTest {
         listSuitableDonor= new ListSuitableDonorImpl();
     }
 
-    // @Test
-    // void testSuitableDonorTest() throws CustomException{
-    //     String donorId= null;
-
-    //     listSuitableDonor.getSuitableDonorID(donorId);
-        
-    // }
+   
 }

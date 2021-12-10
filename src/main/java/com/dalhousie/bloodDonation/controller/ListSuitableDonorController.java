@@ -17,7 +17,7 @@ import com.dalhousie.bloodDonation.service.LocationService;
 import com.dalhousie.bloodDonation.service.LocationServiceImpl;
 import com.dalhousie.bloodDonation.service.SessionService;
 import com.dalhousie.bloodDonation.service.SessionServiceImpl;
-import com.dalhousie.bloodDonation.utils.IOUtils;
+
 
 public class ListSuitableDonorController {
     private final PersonRepository personRepository;
@@ -31,7 +31,7 @@ public class ListSuitableDonorController {
         listSuitableDonorImpl = new ListSuitableDonorImpl();
         LocationService = new LocationServiceImpl();
         sessionService = new SessionServiceImpl();
-        sc = IOUtils.getInstance();
+        sc = new Scanner(System.in);     
     }
 
     public void patientDonorList() throws CustomException {
@@ -71,7 +71,7 @@ public class ListSuitableDonorController {
         String selection = sc.nextLine();
         HashMap<String, List<String>> donorSelection = new HashMap<String, List<String>>();
         List<String> choicesByOrganization = new ArrayList<String>();
-
+        String typeSelection=null;
         if (selection.toLowerCase().equals("yes")) {
             System.out.println("Which blood type you want to select?");
             System.out.println("1. A+ve");
@@ -115,12 +115,10 @@ public class ListSuitableDonorController {
                 donorSelection.put(getDonorId, choicesByOrganization);
 
             }
-            System.out.println(donorSelection);
+
         }
-
-        String typeSelection = null;
+        
         System.out.println("Do you want to choose hemologin level");
-
         typeSelection = sc.nextLine();
         if (typeSelection.toLowerCase().equals("yes")) {
             System.out.println("Choose hemoglobin level between between 120-175 grams per litre");
@@ -184,7 +182,7 @@ public class ListSuitableDonorController {
                 System.out.println("Enter values for " + key);
                 System.out.println("Enter your pin code");
                 String pinCode1 = sc.nextLine();
-                System.out.println("Enter your pin code");
+                System.out.println("Enter organisation pin code");
                 String pinCode2 = sc.nextLine();
                 Float distanceValue = LocationService.getDistanceInMeters(pinCode1, pinCode2);
                 choicesByOrganization.add(Float.toString(distanceValue));
