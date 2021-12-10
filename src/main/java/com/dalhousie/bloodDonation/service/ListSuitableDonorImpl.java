@@ -66,8 +66,6 @@ public class ListSuitableDonorImpl implements ListSuitableDonor {
         for(Person person:personList){
             if(person.getpersonId().equals(donorId)){
                 for(DonorMedicalRecords donorMedicalRecords: donorMedicalRecordsList){
-                    System.out.println(person.getbloodGroup());
-                    System.out.println(bloodType);
                 if(person.getbloodGroup().equals(bloodType) && donorMedicalRecords.getHIVFlag().equals(0) && donorMedicalRecords.getHemochromatosis().equals(0)&& donorMedicalRecords.gethepatitisB().equals(0) && donorMedicalRecords.gethepatitisC().equals(0)){
                     return donorId;
                 }

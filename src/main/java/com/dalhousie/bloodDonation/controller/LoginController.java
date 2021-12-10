@@ -48,9 +48,7 @@ public class LoginController {
                     case 3:
                         organizationSignupMethod();
                         break;
-
                 }
-
             } while (choice != 4);
         } catch (CustomException e) {
             e.printStackTrace();
