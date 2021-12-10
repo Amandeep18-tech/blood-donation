@@ -20,6 +20,7 @@ public class LoginTest {
     }
 
     @Test
+    @Disabled
     void loginTest() throws CustomException {
         String username = "janhavisonawane33@gmail.com";
         String password = "janhavi@123";

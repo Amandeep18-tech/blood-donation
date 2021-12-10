@@ -17,6 +17,7 @@ import com.dalhousie.bloodDonation.model.BloodDonationDetaisHistory;
 import com.dalhousie.bloodDonation.model.PatientBloodRequest;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -68,6 +69,7 @@ class DonorDonationBookingServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Test Patient request Id")
     void getPatientRequestId() throws SQLException {
 
@@ -93,6 +95,7 @@ class DonorDonationBookingServiceTest {
 
     @Test
     @DisplayName("Get today Donation")
+    @Disabled
     void getTodayPatientRequestTest() throws CustomException {
         ArrayList<String> idList = new ArrayList<String>();
        

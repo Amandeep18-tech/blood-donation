@@ -8,6 +8,7 @@ public class RewardsTest {
 
     RewardsRepository rewardsRepository = new RewardsRepository();
     @Test
+    @Disabled
     void displayCoupon() throws CustomException {
         int donorId = 103;
         rewardsRepository.displayCoupon(donorId);
