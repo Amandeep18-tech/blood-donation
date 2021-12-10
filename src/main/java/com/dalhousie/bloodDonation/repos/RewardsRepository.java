@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class RewardsRepository {
     private final Scanner sc;
 
+
     public RewardsRepository() {
         sc = IOUtils.getInstance();
     }
@@ -94,7 +95,62 @@ public class RewardsRepository {
             System.out.println("Press 1 to continue and 0 to return to main menue:");
             int choice = sc.nextInt();
             if (choice == 1) {
-                System.out.println("hhj");
+
+                boolean check = updateStatus(donorId);
+                if(check){
+                    System.out.println("Coupoun Is redemeed successfully");
+                }
+                else{
+                    System.out.println("Could not redeem coupon!!");
+                }
+            }
+        } catch (SQLException e) {
+            throw new CustomException("");
+        }
+    }
+    public boolean updateStatus(int donorId) throws CustomException {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
+            String sql = "update rewards set status='active' where donor_id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, donorId);
+           int row = stmt.executeUpdate();
+           if(row>0) {
+               return true;
+           }
+           return false;
+        } catch (SQLException e) {
+           e.printStackTrace();
+            throw new CustomException("Could not update status");
+        }
+    }
+
+    public void displayRewards(int donorId) throws CustomException {
+
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
+            String sql = "select reward_points from rewards where donor_id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, donorId);
+            ResultSet rs = stmt.executeQuery();
+            String rewardPoints = null;
+            while (rs.next()) {
+                rewardPoints = rs.getString(1);
+            }
+            System.out.println("*************************************");
+            System.out.print("|");
+            System.out.println("Your coupon code is:- " + rewardPoints + "|");
+            System.out.println("*************************************");
+            System.out.println("Do you want to redeem/use this coupon?");
+            System.out.println("Press 1 to continue and 0 to return to main menue:");
+            int choice = sc.nextInt();
+            if (choice == 1) {
+
+                boolean check = updateStatus(donorId);
+                if(check){
+                    System.out.println("Coupoun Is redemeed successfully");
+                }
+                else{
+                    System.out.println("Could not redeem coupon!!");
+                }
             }
         } catch (SQLException e) {
             throw new CustomException("");

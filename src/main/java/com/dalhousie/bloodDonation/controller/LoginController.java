@@ -141,5 +141,15 @@ public class LoginController {
             throw new CustomException("Error caught while signing up");
         }
     }
+    public void userLogout() throws CustomException {
+        try {
+            SessionManagement session = new SessionManagement();
+            session.getSessionMap().clear();
+            LoginController loginController = new LoginController();
+            loginController.menu();
+        }catch (CustomException e){
+            throw  new CustomException("Something went wrong while logging out");
+        }
+    }
 
 }

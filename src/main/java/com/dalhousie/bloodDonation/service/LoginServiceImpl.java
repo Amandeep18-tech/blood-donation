@@ -190,48 +190,6 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
-    /*
-    sendVerification {
-        {
-            final String username = "janhavisonawane33@gmail.com";
-            final String password = "onsgratwlvpddlim";
-
-            Properties prop = new Properties();
-            prop.put("mail.smtp.host", "smtp.gmail.com");
-            prop.put("mail.smtp.port", "465");
-            prop.put("mail.smtp.auth", "true");
-            prop.put("mail.smtp.socketFactory.port", "465");
-            prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
-            Session session = Session.getInstance(prop,
-                    new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
-                        }
-                    });
-
-            try {
-
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(username));
-                message.setRecipients(
-                        Message.RecipientType.TO,
-                        InternetAddress.parse(user.getUserName())
-                );
-                message.setSubject("Testing Gmail SSL");
-                message.setContent("<strong>"+OTP+"</strong>" , "text/html" );
-                Transport.send(message);
-                System.out.println("Done");
-                return true;
-
-            } catch (MessagingException e) {
-                throw new CustomException("Error in sending Verification mail");
-            }
-
-        }
-    }*/
-
-
 
     @Override
     public void userLogout() throws CustomException {

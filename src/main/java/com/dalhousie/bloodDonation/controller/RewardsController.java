@@ -19,9 +19,9 @@ public class RewardsController {
     public void menu() throws CustomException {
         int choice;
         do {
-            System.out.println("Enter 1 if you have donated blood");
-            System.out.println("Enter 2 if you have not donated blood");
-            System.out.println("3.Display coupoun code");
+            System.out.println("1.CollectPoints");
+            System.out.println("2.Display coupoun code");
+            System.out.println("3.Display Reward Points");
             System.out.println("Enter your choice:-");
             choice = sc.nextInt();
             sc.nextLine();
@@ -31,11 +31,11 @@ public class RewardsController {
                     break;
 
                 case 2:
-                    System.out.println("Donate blood!");
+                    displayCoupon();
                     break;
 
                 case 3:
-                    displayCoupon();
+                    displayRewards();
                     break;
 
             }
@@ -53,6 +53,11 @@ public class RewardsController {
         System.out.println("Enter your donor ID:-");
         int donorId = sc.nextInt();
         rewardsServiceImpl.displayCoupon(donorId);
+    }
+    public void displayRewards() throws CustomException{
+        System.out.println("Enter your donor ID");
+        int donorId = sc.nextInt();
+        rewardsServiceImpl.displayRewards(donorId);
     }
 
 }

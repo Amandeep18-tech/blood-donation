@@ -12,9 +12,7 @@ public class NotificationRepository {
         SessionManagement session = new SessionManagement();
         Connection con= DBUtils.getInstance().getConnection();
         String sql = "select * from notification_template ";
-        //where priority=?
         PreparedStatement stmt = con.prepareStatement(sql);
-       // stmt.setString(1, priority1);
         int notification_id = 0;
         String userName = null;
         String message = null;
@@ -22,9 +20,6 @@ public class NotificationRepository {
         String messsage_priority = null;
         String notification_type = null;
         ResultSet rs = stmt.executeQuery();
-        //String check = rs.getString(3);
-       // if(check.contains("Emergency")) {
-
             while (rs.next()) {
                 message = rs.getString(3);
                 if(message.contains("Emergency")) {
@@ -36,7 +31,6 @@ public class NotificationRepository {
                     notification_type = rs.getString(6);
                 }
             }
-       // }
         Notification notification = new Notification();
         notification.setNotification_id(notification_id);
         notification.setUserName(userName);
