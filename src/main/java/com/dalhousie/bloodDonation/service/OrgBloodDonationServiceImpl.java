@@ -20,6 +20,8 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
     private final PersonRepository personRepository;
     private final OrganizationRepository organizationRepository;
     private final SessionService sessionService;
+    private final LocationService locationService;
+
 
     public OrgBloodDonationServiceImpl() {
         bloodDonatedDetailsRepository = new BloodDonatedDetailsRepository();
@@ -27,6 +29,7 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
         personRepository = new PersonRepository();
         organizationRepository = new OrganizationRepository();
         sessionService = new SessionServiceImpl();
+        locationService = new LocationServiceImpl();
     }
 
     @Override
@@ -60,7 +63,9 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
         return bloodRequestOrganisationRepository.getAllRecords()
                 .stream().filter(bloodRequestOrganisation -> bloodRequestOrganisation.getOrgId().equalsIgnoreCase(orgId) && bloodRequestOrganisation.getStatus() == BloodReqOrgStatus.pending)
                 .collect(Collectors.toMap(BloodRequestOrganisation::getId, x -> {
-                    Organisation organisation = organisations.stream().filter(org -> org.getorganisationID().equalsIgnoreCase(x.getOrgId())).collect(Collectors.toList()).get(0);
+                    Organisation organisation = organisations.stream().
+                            filter(org -> org.getorganisationID().equalsIgnoreCase(x.getOrgId()))
+                            .collect(Collectors.toList()).get(0);
                     return String.format("%-20s%-20s%-20s%-20s", organisation.getorganisationName(), x.getBloodGroup().type, x.getUnitsRequired(), x.getTimestamp());
                 }));
     }
@@ -97,21 +102,38 @@ public class OrgBloodDonationServiceImpl implements OrgBloodDonationService {
     }
 
     @Override
-    public LinkedHashMap<String, String> getRecommendedOrganisation(int unitsNeeded, BloodGroup bloodGroup) throws CustomException {
+    public List<String[]> getRecommendedOrganisation(int unitsNeeded, BloodGroup bloodGroup) throws CustomException {
         List<Organisation> organisations = organizationRepository.getAllPlaces();
+        String orgId = sessionService.getUserId();
         String currentPinCode = organisations.stream()
-                .filter(x->x.getorganisationID().equalsIgnoreCase(sessionService.getUserId()))
+                .filter(x->x.getorganisationID().equalsIgnoreCase(orgId))
                 .collect(Collectors.toList())
                 .get(0).getPinCode();
         Map<String, List<BloodDonatedDetail>> collect = bloodDonatedDetailsRepository.getAllRecords().stream()
                 .filter(x -> x.getBloodGroup() == bloodGroup)
                 .collect(Collectors.groupingBy(BloodDonatedDetail::getOrgId));
-        LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap();
+        List<String[]> recommendedOrgList = new ArrayList<>();
         //Todo Added recommendation logics
         for (Map.Entry<String, List<BloodDonatedDetail>> entry : collect.entrySet()) {
-            linkedHashMap.put(entry.getKey(), String.valueOf(entry.getValue().size()));
+            if(entry.getValue().size()<unitsNeeded || entry.getKey().equalsIgnoreCase(orgId)) {
+                continue;
+            }
+            Organisation organisation = organisations.stream()
+                    .filter(x -> x.getorganisationID().equalsIgnoreCase(entry.getKey()))
+                    .collect(Collectors.toList()).get(0);
+            recommendedOrgList.add(new String[]{
+                    organisation.getorganisationID(),
+                    organisation.getorganisationName(),
+                    String.valueOf(entry.getValue().size()),
+                    organisation.getLocation(),
+                    locationService.getShortestPath(currentPinCode,organisation.getPinCode()),
+                    String.valueOf(locationService.getDistanceInMeters(currentPinCode,organisation.getPinCode())),
+            });
         }
-        return linkedHashMap;
+        Collections.sort(recommendedOrgList,(strings1, strings2) -> {
+            return Integer.valueOf((int) (Double.valueOf(strings1[5]) - Double.valueOf(strings2[5])));
+        });
+        return recommendedOrgList;
     }
 
     @Override

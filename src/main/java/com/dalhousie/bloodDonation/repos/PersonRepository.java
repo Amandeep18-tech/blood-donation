@@ -23,6 +23,7 @@ public class PersonRepository {
             person.setName(rs.getString("person_first_name")); 
             person.setpersonId(rs.getString("person_id"));
             person.setbloodGroup(rs.getString("blood_group"));
+            person.setcontactNumber(rs.getString("contact_number"));
             person.setPinCode(rs.getString("pin_code"));
             personDetail.add(person);
         }

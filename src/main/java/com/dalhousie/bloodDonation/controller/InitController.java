@@ -65,7 +65,6 @@ public class InitController {
                         loginController.forgetPassword();
                         break;
                     case 5:
-//                        loginController.
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
@@ -83,7 +82,7 @@ public class InitController {
                     patient();
                 }
             }
-        } while (choice != 4);
+        } while (choice != 5);
     }
 
     public void donor() {
@@ -120,6 +119,7 @@ public class InitController {
                         financialDonationController.selectModeOfPayment();
                         break;
                     case 7:
+                        loginController.userLogout();
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
@@ -160,6 +160,7 @@ public class InitController {
                         financialDonationController.selectModeOfPayment();
                         break;
                     case 6:
+                        loginController.userLogout();
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");
@@ -227,6 +228,7 @@ public class InitController {
                     case 12: financialDonationController.selectModeOfPayment();
                         break;
                     case 13:
+                        loginController.userLogout();
                         break;
                     default:
                         System.out.println("Invalid option please retry!!");

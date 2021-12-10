@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+// Singleton Design Pattern is followed
 public class DBUtils {
 
     private static DBUtils dbUtilsInstance = null;
