@@ -23,7 +23,6 @@ public class FinancialDonationRepository {
                     + financialDonation.getDonationType().type + "','"
                     + financialDonation.getTransRefNumber()
                     + "')";
-            System.out.println(query);
             stmt.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();

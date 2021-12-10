@@ -125,7 +125,7 @@ public class DonorAppointmentController {
         System.out.println("Appointment Time " + patientBloodRequest.getAppointmentDate());
     }
 
-    public void confirmDonorRequests() throws SQLException {
+    public void confirmDonorRequests() {
         System.out.println("Do you want to confirm this appointment");
         System.out.println("Press 1 to confirm ");
         System.out.println("Press 2 to decline");
@@ -286,13 +286,6 @@ public class DonorAppointmentController {
         sc.close();
     }
 
-    public void confirmDonation() throws SQLException, UnsupportedEncodingException, MessagingException, CustomException {
-        bookDonationPlace();
-        displayAppointmentTime();
-        bookDate();
-
-    }
-
     public void seePatientRequestStatus() {
         PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
         List<PatientBloodRequest> patientBloodRequests = patientBloodRequestRepository.getAllDonorRequests();
@@ -304,6 +297,17 @@ public class DonorAppointmentController {
                 System.out.println("Request done");
             }
         }
+    }
+
+    public void confirmDonation() throws CustomException {
+        try {
+            bookDonationPlace();
+            displayAppointmentTime();
+            bookDate();
+        }catch (Exception e){
+            //todo
+        }
+
     }
 
     public void todayPatientRequestConfirmation() throws CustomException {

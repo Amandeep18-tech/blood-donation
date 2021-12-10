@@ -65,7 +65,7 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         patientInfo.setEmailId(emailId);
         int patientId = patientPersonalInformationRepository.addPatient(patientInfo);
         String message = "Your Username & Password For Patient Login Is Username: " + patientInfo.getEmailId() + ", Password: " + patientInfo.getContactNumber();
-        List<String> recipients = new ArrayList<>() {{
+        List<String> recipients = new ArrayList<String>() {{
             add(patientInfo.getEmailId());
         }};
         notificationService.sendMailToMultipleUser(recipients, message);

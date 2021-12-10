@@ -21,7 +21,7 @@ public class InitController {
     private final DonorAppointmentController donorAppointmentController;
     private final DonorMedicalRecordController donorMedicalRecordController;
     private final SessionService sessionService;
-    private final Scanner sc;
+    private Scanner sc;
 
     public InitController() {
         sc = IOUtils.getInstance();
@@ -50,6 +50,7 @@ public class InitController {
                 System.out.println("5.Exit");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
                         loginController.loginMethod();
@@ -98,15 +99,16 @@ public class InitController {
                 System.out.println("7.Logout");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
-                        listSuitableDonorController.patientDonorList();
+                        donorAppointmentController.confirmDonorRequests();
                         break;
                     case 2:
-                        appointmentController.bookPlace();
+                        appointmentController.confirmMedicalAppointment();
                         break;
                     case 3:
-                        appointmentController.bookDate();
+                        donorAppointmentController.confirmDonation();
                         break;
                     case 4:
                         rewardsController.menu();
@@ -125,7 +127,7 @@ public class InitController {
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
-        } while (choice != 4);
+        } while (choice != 7);
     }
 
     public void patient() {
@@ -140,6 +142,7 @@ public class InitController {
                 System.out.println("6.Logout");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
                         listSuitableDonorController.patientDonorList();
@@ -164,7 +167,7 @@ public class InitController {
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
-        } while (choice != 4);
+        } while (choice != 6);
     }
 
     public void organization() {
@@ -186,6 +189,7 @@ public class InitController {
                 System.out.println("13.Logout");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
                         listSuitableDonorController.organisationDonorSelection();
@@ -230,6 +234,6 @@ public class InitController {
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
-        } while (choice != 4);
+        } while (choice != 13);
     }
 }

@@ -150,6 +150,7 @@ public class LoginServiceImpl implements LoginService {
                 System.out.println("Do you want to continue:");
                 System.out.println("Enter 1 to resend otp or any key to exit");
                 int userInput = sc.nextInt();
+                sc.nextLine();
                 if (userInput == 1)
                     generateAndSendOtp(user);
                 break;
