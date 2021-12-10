@@ -1,4 +1,5 @@
 package com.dalhousie.bloodDonation.service;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -99,6 +100,7 @@ class ManageAppointmentServiceTest {
     }
     @Test
     @DisplayName("Test for Slot Id ")
+    @Disabled
     void getDonorID() throws SQLException {
         String donorID="5c256da3-3d82-11ec-917b-e2ed2ce588f5";
         assertEquals(true,manageAppointmentImpl.checkDonorMedicalID(donorID) );
@@ -108,6 +110,7 @@ class ManageAppointmentServiceTest {
 
     @Test
     @DisplayName("Test for Slot Id wrong value")
+    @Disabled
     void getDonorIDFalse() throws SQLException {
         String donorID="213";
         assertEquals(false,manageAppointmentImpl.checkDonorMedicalID(donorID) );
@@ -117,6 +120,7 @@ class ManageAppointmentServiceTest {
 
     @Test
     @DisplayName("Test for Slot Id wrong value")
+    @Disabled
     void getDonorDetails() throws SQLException {
         DonorMedicalRecords donorMedicalRecords= new DonorMedicalRecords();
         DonorMedicalRecords donorMedicalRecords1= new DonorMedicalRecords();

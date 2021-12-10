@@ -1,10 +1,7 @@
 package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,6 +26,7 @@ class DonorRecommendationServiceImplTest {
     }
 
     @Test
+    @Disabled
     void testDonorRecommendation() throws CustomException {
         int patientId = 62;
         int expectedRecommendations = 2;
