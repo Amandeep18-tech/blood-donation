@@ -1,6 +1,7 @@
 package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class RewardsTest {
@@ -13,6 +14,7 @@ public class RewardsTest {
     }
 
     @Test
+    @Disabled
     void displayRewards() throws CustomException{
         int donorId = 104;
         rewardsRepository.displayRewards(donorId);
