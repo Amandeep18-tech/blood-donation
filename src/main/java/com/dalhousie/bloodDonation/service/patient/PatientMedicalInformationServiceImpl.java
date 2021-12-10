@@ -3,6 +3,7 @@ package com.dalhousie.bloodDonation.service.patient;
 import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.patient.PatientMedicalInformation;
+import com.dalhousie.bloodDonation.repos.patient.PatientMedicalInformationRepository;
 import com.dalhousie.bloodDonation.repos.patient.PatientMedicalInformationRepositoryImpl;
 import com.dalhousie.bloodDonation.utils.IOUtils;
 
@@ -23,9 +24,11 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
     private String plateletCount;
     private PatientMedicalInformation patientMedicalInfo;
     private Scanner in;
+    private final PatientMedicalInformationRepository patientMedicalInfoRepo;
 
     public PatientMedicalInformationServiceImpl() {
         in = IOUtils.getInstance();
+        patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
     }
 
     @Override
@@ -146,7 +149,6 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
 
     @Override
     public void storePatientMedicalInformation(PatientMedicalInformation patientMedicalInfo) throws CustomException {
-        PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
         patientMedicalInfoRepo.addPatientMedicalInformation(patientMedicalInfo);
         System.out.println("\nPatient Added Successfully!");
     }
@@ -162,7 +164,6 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
     public void deleteMedicalInformation() throws CustomException {
         System.out.print("\nEnter Patient ID To Delete Medical Information: ");
         int patientId = in.nextInt();
-        PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
         patientMedicalInfoRepo.delete(patientId);
         System.out.println("\nMedical Information For Patient ID-" + patientId + " Has Been Deleted Successfully!");
     }
@@ -171,7 +172,7 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
     public void viewPatientMedicalInformation() throws CustomException {
         System.out.print("\nEnter Patient ID To View Patient's Medical Information: ");
         int patientId = in.nextInt();
-        PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
+
         PatientMedicalInformation patientMedicalInfo = patientMedicalInfoRepo.getPatientMedicalInformation(patientId);
 
         if (patientMedicalInfo.getHasHepatitisB() == 1) {
@@ -206,7 +207,6 @@ public class PatientMedicalInformationServiceImpl implements PatientMedicalInfor
         System.out.print("\nEnter Patient ID To Update Medical Information: ");
         int patientId = in.nextInt();
         in.nextLine();
-        PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
         PatientMedicalInformation patientMedicalInfo = patientMedicalInfoRepo.getPatientMedicalInformation(patientId);
         System.out.println();
         System.out.format("%5s%15s%15s%15s%10s%20s%15s%15s%20s%15s%20s%22s%33s", "Patient ID", "Blood Group", "HepatitisB", "HepatitisC", "HIV", "Hemochromatosis", "Hemoglobin", "RBC Count", "Platelets Count", "Referred By", "Priority", "Requirement Reason", "Current Location");

@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     private String surveyQuestion;
     private final List<SurveyQuestions> questionList = new ArrayList<>();
-    private final SurveyQuestionsRepositoryImpl surveyQuestionsRepository;
+    private final SurveyQuestionsRepository surveyQuestionsRepository;
     private final Scanner in;
 
     public SurveyQuestionsServiceImpl() {
@@ -39,9 +39,9 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
 
     @Override
     public void storeSurveyQuestions(List<SurveyQuestions> questionList) throws CustomException {
-        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
+
         for (SurveyQuestions questionObj : questionList) {
-            questionRepo.add(questionObj);
+            surveyQuestionsRepository.add(questionObj);
         }
         System.out.println("Survey Questions Added Successfully!");
     }
@@ -57,8 +57,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     public void viewAllSurveyQuestions() throws CustomException {
         System.out.print("\nEnter Survey ID To View Survey Questions: ");
         int surveyMasterId = in.nextInt();
-        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
-        List<SurveyQuestions> questionList = questionRepo.getAllSurveyQuestions(surveyMasterId);
+        List<SurveyQuestions> questionList = surveyQuestionsRepository.getAllSurveyQuestions(surveyMasterId);
         System.out.println();
         System.out.print("Question ID\t\tSurvey ID\t\tQuestion");
         System.out.println();
@@ -72,8 +71,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
     public void deleteSurveyQuestion() throws CustomException {
         System.out.print("\nEnter Question ID To Delete: ");
         int id = in.nextInt();
-        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
-        questionRepo.delete(id);
+        surveyQuestionsRepository.delete(id);
         System.out.println("\nQuestion With ID- " + id + " Deleted Successfully!");
     }
 
@@ -82,8 +80,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
         System.out.print("\n Enter Question ID To Update: ");
         int id = in.nextInt();
         in.nextLine();
-        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
-        SurveyQuestions surveyQuestion = questionRepo.getSurveyQuestion(id);
+        SurveyQuestions surveyQuestion = surveyQuestionsRepository.getSurveyQuestion(id);
         System.out.print("\nNote: Leave The Field Blank If You Do Not Want To Update");
         System.out.print("\nEnter Survey Question: ");
         this.surveyQuestion = in.nextLine();
@@ -91,7 +88,7 @@ public class SurveyQuestionsServiceImpl implements SurveyQuestionsService {
             this.surveyQuestion = surveyQuestion.getSurveyQuestion();
         }
         surveyQuestion.setSurveyQuestion(this.surveyQuestion);
-        questionRepo.update(surveyQuestion);
+        surveyQuestionsRepository.update(surveyQuestion);
         System.out.println("\nQuestion With ID- " + id + " Updated Successfully!");
     }
 }
