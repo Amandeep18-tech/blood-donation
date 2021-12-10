@@ -1,8 +1,8 @@
 package com.dalhousie.bloodDonation.service.common;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.model.organisation.Organisation;
 import com.dalhousie.bloodDonation.model.common.User;
+import com.dalhousie.bloodDonation.model.organisation.Organisation;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;

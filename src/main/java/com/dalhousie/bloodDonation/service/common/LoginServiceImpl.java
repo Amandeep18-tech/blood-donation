@@ -14,7 +14,6 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-
 import java.time.Instant;
 import java.util.Scanner;
 

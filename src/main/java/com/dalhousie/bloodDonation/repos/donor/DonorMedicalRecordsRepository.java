@@ -1,5 +1,8 @@
 package com.dalhousie.bloodDonation.repos.donor;
 
+import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
+import com.dalhousie.bloodDonation.utils.DBUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,9 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
-import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class DonorMedicalRecordsRepository {
     

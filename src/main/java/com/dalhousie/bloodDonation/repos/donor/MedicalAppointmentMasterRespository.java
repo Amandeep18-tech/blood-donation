@@ -1,8 +1,8 @@
 package com.dalhousie.bloodDonation.repos.donor;
 
 import com.dalhousie.bloodDonation.model.donor.MedicalAppointmentMaster;
-
 import com.dalhousie.bloodDonation.utils.DBUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

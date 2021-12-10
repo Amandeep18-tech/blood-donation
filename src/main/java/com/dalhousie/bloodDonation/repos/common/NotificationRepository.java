@@ -4,7 +4,10 @@ import com.dalhousie.bloodDonation.model.common.Notification;
 import com.dalhousie.bloodDonation.model.common.SessionManagement;
 import com.dalhousie.bloodDonation.utils.DBUtils;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class NotificationRepository {
     public Notification fetchData(String priority1) throws ClassNotFoundException, SQLException {

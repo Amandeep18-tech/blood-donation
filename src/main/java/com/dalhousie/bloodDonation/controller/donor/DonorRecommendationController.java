@@ -1,10 +1,10 @@
 package com.dalhousie.bloodDonation.controller.donor;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
-import com.dalhousie.bloodDonation.service.donor.DonorRecommendationServiceImpl;
-import com.dalhousie.bloodDonation.service.patient.PatientPersonalInformationServiceImpl;
 import com.dalhousie.bloodDonation.service.common.SessionService;
 import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
+import com.dalhousie.bloodDonation.service.donor.DonorRecommendationServiceImpl;
+import com.dalhousie.bloodDonation.service.patient.PatientPersonalInformationServiceImpl;
 import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;

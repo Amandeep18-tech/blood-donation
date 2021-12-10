@@ -1,9 +1,9 @@
 package com.dalhousie.bloodDonation.service.donor;
 
-import java.util.ArrayList;
-
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.patient.PatientBloodRequest;
+
+import java.util.ArrayList;
 
 public interface DonorDonationBooking{
     public String getPatientRequestId(String donorID);

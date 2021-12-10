@@ -1,13 +1,13 @@
 package com.dalhousie.bloodDonation.service.donor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.donor.Person;
 import com.dalhousie.bloodDonation.repos.donor.DonorMedicalRecordsRepository;
 import com.dalhousie.bloodDonation.repos.donor.PersonRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListSuitableDonorImpl implements ListSuitableDonor {
   

@@ -1,17 +1,12 @@
 package com.dalhousie.bloodDonation.repos.patient;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import com.dalhousie.bloodDonation.model.patient.PatientBloodRequest;
+import com.dalhousie.bloodDonation.utils.DBUtils;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.dalhousie.bloodDonation.model.patient.PatientBloodRequest;
-import com.dalhousie.bloodDonation.utils.DBUtils;
 
 public class PatientBloodRequestRepository {
     private int executeUpdate;

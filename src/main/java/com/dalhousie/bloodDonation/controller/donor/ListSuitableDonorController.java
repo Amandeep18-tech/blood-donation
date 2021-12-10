@@ -1,22 +1,21 @@
 package com.dalhousie.bloodDonation.controller.donor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import java.util.Scanner;
-
 import com.dalhousie.bloodDonation.constants.BloodGroup;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.DonorMedicalRecords;
 import com.dalhousie.bloodDonation.model.donor.Person;
 import com.dalhousie.bloodDonation.repos.donor.PersonRepository;
-import com.dalhousie.bloodDonation.service.donor.ListSuitableDonor;
-import com.dalhousie.bloodDonation.service.donor.ListSuitableDonorImpl;
 import com.dalhousie.bloodDonation.service.common.LocationService;
 import com.dalhousie.bloodDonation.service.common.LocationServiceImpl;
 import com.dalhousie.bloodDonation.service.common.SessionService;
 import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
+import com.dalhousie.bloodDonation.service.donor.ListSuitableDonor;
+import com.dalhousie.bloodDonation.service.donor.ListSuitableDonorImpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class ListSuitableDonorController {
