@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CalculateDonorMatchingPercentageServiceImplTest {
     private static CalculateDonorMatchingPercentageServiceImpl calculateDonorMatchingPercentageService;
@@ -21,6 +22,11 @@ class CalculateDonorMatchingPercentageServiceImplTest {
     void tearDown() {
         calculateDonorMatchingPercentageService = null;
         donorInformation = null;
+    }
+
+    @Test()
+    void testClassExist() {
+        assertNotNull(calculateDonorMatchingPercentageService, "Class Exist");
     }
 
     @Test
