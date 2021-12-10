@@ -3,8 +3,11 @@ package com.dalhousie.bloodDonation.service.donor;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.donor.DonorInformation;
 import com.dalhousie.bloodDonation.model.patient.PatientMedicalInformation;
+import com.dalhousie.bloodDonation.repos.donor.DonorMedicalInformationRepository;
 import com.dalhousie.bloodDonation.repos.donor.DonorMedicalInformationRepositoryImpl;
+import com.dalhousie.bloodDonation.repos.donor.DonorPersonalInformationRepository;
 import com.dalhousie.bloodDonation.repos.donor.DonorPersonalInformationRepositoryImpl;
+import com.dalhousie.bloodDonation.repos.patient.PatientMedicalInformationRepository;
 import com.dalhousie.bloodDonation.repos.patient.PatientMedicalInformationRepositoryImpl;
 
 import java.text.DecimalFormat;
@@ -14,10 +17,10 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DonorRecommendationServiceImpl implements DonorRecommendationService {
-    private final PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo;
-    private final DonorPersonalInformationRepositoryImpl donorPersonalInfoRepo;
-    private final DonorMedicalInformationRepositoryImpl donorMedicalInfoRepo;
-    private final CalculateDonorMatchingPercentageServiceImpl donorMatchingPercentage;
+    private final PatientMedicalInformationRepository patientMedicalInfoRepo;
+    private final DonorPersonalInformationRepository donorPersonalInfoRepo;
+    private final DonorMedicalInformationRepository donorMedicalInfoRepo;
+    private final CalculateDonorMatchingPercentageService donorMatchingPercentage;
 
     public DonorRecommendationServiceImpl() {
         patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();

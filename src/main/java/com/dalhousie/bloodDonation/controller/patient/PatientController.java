@@ -3,18 +3,16 @@ package com.dalhousie.bloodDonation.controller.patient;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.patient.PatientLoginInformation;
 import com.dalhousie.bloodDonation.model.patient.PatientMedicalInformation;
-import com.dalhousie.bloodDonation.service.patient.PatientLoginInformationServiceImpl;
-import com.dalhousie.bloodDonation.service.patient.PatientMedicalInformationServiceImpl;
-import com.dalhousie.bloodDonation.service.patient.PatientPersonalInformationServiceImpl;
+import com.dalhousie.bloodDonation.service.patient.*;
 import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;
 
 public class PatientController {
     private final Scanner input;
-    private final PatientPersonalInformationServiceImpl patientPersonalInfoService;
-    private final PatientMedicalInformationServiceImpl patientMedicalInfoService;
-    private final PatientLoginInformationServiceImpl patientLoginInfoService;
+    private final PatientPersonalInformationService patientPersonalInfoService;
+    private final PatientMedicalInformationService patientMedicalInfoService;
+    private final PatientLoginInformationService patientLoginInfoService;
 
     public PatientController() {
         input = IOUtils.getInstance();
