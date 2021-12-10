@@ -11,29 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BloodDonationDetailsRepository {
-    
+
     public List<BloodDonationDetails> getAllDonorAppointment() {
-        String query="SELECT * FROM blood_donation_details";
+        String query = "SELECT * FROM blood_donation_details";
         List<BloodDonationDetails> donorSlotList = new ArrayList();
-        try{
-        Connection conn= DBUtils.getInstance().getConnection();
-        PreparedStatement ps = conn.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()){
-            BloodDonationDetails bloodDonationDetails = new BloodDonationDetails();
-            bloodDonationDetails.setId(rs.getString("id"));
-            bloodDonationDetails.setOrganisationID(rs.getString("organisation_id"));
-            bloodDonationDetails.setDonationTime(rs.getTime("donation_time"));
-            bloodDonationDetails.setSlotNumber(rs.getInt("slot_number"));
-            
-            donorSlotList.add(bloodDonationDetails);
-        }
-        }
-        catch(SQLException e){
+        try {
+            Connection conn = DBUtils.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BloodDonationDetails bloodDonationDetails = new BloodDonationDetails();
+                bloodDonationDetails.setId(rs.getString("id"));
+                bloodDonationDetails.setOrganisationID(rs.getString("organisation_id"));
+                bloodDonationDetails.setDonationTime(rs.getTime("donation_time"));
+                bloodDonationDetails.setSlotNumber(rs.getInt("slot_number"));
+                donorSlotList.add(bloodDonationDetails);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return donorSlotList;
-        
-        
     }
 }

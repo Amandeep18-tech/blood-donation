@@ -26,7 +26,6 @@ public class OrganizationRepository {
                 organisationDetails.setEmail(rs.getString("email"));
                 organisationDetails.setPinCode(rs.getString("pin_code"));
                 organisationDetails.setorganisationID(rs.getString("organisation_id"));
-                
                 organisationList.add(organisationDetails);
             }
         }
@@ -34,7 +33,5 @@ public class OrganizationRepository {
             e.printStackTrace();
         }
         return organisationList;
-        
-        
     }
 }

@@ -27,7 +27,7 @@ public class SeqNumMasterRepositoryImpl implements SeqNumMasterRepository {
     }
 
     @Override
-    public void incr(String seqName) {
+    public void increment(String seqName) {
         try (Connection conn = DBUtils.getInstance().getConnection()) {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("UPDATE seq_num_master SET seq_no=seq_no+1 where seq_name='" + seqName + "'");

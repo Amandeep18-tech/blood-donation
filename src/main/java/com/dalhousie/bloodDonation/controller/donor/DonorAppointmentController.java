@@ -274,7 +274,7 @@ public class DonorAppointmentController {
         getRouteToOrganisation();
     }
 
-    public void getRouteToOrganisation() {
+    public void getRouteToOrganisation() throws CustomException {
         System.out.println("Enter your pin code");
         String pinCode1 = sc.nextLine();
         System.out.println("Enter your pin code");

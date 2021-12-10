@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.service.common;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.common.LocationDetail;
 import com.dalhousie.bloodDonation.model.common.LocationName;
 import com.dalhousie.bloodDonation.repos.common.LocationRepository;
@@ -56,41 +57,34 @@ public class LocationServiceImpl implements LocationService {
         }
     }
 
-    @Override
-    public String getShortestPath(String pinCode1, String pinCode2) {
-        initGraph();
-        int src = 0;
-        int dest = 0;
+    private int getLocationIndex(String pinCode){
         for (int i = 0; i < this.locationNames.size(); i++) {
-            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)) {
-                src = i;
-            }
-            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode2)) {
-                dest = i;
+            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode)) {
+                return i;
             }
         }
+        return 0;
+    }
+
+    @Override
+    public String getShortestPath(String pinCode1, String pinCode2) throws CustomException {
+        initGraph();
+        int src = getLocationIndex(pinCode1);
+        int dest = getLocationIndex(pinCode2);
         dijkstra(src);
         return this.path[dest].toString();
     }
 
     @Override
-    public float getDistanceInMeters(String pinCode1, String pinCode2) {
+    public float getDistanceInMeters(String pinCode1, String pinCode2) throws CustomException {
         initGraph();
-        int src = 0;
-        int dest = 0;
-        for (int i = 0; i < this.locationNames.size(); i++) {
-            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode1)) {
-                src = i;
-            }
-            if (this.locationNames.get(i).getPinCode().equalsIgnoreCase(pinCode2)) {
-                dest = i;
-            }
-        }
+        int src = getLocationIndex(pinCode1);
+        int dest = getLocationIndex(pinCode2);
         dijkstra(src);
         return this.dist[dest];
     }
 
-    private void initGraph() {
+    private void initGraph() throws CustomException {
         List<LocationDetail> locationDetails = locationRepository.getAllRecordsLocationDistance();
         this.locationNames = locationRepository.getAllRecordsLocationName();
         int size = this.locationNames.size();

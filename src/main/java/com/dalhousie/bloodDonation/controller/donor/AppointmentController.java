@@ -73,7 +73,7 @@ public class AppointmentController {
 
     }
 
-    public void bookDate() {
+    public void bookDate() throws CustomException {
         String appointmentBookingChoice = null;
         String slotIdInput = null;
         boolean dateAvailable;
@@ -142,7 +142,7 @@ public class AppointmentController {
         getRouteToOrganisation();
     }
 
-    public void getRouteToOrganisation() {
+    public void getRouteToOrganisation() throws CustomException {
         System.out.println("Enter your pin code");
         String pinCode1 = scanner.nextLine();
         System.out.println("Enter your pin code");
