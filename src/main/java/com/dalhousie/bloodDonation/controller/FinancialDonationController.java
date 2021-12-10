@@ -55,11 +55,11 @@ public class FinancialDonationController {
                     default:
                         System.out.println("Invalid option. Retry.");
                 }
+                System.out.println("Transaction is complete. Thank you for your donation.");
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
         } while (modeOfPayment != 9);
-        System.out.println("Transaction is complete. Thank you for your donation.");
     }
 
     private void getBankTransferDetails() throws CustomException {
@@ -147,7 +147,7 @@ public class FinancialDonationController {
                 transactionCompleted = financialDonationService.verifyDonation(transRefNumber, DonationType.MOBILE_BANKING);
                 financialDonationService.makeDonation(transRefNumber, DonationType.MOBILE_BANKING);
             } catch (CustomException e) {
-                System.out.println("Invalid Card Details: " + e.getMessage());
+                System.out.println("Invalid Details: " + e.getMessage());
             }
         }
     }

@@ -192,15 +192,9 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public void userLogout() throws CustomException {
-        try {
+    public void userLogout() {
             SessionManagement session = new SessionManagement();
             session.getSessionMap().clear();
-            LoginController loginController = new LoginController();
-            loginController.menu();
-        }catch (CustomException e){
-            throw  new CustomException("Something went wrong while logging out");
-        }
     }
 
 }
