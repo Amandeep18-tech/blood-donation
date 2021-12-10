@@ -1,5 +1,6 @@
 package com.dalhousie.bloodDonation.repos.common;
 
+import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.common.LocationDetail;
 import com.dalhousie.bloodDonation.model.common.LocationName;
 import com.dalhousie.bloodDonation.utils.DBUtils;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class LocationRepository {
 
-    public List<LocationDetail> getAllRecordsLocationDistance() {
+    public List<LocationDetail> getAllRecordsLocationDistance() throws CustomException {
         List<LocationDetail> locationDetails = new ArrayList<>();
         try (Connection connection = DBUtils.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
@@ -26,12 +27,12 @@ public class LocationRepository {
                 locationDetails.add(locationDetail);
             }
         } catch (SQLException sqlException) {
-            //Todo
+            throw new CustomException(sqlException.getMessage());
         }
         return locationDetails;
     }
 
-    public List<LocationName> getAllRecordsLocationName() {
+    public List<LocationName> getAllRecordsLocationName() throws CustomException {
         List<LocationName> locationNames = new ArrayList<>();
         try (Connection connection = DBUtils.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
@@ -43,7 +44,7 @@ public class LocationRepository {
                 locationNames.add(locationName);
             }
         } catch (SQLException sqlException) {
-            //Todo
+            throw new CustomException(sqlException.getMessage());
         }
         return locationNames;
     }

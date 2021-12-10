@@ -24,12 +24,9 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
 
     @Override
     public String getPatientRequestId(String donorID) {
-
         PatientRequestMappingRepository patientRequestMappingRepository = new PatientRequestMappingRepository();
         List<PatientRequestMapping> requestList = patientRequestMappingRepository.getAllDonorRequests();
-
         for (PatientRequestMapping patientRequestMapping : requestList) {
-
             if (patientRequestMapping.getDonorOrOrganisationID().equals(donorID)) {
                 if (patientRequestMapping.getAcceptFlag() == -1) {
                     return patientRequestMapping.getPatientBloodRequestID();
@@ -41,15 +38,12 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
 
     @Override
     public PatientBloodRequest getPatientRequestDetails(String patientRequestID) {
-
         PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
         List<PatientBloodRequest> patientDetailsList = patientBloodRequestRepository.getAllDonorRequests();
-
         for (PatientBloodRequest patientBloodRequest : patientDetailsList) {
             if (patientBloodRequest.getId().equals(patientRequestID)) {
                 return patientBloodRequest;
             }
-
         }
         return null;
     }
@@ -58,50 +52,39 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
     public String selectDonationPlace(String placeName) {
         OrganizationRepository organizationRepository = new OrganizationRepository();
         List<Organisation> placeList = organizationRepository.getAllPlaces();
-
         for (Organisation organisation : placeList) {
             if (organisation.getorganisationName().equals(placeName)) {
-
                 return organisation.getorganisationID();
             }
         }
-
         return null;
-
     }
 
     @Override
     public String getDonationSlotId(String slotIdInput) {
-
         BloodDonationDetailsRepository bloodDonationDetailsRepository = new BloodDonationDetailsRepository();
         List<BloodDonationDetails> donationList = bloodDonationDetailsRepository.getAllDonorAppointment();
         for (BloodDonationDetails bloodDonationDetails : donationList) {
             if (bloodDonationDetails.getSlotNumber() == Integer.parseInt(slotIdInput)) {
                 return bloodDonationDetails.getId();
-
             }
-
         }
         return SlotAvailableConstants.SLOT_UNAVAILABLE.toString();
-
     }
 
     @Override
     public boolean compareDonationDate(String dateFormatInput, String slotIdInput) {
         BloodDonationDetailsHistoryRepository bloodDonationDetailsHistoryRepository = new BloodDonationDetailsHistoryRepository();
         List<BloodDonationDetaisHistory> allDonationHistory = bloodDonationDetailsHistoryRepository.getAllDetails();
-
         for (BloodDonationDetaisHistory bloodDonationDetaisHistory : allDonationHistory) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateToString = dateFormat.format(bloodDonationDetaisHistory.getSlotDate());
-                if ((bloodDonationDetaisHistory.getSlotId().equals(slotIdInput))
-                        && dateToString.equals(dateFormatInput)) {
-                    return true;
-                }
-                
+            if ((bloodDonationDetaisHistory.getSlotId().equals(slotIdInput))
+                    && dateToString.equals(dateFormatInput)) {
+                return true;
+            }
         }
         return false;
-
     }
 
     public ArrayList<String> getTodayDonation() throws CustomException {
@@ -112,45 +95,34 @@ public class DonorDonationBookingImpl implements DonorDonationBooking {
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String todayToString = simpleDateFormat.format(today);
-    
         for (BloodDonationDetaisHistory bloodDonationDetaisHistory : bloodDonationDetailsHistoryList) {
-            
             String donorDate = simpleDateFormat.format(bloodDonationDetaisHistory.getSlotDate());
-                if (donorDate.equals(todayToString)) {
-                    idList.add(bloodDonationDetaisHistory.getDonorId());
-                }
-
+            if (donorDate.equals(todayToString)) {
+                idList.add(bloodDonationDetaisHistory.getDonorId());
             }
-            if(idList.size()==0){
-                throw new CustomException("No donation for today");
-            }
-           
-            return idList;
         }
-
-        public ArrayList<String> getTodayPatientRequest() throws CustomException{
-            PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
-            List<PatientBloodRequest> patientBloodRequestsList= patientBloodRequestRepository.getAllDonorRequests();
-            ArrayList<String> idList = new ArrayList<String>();
-            Date today = Calendar.getInstance().getTime();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String todayToString = simpleDateFormat.format(today);
-            for (PatientBloodRequest patientBloodRequest: patientBloodRequestsList) {
-                
-                String donorDate = simpleDateFormat.format(patientBloodRequest.getAppointmentDate());
-                    if (donorDate.equals(todayToString)) {
-                        idList.add(patientBloodRequest.getPatientID());
-                    }
-    
-                }
-                if(idList.size()==0){
-                    throw new CustomException("No donation for today");
-                }
-               
-                return idList;
-
+        if (idList.size() == 0) {
+            throw new CustomException("No donation for today");
         }
-        
-
+        return idList;
     }
 
+    public ArrayList<String> getTodayPatientRequest() throws CustomException {
+        PatientBloodRequestRepository patientBloodRequestRepository = new PatientBloodRequestRepository();
+        List<PatientBloodRequest> patientBloodRequestsList = patientBloodRequestRepository.getAllDonorRequests();
+        ArrayList<String> idList = new ArrayList<String>();
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String todayToString = simpleDateFormat.format(today);
+        for (PatientBloodRequest patientBloodRequest : patientBloodRequestsList) {
+            String donorDate = simpleDateFormat.format(patientBloodRequest.getAppointmentDate());
+            if (donorDate.equals(todayToString)) {
+                idList.add(patientBloodRequest.getPatientID());
+            }
+        }
+        if (idList.size() == 0) {
+            throw new CustomException("No donation for today");
+        }
+        return idList;
+    }
+}

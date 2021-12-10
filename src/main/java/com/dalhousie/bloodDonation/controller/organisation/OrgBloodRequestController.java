@@ -103,7 +103,9 @@ public class OrgBloodRequestController {
         }
         System.out.println("Select the organisation to request(#-go back):");
         orgSelected = scanner.nextLine();
-        if (orgSelected.equalsIgnoreCase("#")) return;
+        if (orgSelected.equalsIgnoreCase("#")) {
+            return;
+        }
         try {
             orgBloodDonationService.requestBlood(sessionService.getUserId(), orgSelected, bloodGroup, unitsNeeded);
             System.out.println("Blood Requested!");
@@ -123,7 +125,9 @@ public class OrgBloodRequestController {
         pendingRequests.entrySet().forEach(integerStringEntry -> System.out.println(String.format("%-20s%s", integerStringEntry.getKey(), integerStringEntry.getValue())));
         System.out.println("Select the request to approve(# to go back):");
         optionSelected = scanner.nextLine();
-        if (optionSelected.equalsIgnoreCase("#")) return;
+        if (optionSelected.equalsIgnoreCase("#")) {
+            return;
+        }
         try {
             orgBloodDonationService.acceptBloodRequest(optionSelected);
             System.out.println("Blood Donated!");

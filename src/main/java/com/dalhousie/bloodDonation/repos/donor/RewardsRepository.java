@@ -12,12 +12,10 @@ import java.util.Scanner;
 public class RewardsRepository {
     private final Scanner sc;
 
-
     public RewardsRepository() {
         sc = IOUtils.getInstance();
     }
 
-    //    RewardsController rewardsController = new RewardsController();
     public void rewards(int donorId) {
         try (Connection con = DBUtils.getInstance().getConnection()) {
             String sql = "select * from rewards where donor_id=?";
@@ -137,7 +135,6 @@ public class RewardsRepository {
             System.out.println("Press 1 to continue and 0 to return to main menue:");
             int choice = sc.nextInt();
             if (choice == 1) {
-
                 boolean check = updateStatus(donorId);
                 if(check){
                     System.out.println("Coupoun Is redemeed successfully");
@@ -147,7 +144,7 @@ public class RewardsRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new CustomException("");
+            throw new CustomException(e.getMessage());
         }
     }
 }

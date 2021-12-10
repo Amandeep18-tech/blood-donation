@@ -20,16 +20,10 @@ import java.util.UUID;
 import static com.dalhousie.bloodDonation.constants.QueryConstants.*;
 
 public class LoginRepository {
-    User user;
     String username;
     String pass;
     int patient_id;
-    int flag = 0;
-    PatientMedicalInformationRepository patientMedicalInformationRepository;
     LoginController loginController;
-    SessionManagement session = new SessionManagement();
-
-    Scanner sc = new Scanner(System.in);
 
     public boolean checkExistingUser(String userName, String password) throws CustomException {
         try(Connection con = DBUtils.getInstance().getConnection()) {

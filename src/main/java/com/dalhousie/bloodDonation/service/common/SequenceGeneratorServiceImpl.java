@@ -6,7 +6,7 @@ import com.dalhousie.bloodDonation.repos.common.SeqNumMasterRepositoryImpl;
 
 public class SequenceGeneratorServiceImpl implements SequenceGeneratorService{
 
-    private SeqNumMasterRepository seqNumMasterRepository;
+    private final SeqNumMasterRepository seqNumMasterRepository;
 
     public SequenceGeneratorServiceImpl(){
         seqNumMasterRepository = new SeqNumMasterRepositoryImpl();
@@ -15,7 +15,7 @@ public class SequenceGeneratorServiceImpl implements SequenceGeneratorService{
     @Override
     public String getSequenceNumber(String seqName) {
         SeqNumMaster seqNumMaster = seqNumMasterRepository.getSeqNumMaster(seqName);
-        seqNumMasterRepository.incr(seqName);
+        seqNumMasterRepository.increment(seqName);
         int start = seqNumMaster.getSeqPattern().indexOf("{");
         int end = seqNumMaster.getSeqPattern().indexOf("}");
         int length = end - start - 1;

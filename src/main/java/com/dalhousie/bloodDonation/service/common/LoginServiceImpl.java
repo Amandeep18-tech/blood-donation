@@ -19,7 +19,6 @@ import java.util.Scanner;
 
 public class LoginServiceImpl implements LoginService {
 
-    private Object NullPointerException;
     private LoginRepository loginRepository;
     public JavaMailSender mailSender;
 
@@ -38,14 +37,12 @@ public class LoginServiceImpl implements LoginService {
                 throw new NullPointerException();
             }
             if (!userName.isEmpty() && !password.isEmpty()) {
-              boolean check =  loginRepository.checkExistingUser(userName, password);
-                if(check){
+                boolean check = loginRepository.checkExistingUser(userName, password);
+                if (check) {
                     System.out.println("login success");
                 }
             }
-
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException("Error caugh while loggingin");
         }
@@ -64,7 +61,7 @@ public class LoginServiceImpl implements LoginService {
             }
             if (!userName.isEmpty() && !password.isEmpty()) {
                 boolean check = loginRepository.checkExistingOrgansation(userName, password);
-                if(check){
+                if (check) {
                     System.out.println("login success");
                 }
             }
@@ -105,7 +102,7 @@ public class LoginServiceImpl implements LoginService {
         generateAndSendOtp(user);
     }
 
-    public void generateAndSendOtp(User user) throws  CustomException {
+    public void generateAndSendOtp(User user) throws CustomException {
         String OTP = RandomString.make(8);
         long issueTime = Instant.now().getEpochSecond();
         OTPDetails otpDetails = new OTPDetails(OTP, issueTime);
@@ -173,26 +170,24 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean sendVerificationEmail(User user, String OTP) throws CustomException{
+    public boolean sendVerificationEmail(User user, String OTP) throws CustomException {
         try {
             MailBuilder.getMailInstance()
-                        .recipient(user.getUserName())
-                        .subject("Blood donation notification")
-                        .content("<strong>"+OTP+"</strong>")
-                        .send();
+                    .recipient(user.getUserName())
+                    .subject("Blood donation notification")
+                    .content("<strong>" + OTP + "</strong>")
+                    .send();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException("Error in sending Verification mail");
         }
-
     }
 
 
     @Override
     public void userLogout() {
-            SessionManagement session = new SessionManagement();
-            session.getSessionMap().clear();
+        SessionManagement session = new SessionManagement();
+        session.getSessionMap().clear();
     }
-
 }
