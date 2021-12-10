@@ -4,6 +4,10 @@ import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.PatientLoginInformation;
 import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.repos.*;
+import com.dalhousie.bloodDonation.utils.IOUtils;
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.util.Scanner;
 
 public class PatientLoginInformationServiceImpl implements PatientLoginInformationService {
     private final PatientLoginInformationRepositoryImpl patientLoginInformationRepository;
