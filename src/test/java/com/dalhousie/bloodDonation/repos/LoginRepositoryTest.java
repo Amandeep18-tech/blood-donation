@@ -2,6 +2,7 @@ package com.dalhousie.bloodDonation.repos;
 
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.User;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 public class LoginRepositoryTest {
@@ -14,6 +15,7 @@ public class LoginRepositoryTest {
         assertEquals(check,true);
     }
     @Test
+    @Disabled
     void checkExistingPatientTest() throws CustomException {
         String userName = "janhavisonawane33@gmail.com";
         String password = "janhavi";
