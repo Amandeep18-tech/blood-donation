@@ -36,6 +36,7 @@ public class LoginController {
                 System.out.println("6.Exit");
                 System.out.println("Enter your choice:-");
                 choice = sc.nextInt();
+                sc.nextLine();
                 switch (choice) {
                     case 1:
                         loginMethod();
@@ -59,9 +60,9 @@ public class LoginController {
     public void loginMethod() throws CustomException {
         try {
             System.out.println("Enter UserName:-");
-            String userName = sc.next();
+            String userName = sc.nextLine();
             System.out.println("Enter Password");
-            String password = sc.next();
+            String password = sc.nextLine();
             loginService.userLogin(userName, password);
         } catch (Exception e) {
             throw new CustomException("Error caught while login");
@@ -71,19 +72,19 @@ public class LoginController {
     public void signupMethod() throws CustomException {
         try {
             System.out.println("Enter Firstname:-");
-            String fname = sc.next();
+            String fname = sc.nextLine();
             System.out.println("Enter Lastname:-");
-            String lname = sc.next();
+            String lname = sc.nextLine();
             System.out.println("Enter Email as username");
-            String uname = sc.next();
+            String uname = sc.nextLine();
             System.out.println("Enter password:-");
-            String pass = sc.next();
+            String pass = sc.nextLine();
             System.out.println("Enter your Blood Group:-");
-            String bloodGroup = sc.next();
+            String bloodGroup = sc.nextLine();
             System.out.println("Enter your Contact number:-");
-            String contactNo = sc.next();
+            String contactNo = sc.nextLine();
             System.out.println("Enter your PinCode:-");
-            String pinCode = sc.next();
+            String pinCode = sc.nextLine();
             user = new User();
             user.setBloodGroup(bloodGroup);
             user.setFirstname(fname);
@@ -101,7 +102,7 @@ public class LoginController {
     public void forgetPassword() throws CustomException {
         try {
             System.out.println("Enter Email address:-");
-            String email = sc.next();
+            String email = sc.nextLine();
             loginService.forgetPass(email);
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,20 +113,20 @@ public class LoginController {
     public void organizationSignupMethod() throws CustomException {
         try {
             System.out.println("Enter organisation name");
-            String oname = sc.next();
+            String oname=sc.nextLine();
             System.out.println("Enter location:-");
-            String location = sc.next();
+            String location = sc.nextLine();
             System.out.println("Organizatin type:-");
-            String type = sc.next();
+            String type = sc.nextLine();
             System.out.println("Enter Email:-");
-            String email = sc.next();
+            String email = sc.nextLine();
             System.out.println("Enter your password:-");
-            String password = sc.next();
+            String password = sc.nextLine();
             System.out.println("Enter slots available:-");
-            String slots = sc.next();
+            String slots = sc.nextLine();
             System.out.println("Enter PinCode:-");
-            String pinCode = sc.next();
-            organisation = new Organisation();
+            String pinCode = sc.nextLine();
+            organisation= new Organisation();
             organisation.setorganisationName(oname);
             organisation.setLocation(location);
             organisation.setorganisationType(type);

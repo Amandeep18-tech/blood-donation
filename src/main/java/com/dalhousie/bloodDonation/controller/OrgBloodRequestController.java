@@ -30,6 +30,7 @@ public class OrgBloodRequestController {
             System.out.println("2. Pending Request");
             System.out.println("3. List blood donated available:(sort by expiry/group by bloodGroup)");
             optionSelected = scanner.nextInt();
+            scanner.nextLine();
             try {
                 switch (optionSelected) {
                     case 1:
@@ -56,6 +57,7 @@ public class OrgBloodRequestController {
         do {
             System.out.println("Enter the units of blood needed:");
             int unitsNeeded = scanner.nextInt();
+            scanner.nextLine();
             System.out.println("1. A+ve");
             System.out.println("2. A-ve");
             System.out.println("3. B+ve");
@@ -66,6 +68,7 @@ public class OrgBloodRequestController {
             System.out.println("8. 0-ve");
             System.out.println("Select the blood group needed:");
             int bloodGroupSelected = scanner.nextInt();
+            scanner.nextLine();
             BloodGroup bloodGroup = null;
             if(bloodGroupSelected == 1){
                 bloodGroup = BloodGroup.APos;
@@ -89,7 +92,7 @@ public class OrgBloodRequestController {
             LinkedHashMap<String, String> recommendedOrganisation = orgBloodDonationService.getRecommendedOrganisation(unitsNeeded, bloodGroup);
             recommendedOrganisation.entrySet().forEach(System.out::println);
             System.out.println("Select the organisation to request(*-all/#-go back):");
-            orgSelected = scanner.next();
+            orgSelected = scanner.nextLine();
             try {
                 orgBloodDonationService.requestBlood(sessionService.getUserId(), orgSelected, bloodGroup, unitsNeeded);
                 System.out.println("Blood Requested!");
@@ -106,7 +109,7 @@ public class OrgBloodRequestController {
             System.out.println(String.format("%-20s%-20s%-20s%-20s%-20s","Request ID","Organization Name","Blood Group","Units Requested","Time Requested"));
             pendingRequests.entrySet().forEach(integerStringEntry -> System.out.println(String.format("%-20s%s",integerStringEntry.getKey(),integerStringEntry.getValue())));
             System.out.println("Select the request to approve(# to go back):");
-            optionSelected = scanner.next();
+            optionSelected = scanner.nextLine();
             if(optionSelected.equalsIgnoreCase("#"))break;
             try {
                 orgBloodDonationService.acceptBloodRequest(optionSelected);
@@ -124,6 +127,7 @@ public class OrgBloodRequestController {
             System.out.println("2. Show by Blood Group");
             System.out.println("9. Return to Previous Menu");
             optionSelected = scanner.nextInt();
+            scanner.nextLine();
             try {
                 List<String[]> responses = new ArrayList<>();
                 switch (optionSelected) {

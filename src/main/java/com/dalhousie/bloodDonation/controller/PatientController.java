@@ -27,7 +27,9 @@ public class PatientController {
         System.out.println("\nPatient Menu");
         System.out.println("1. Add Patient\n2. View Patients\n3. Delete Patient\n4. Update Patient Information\n5. Add Medical Information\n6. Delete Medical Information\n7. View Patient Medical Information\n8. Update Patient Medical Information\n9. Import Patients\n10. Go Back\n11. Exit");
         System.out.print("Select: ");
-        switch (input.nextInt()) {
+        int choice = input.nextInt();
+        input.nextLine();
+        switch (choice) {
             case 1:
                 patientPersonalInfoService.getPatientInformationInput();
                 int patient_id = patientPersonalInfoService.storePatientInformation();

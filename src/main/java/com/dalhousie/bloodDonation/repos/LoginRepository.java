@@ -107,10 +107,9 @@ public class LoginRepository {
             UUID uuid = UUID.randomUUID();
             String uuidAsString = uuid.toString();
             Statement st = con.createStatement();
-            st.execute("INSERT INTO organisation(organisation_id,organisation_name,location,organisation_type,password,slots_available) " +
-                    "VALUES('" + uuidAsString + "','" + organisation.getorganisationName() + "','" + organisation.getLocation() + "','" + organisation
-                    .getorganisationType() + "','" + organisation.getPassword() + "','" + organisation.getSlots_available() + "')");
-            st.execute("Insert into user(username,password,firstname,userId,userType) values ('" + organisation.getorganisationName() + "','" + organisation.getPassword() + "','" + organisation.getorganisationName() + "','" + uuidAsString + "','" + UserType.ORGANIZATION + "')");
+            st.execute("INSERT INTO organisation(organisation_id,organisation_name,location,password,slots_available) " +
+                    "VALUES('"+ uuidAsString +"','"+ organisation.getorganisationName()+"','"+ organisation.getLocation()+"','"+ organisation.getPassword()+"','"+ organisation.getSlots_available()+"')");
+            st.execute("Insert into user(username,password,firstname,userId,userType) values ('"+organisation.getEmail()+"','"+organisation.getPassword()+"','"+organisation.getorganisationName()+"','"+uuidAsString+"','"+UserType.ORGANIZATION+"')");
             System.out.println("SignUp successful");
             return organisation;
         } catch (SQLException e) {

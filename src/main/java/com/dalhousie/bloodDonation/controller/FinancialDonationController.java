@@ -31,6 +31,7 @@ public class FinancialDonationController {
             System.out.println("6. Mobile Banking");
             System.out.println("9. Go Back");
             modeOfPayment = scanner.nextInt();
+            scanner.nextLine();
             try {
                 switch (modeOfPayment) {
                     case 1:
@@ -63,7 +64,7 @@ public class FinancialDonationController {
 
     private void getBankTransferDetails() throws CustomException {
         System.out.println("Enter transaction reference number:");
-        String transRefNum = scanner.next();
+        String transRefNum = scanner.nextLine();
         try {
             financialDonationService.verifyDonation(transRefNum, DonationType.BANK_TRANSFER);
             financialDonationService.makeDonation(transRefNum, DonationType.BANK_TRANSFER);
@@ -74,7 +75,7 @@ public class FinancialDonationController {
 
     private void getChequeDetails() throws CustomException {
         System.out.println("Enter Cheque number:");
-        String chequeNumber = scanner.next();
+        String chequeNumber = scanner.nextLine();
         try {
             financialDonationService.verifyDonation(chequeNumber, DonationType.CHEQUE);
             financialDonationService.makeDonation(chequeNumber, DonationType.CHEQUE);
@@ -85,7 +86,7 @@ public class FinancialDonationController {
 
     private void getCashDetails() throws CustomException {
         System.out.println("Enter receipt number:");
-        String transRefNum = scanner.next();
+        String transRefNum = scanner.nextLine();
         try {
             financialDonationService.verifyDonation(transRefNum, DonationType.CASH);
             financialDonationService.makeDonation(transRefNum, DonationType.CASH);
@@ -98,9 +99,10 @@ public class FinancialDonationController {
         boolean transactionCompleted = false;
         System.out.println("Enter the amount to be donated:");
         Double amount = scanner.nextDouble();
+        scanner.nextLine();
         while (!transactionCompleted) {
             System.out.println("Enter UPI:");
-            String upi = scanner.next();
+            String upi = scanner.nextLine();
             try {
                 transactionCompleted = financialDonationService.makeDonationByUPI(amount, upi);
             } catch (CustomException e) {
@@ -113,13 +115,14 @@ public class FinancialDonationController {
         boolean transactionCompleted = false;
         System.out.println("Enter the amount to be donated:");
         Double amount = scanner.nextDouble();
+        scanner.nextLine();
         while (!transactionCompleted) {
             System.out.println("Enter Credit/Debit Card No:");
-            String cardNo = scanner.next();
+            String cardNo = scanner.nextLine();
             System.out.println("Enter the Expiry date(MM/YY):");
-            String expiryDate = scanner.next();
+            String expiryDate = scanner.nextLine();
             System.out.println("Enter the CVV:");
-            String cvv = scanner.next();
+            String cvv = scanner.nextLine();
             try {
                 transactionCompleted = financialDonationService.makeDonationByCard(amount, cardNo, expiryDate, cvv);
             } catch (CustomException e) {
@@ -132,13 +135,14 @@ public class FinancialDonationController {
         boolean transactionCompleted = false;
         System.out.println("Enter the amount to be donated:");
         Double amount = scanner.nextDouble();
+        scanner.nextLine();
         while (!transactionCompleted) {
             System.out.println("Enter Mobile No:");
-            String mobileNumber = scanner.next();
+            String mobileNumber = scanner.nextLine();
             financialDonationService.validateAndSendLink(amount, mobileNumber);
             System.out.println("Follow the link in the SMS you have received and complete the transaction.");
             System.out.println("Enter the transaction reference number:");
-            String transRefNumber = scanner.next();
+            String transRefNumber = scanner.nextLine();
             try {
                 transactionCompleted = financialDonationService.verifyDonation(transRefNumber, DonationType.MOBILE_BANKING);
                 financialDonationService.makeDonation(transRefNumber, DonationType.MOBILE_BANKING);

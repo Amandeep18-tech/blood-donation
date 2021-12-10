@@ -24,6 +24,7 @@ public class RewardsController {
             System.out.println("3.Display coupoun code");
             System.out.println("Enter your choice:-");
             choice = sc.nextInt();
+            sc.nextLine();
             switch (choice) {
                 case 1:
                     rewardsSystem();
