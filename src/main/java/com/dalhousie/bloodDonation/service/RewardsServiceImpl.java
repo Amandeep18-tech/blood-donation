@@ -16,4 +16,9 @@ public class RewardsServiceImpl implements RewardsService{
     public void displayCoupon(int donorId) throws CustomException {
         rewardsRepository.displayCoupon(donorId);
     }
+
+    @Override
+    public void displayRewards(int donorId) throws CustomException {
+        rewardsRepository.displayRewards(donorId);
+    }
 }

@@ -7,10 +7,12 @@ import com.dalhousie.bloodDonation.model.PatientPersonalInformation;
 import com.dalhousie.bloodDonation.repos.PatientMedicalInformationRepositoryImpl;
 import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepository;
 import com.dalhousie.bloodDonation.repos.PatientPersonalInformationRepositoryImpl;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -22,15 +24,18 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
     private String address;
     private String contactNumber;
     private String emailId;
-    private final PatientPersonalInformationRepository patientPersonalInformationRepository;
+    private final PatientPersonalInformationRepositoryImpl patientPersonalInformationRepository;
+    private final Scanner in;
+    private final NotificationServiceImpl notificationService;
 
     public PatientPersonalInformationServiceImpl() {
-        patientPersonalInformationRepository = PatientPersonalInformationRepositoryImpl.getInstance();
+        patientPersonalInformationRepository = new PatientPersonalInformationRepositoryImpl();
+        in = IOUtils.getInstance();
+        notificationService = new NotificationServiceImpl();
     }
 
     @Override
     public void getPatientInformationInput() {
-        Scanner in = new Scanner(System.in);
         System.out.print("\n=============================");
         System.out.print("\nPatient Personal Information\n");
         System.out.println("=============================");
@@ -58,7 +63,13 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
         patientInfo.setAddress(address);
         patientInfo.setContactNumber(contactNumber);
         patientInfo.setEmailId(emailId);
-        return patientPersonalInformationRepository.addPatient(patientInfo);
+        int patientId = patientPersonalInformationRepository.addPatient(patientInfo);
+        String message = "Your Username & Password For Patient Login Is Username: " + patientInfo.getEmailId() + ", Password: " + patientInfo.getContactNumber();
+        List<String> recipients = new ArrayList<String>() {{
+            add(patientInfo.getEmailId());
+        }};
+        notificationService.sendMailToMultipleUser(recipients, message);
+        return patientId;
     }
 
     @Override
@@ -75,8 +86,6 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
 
     @Override
     public void deletePatient() throws CustomException {
-        viewAllPatients();
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Delete: ");
         int id = in.nextInt();
         PatientPersonalInformationRepository patientPersonalInfoRepo = patientPersonalInformationRepository;
@@ -86,8 +95,6 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
 
     @Override
     public void updatePatientPersonalInformation() throws CustomException {
-        viewAllPatients();
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Patient ID To Update: ");
         int id = in.nextInt();
         in.nextLine();
@@ -136,7 +143,6 @@ public class PatientPersonalInformationServiceImpl implements PatientPersonalInf
 
     @Override
     public void importPatientsFromFile() throws CustomException {
-        Scanner in = new Scanner(System.in);
         System.out.print("\nEnter Name Of The File From Which You Want To Import Patient Data: ");
         String fileName = in.nextLine();
         File resourceDirectory = new File(Directory.RESOURCES_DIRECTORY);

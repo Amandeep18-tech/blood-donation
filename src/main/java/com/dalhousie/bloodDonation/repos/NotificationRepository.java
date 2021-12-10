@@ -3,19 +3,16 @@ package com.dalhousie.bloodDonation.repos;
 import com.dalhousie.bloodDonation.model.Notification;
 import com.dalhousie.bloodDonation.model.SessionManagement;
 import com.dalhousie.bloodDonation.model.User;
+import com.dalhousie.bloodDonation.utils.DBUtils;
 
 import java.sql.*;
 
 public class NotificationRepository {
     public Notification fetchData(String priority1) throws ClassNotFoundException, SQLException {
         SessionManagement session = new SessionManagement();
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con= DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
+        Connection con= DBUtils.getInstance().getConnection();
         String sql = "select * from notification_template ";
-        //where priority=?
         PreparedStatement stmt = con.prepareStatement(sql);
-       // stmt.setString(1, priority1);
         int notification_id = 0;
         String userName = null;
         String message = null;
@@ -23,9 +20,6 @@ public class NotificationRepository {
         String messsage_priority = null;
         String notification_type = null;
         ResultSet rs = stmt.executeQuery();
-        //String check = rs.getString(3);
-       // if(check.contains("Emergency")) {
-
             while (rs.next()) {
                 message = rs.getString(3);
                 if(message.contains("Emergency")) {
@@ -37,7 +31,6 @@ public class NotificationRepository {
                     notification_type = rs.getString(6);
                 }
             }
-       // }
         Notification notification = new Notification();
         notification.setNotification_id(notification_id);
         notification.setUserName(userName);

@@ -12,25 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DonorPersonalInformationRepositoryImpl implements DonorPersonalInformationRepository {
-    private static DonorPersonalInformationRepository donorPersonalInformationRepository = null;
-
-    public static DonorPersonalInformationRepository getInstance() {
-        if (donorPersonalInformationRepository == null) {
-            donorPersonalInformationRepository = new DonorPersonalInformationRepositoryImpl();
-        }
-        return donorPersonalInformationRepository;
-    }
-
     @Override
     public List<DonorInformation> getAllMatchingBloodTypeDonors(String bloodGroup) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try (Connection conn = dbUtils.getConnection()) {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String query = "SELECT * FROM Person WHERE blood_group= ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, bloodGroup);
             ResultSet rs = ps.executeQuery();
             List<DonorInformation> donorListByMatchedBloodGroup = new ArrayList<>();
-
             while (rs.next()) {
                 DonorInformation donorPersonalInfo = new DonorInformation();
                 donorPersonalInfo.setDonorId(rs.getString("person_id"));

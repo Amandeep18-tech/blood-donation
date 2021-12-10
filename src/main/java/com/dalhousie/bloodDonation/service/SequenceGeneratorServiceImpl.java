@@ -2,13 +2,14 @@ package com.dalhousie.bloodDonation.service;
 
 import com.dalhousie.bloodDonation.model.SeqNumMaster;
 import com.dalhousie.bloodDonation.repos.SeqNumMasterRepository;
+import com.dalhousie.bloodDonation.repos.SeqNumMasterRepositoryImpl;
 
 public class SequenceGeneratorServiceImpl implements SequenceGeneratorService{
 
     private SeqNumMasterRepository seqNumMasterRepository;
 
     public SequenceGeneratorServiceImpl(){
-        seqNumMasterRepository = new SeqNumMasterRepository();
+        seqNumMasterRepository = new SeqNumMasterRepositoryImpl();
     }
 
     @Override

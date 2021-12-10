@@ -16,6 +16,6 @@ public interface LoginService {
     void organizationSignup(Organisation organisation) throws Exception;
     void forgetPass(String username) throws Exception;
     boolean sendVerificationEmail(User user, String otp) throws MessagingException, UnsupportedEncodingException, CustomException;
-    void userLogout() throws Exception;
+    void userLogout();
     boolean validateOTP(String username, String otp);
 }

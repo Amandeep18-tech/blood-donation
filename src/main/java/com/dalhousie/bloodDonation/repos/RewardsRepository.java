@@ -3,6 +3,7 @@ package com.dalhousie.bloodDonation.repos;
 import com.dalhousie.bloodDonation.controller.RewardsController;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.utils.DBUtils;
+import com.dalhousie.bloodDonation.utils.IOUtils;
 import net.bytebuddy.utility.RandomString;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -15,67 +16,69 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class RewardsRepository {
-    Scanner sc = new Scanner(System.in);
-//    RewardsController rewardsController = new RewardsController();
-    public void rewards(int donorId){
-       try{
-           Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection con= DriverManager.getConnection(
-                   "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
-           String sql = "select * from rewards where donor_id=?";
-           PreparedStatement stmt = con.prepareStatement(sql);
-           stmt.setInt(1, donorId);
-           ResultSet rs = stmt.executeQuery();
-           int rewardPoints = 0;
-           Date expiryDate = null;
-           Date couponGeneratedDate = null;
-           String couponcode = null;
-           String status = null;
-           while (rs.next()){
-               rewardPoints = rs.getInt(3);
-               expiryDate = rs.getDate(4);
-               couponGeneratedDate = rs.getDate(5);
-               couponcode = rs.getString(6);
-               status = rs.getString(7);
-           }
-           System.out.println(rewardPoints);
-           int data=50;
-           if(rewardPoints == 0){
-               String sql1 = "update rewards set reward_points=? where donor_id=?";
-               stmt = con.prepareStatement(sql1);
-               stmt.setInt(1,data);
-               stmt.setInt(2, donorId);
-               stmt.executeUpdate();
-           }
+    private final Scanner sc;
 
-           else{
-               String sql12 = "update rewards set reward_points=? where donor_id=?";
-               stmt = con.prepareStatement(sql12);
-               stmt.setInt(1,rewardPoints=rewardPoints+50);
-               stmt.setInt(2, donorId);
-               stmt.executeUpdate();
-           }
 
-           if(rewardPoints == 500){
-               String couponCode = RandomString.make(20);
-               System.out.println(couponCode);
-               LocalDate today = LocalDate.now();
-               String updateCoupon = "update rewards set coupon_code=?,coupon_generated_date=?,expiry_date_point=? where donor_id=?";
-               stmt = con.prepareStatement(updateCoupon);
-               stmt.setString(1,couponCode);
-               stmt.setDate(2, Date.valueOf(today));
-               stmt.setDate(3, Date.valueOf(today.plusDays(10)));
-               stmt.setInt(4,donorId);
-               stmt.executeUpdate();
-           }
-
-       }catch (Exception e){
-           System.out.println("Something went wrong!");
-       }
+    public RewardsRepository() {
+        sc = IOUtils.getInstance();
     }
+
+    //    RewardsController rewardsController = new RewardsController();
+    public void rewards(int donorId) {
+        try (Connection con = DBUtils.getInstance().getConnection()) {
+            String sql = "select * from rewards where donor_id=?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, donorId);
+            ResultSet rs = stmt.executeQuery();
+            int rewardPoints = 0;
+            Date expiryDate = null;
+            Date couponGeneratedDate = null;
+            String couponcode = null;
+            String status = null;
+            while (rs.next()) {
+                rewardPoints = rs.getInt(3);
+                expiryDate = rs.getDate(4);
+                couponGeneratedDate = rs.getDate(5);
+                couponcode = rs.getString(6);
+                status = rs.getString(7);
+            }
+            System.out.println(rewardPoints);
+            int data = 50;
+            if (rewardPoints == 0) {
+                String sql1 = "update rewards set reward_points=? where donor_id=?";
+                stmt = con.prepareStatement(sql1);
+                stmt.setInt(1, data);
+                stmt.setInt(2, donorId);
+                stmt.executeUpdate();
+            } else {
+                String sql12 = "update rewards set reward_points=? where donor_id=?";
+                stmt = con.prepareStatement(sql12);
+                stmt.setInt(1, rewardPoints = rewardPoints + 50);
+                stmt.setInt(2, donorId);
+                stmt.executeUpdate();
+            }
+
+            if (rewardPoints == 500) {
+                String couponCode = RandomString.make(20);
+                System.out.println(couponCode);
+                LocalDate today = LocalDate.now();
+                String updateCoupon = "update rewards set coupon_code=?,coupon_generated_date=?,expiry_date_point=? where donor_id=?";
+                stmt = con.prepareStatement(updateCoupon);
+                stmt.setString(1, couponCode);
+                stmt.setDate(2, Date.valueOf(today));
+                stmt.setDate(3, Date.valueOf(today.plusDays(10)));
+                stmt.setInt(4, donorId);
+                stmt.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong!");
+        }
+    }
+
     public void displayCoupon(int donorId) throws CustomException {
-        DBUtils dbUtils = new DBUtils();
-        try(Connection conn = dbUtils.getConnection()) {
+
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
             String sql = "select coupon_code from rewards where donor_id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, donorId);
@@ -92,27 +95,65 @@ public class RewardsRepository {
             System.out.println("Press 1 to continue and 0 to return to main menue:");
             int choice = sc.nextInt();
             if (choice == 1) {
-                //redeemCoupon(donorId);
-                System.out.println("hhj");
+
+                boolean check = updateStatus(donorId);
+                if(check){
+                    System.out.println("Coupoun Is redemeed successfully");
+                }
+                else{
+                    System.out.println("Could not redeem coupon!!");
+                }
             }
-//        else{
-//            rewardsController.menu();
-//        }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new CustomException("");
         }
     }
-//    public void redeemCoupon(int donorId) throws Exception {
-//
-//        Class.forName("com.mysql.cj.jdbc.Driver");
-//        Connection con= DriverManager.getConnection(
-//                "jdbc:mysql://localhost:3306/blooddonationdb","root","123456789");
-//        //String query = "update rewards set status = active where donorId = ?";
-//        String query = "selct * from rewards where donorId=?";
-//        PreparedStatement stmt = con.prepareStatement(query);
-//        stmt.setInt(1,donorId);
-//        stmt.executeUpdate();
-//        System.out.println("Your coupon is successfully redeemed!!!");
-//        rewardsController.menu();
-//    }
+    public boolean updateStatus(int donorId) throws CustomException {
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
+            String sql = "update rewards set status='active' where donor_id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, donorId);
+           int row = stmt.executeUpdate();
+           if(row>0) {
+               return true;
+           }
+           return false;
+        } catch (SQLException e) {
+           e.printStackTrace();
+            throw new CustomException("Could not update status");
+        }
+    }
+
+    public void displayRewards(int donorId) throws CustomException {
+
+        try (Connection conn = DBUtils.getInstance().getConnection()) {
+            String sql = "select reward_points from rewards where donor_id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, donorId);
+            ResultSet rs = stmt.executeQuery();
+            String rewardPoints = null;
+            while (rs.next()) {
+                rewardPoints = rs.getString(1);
+            }
+            System.out.println("*************************************");
+            System.out.print("|");
+            System.out.println("Your coupon code is:- " + rewardPoints + "|");
+            System.out.println("*************************************");
+            System.out.println("Do you want to redeem/use this coupon?");
+            System.out.println("Press 1 to continue and 0 to return to main menue:");
+            int choice = sc.nextInt();
+            if (choice == 1) {
+
+                boolean check = updateStatus(donorId);
+                if(check){
+                    System.out.println("Coupoun Is redemeed successfully");
+                }
+                else{
+                    System.out.println("Could not redeem coupon!!");
+                }
+            }
+        } catch (SQLException e) {
+            throw new CustomException("");
+        }
+    }
 }

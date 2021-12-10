@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DonorRecommendationServiceImpl implements DonorRecommendationService {
-    private final PatientMedicalInformationRepository patientMedicalInfoRepo;
-    private final DonorPersonalInformationRepository donorPersonalInfoRepo;
-    private final DonorMedicalInformationRepository donorMedicalInfoRepo;
+    private final PatientMedicalInformationRepositoryImpl patientMedicalInfoRepo;
+    private final DonorPersonalInformationRepositoryImpl donorPersonalInfoRepo;
+    private final DonorMedicalInformationRepositoryImpl donorMedicalInfoRepo;
     private final CalculateDonorMatchingPercentageServiceImpl donorMatchingPercentage;
 
     public DonorRecommendationServiceImpl() {
-        patientMedicalInfoRepo = PatientMedicalInformationRepositoryImpl.getInstance();
-        donorPersonalInfoRepo = DonorPersonalInformationRepositoryImpl.getInstance();
-        donorMedicalInfoRepo = DonorMedicalInformationRepositoryImpl.getInstance();
+        patientMedicalInfoRepo = new PatientMedicalInformationRepositoryImpl();
+        donorPersonalInfoRepo = new DonorPersonalInformationRepositoryImpl();
+        donorMedicalInfoRepo = new DonorMedicalInformationRepositoryImpl();
         donorMatchingPercentage = new CalculateDonorMatchingPercentageServiceImpl();
     }
 
@@ -39,7 +39,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
             }
         }
         List<DonorInformation> donorListWithParameterDifference = new ArrayList<>();
-        for (DonorInformation donorInformation : filteredDonorListWithoutDisease) {
+        filteredDonorListWithoutDisease.forEach(donorInformation -> {
             DecimalFormat df = new DecimalFormat("##.##");
             Double patientHemoglobin = Double.valueOf(df.format(patientMedicalInfo.getHemoglobinLevel()));
             Double donorHemoglobin = Double.valueOf(df.format(donorInformation.getHemoglobinLevel() / 10));
@@ -47,8 +47,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
                 add(patientHemoglobin);
                 add(donorHemoglobin);
             }};
-            Double hemoglobinLevelDifference = Collections.max(hemoglobinLevelValues) - Collections.min(hemoglobinLevelValues);
-
+            double hemoglobinLevelDifference = Collections.max(hemoglobinLevelValues) - Collections.min(hemoglobinLevelValues);
             int patientRbcCount = patientMedicalInfo.getRbcCount();
             int donorRbcCount = donorInformation.getRbcCount();
             List<Integer> rbcCountValues = new ArrayList<Integer>() {{
@@ -56,7 +55,6 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
                 add(donorRbcCount);
             }};
             int rbcCountDifference = Collections.max(rbcCountValues) - Collections.min(rbcCountValues);
-
             int patientPlateletCount = patientMedicalInfo.getPlateletCount();
             int donorPlateletCount = donorInformation.getPlateletCount();
             List<Integer> plateletCountValues = new ArrayList<Integer>() {{
@@ -68,7 +66,7 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
             donorInformation.setRbcCountDifference(rbcCountDifference);
             donorInformation.setPlateletCountDifference(plateletCountDifference);
             donorListWithParameterDifference.add(donorInformation);
-        }
+        });
         List<DonorInformation> donorListWithMatchingPercentage = new CopyOnWriteArrayList<>();
         for (DonorInformation donorInformation : donorListWithParameterDifference) {
             donorListWithMatchingPercentage.add(donorMatchingPercentage.getMatchingPercentage(donorInformation));
@@ -88,10 +86,10 @@ public class DonorRecommendationServiceImpl implements DonorRecommendationServic
         System.out.println();
         System.out.format("%5s%6s%33s%26s%15s%15s%20s", "Match(%)", "Name", "Contact", "Blood Group", "Hemoglobin", "RBC Count", "Platelet Count");
         System.out.println();
-        for (DonorInformation donorInformation : donorInformationListSortedByMaximumPercentage) {
+        donorInformationListSortedByMaximumPercentage.forEach(donorInformation -> {
             System.out.format("%-10s%-30s%-22s%-16s%-16s%-15s%-15s", donorInformation.getMatchingPercentage(), donorInformation.getDonorFirstName() + " " + donorInformation.getDonorLastName(), donorInformation.getDonorContactNumber(), donorInformation.getDonorBloodGroup(), donorInformation.getHemoglobinLevel(), donorInformation.getRbcCount(), donorInformation.getPlateletCount());
             System.out.println();
-        }
+        });
         return donorInformationListSortedByMaximumPercentage.size();
     }
 }
