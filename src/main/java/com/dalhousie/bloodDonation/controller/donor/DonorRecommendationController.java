@@ -3,15 +3,17 @@ package com.dalhousie.bloodDonation.controller.donor;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.service.common.SessionService;
 import com.dalhousie.bloodDonation.service.common.SessionServiceImpl;
+import com.dalhousie.bloodDonation.service.donor.DonorRecommendationService;
 import com.dalhousie.bloodDonation.service.donor.DonorRecommendationServiceImpl;
+import com.dalhousie.bloodDonation.service.patient.PatientPersonalInformationService;
 import com.dalhousie.bloodDonation.service.patient.PatientPersonalInformationServiceImpl;
 import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.Scanner;
 
 public class DonorRecommendationController {
-    private final DonorRecommendationServiceImpl donorRecommendationService;
-    private final PatientPersonalInformationServiceImpl patientPersonalInformationService;
+    private final DonorRecommendationService donorRecommendationService;
+    private final PatientPersonalInformationService patientPersonalInformationService;
     private final Scanner input;
     private final SessionService sessionService;
 

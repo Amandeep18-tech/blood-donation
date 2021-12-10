@@ -3,9 +3,7 @@ package com.dalhousie.bloodDonation.controller.common;
 import com.dalhousie.bloodDonation.exception.CustomException;
 import com.dalhousie.bloodDonation.model.common.Survey;
 import com.dalhousie.bloodDonation.model.common.SurveyQuestions;
-import com.dalhousie.bloodDonation.service.common.SurveyDetailsServiceImpl;
-import com.dalhousie.bloodDonation.service.common.SurveyQuestionsServiceImpl;
-import com.dalhousie.bloodDonation.service.common.SurveyServiceImpl;
+import com.dalhousie.bloodDonation.service.common.*;
 import com.dalhousie.bloodDonation.utils.IOUtils;
 
 import java.util.List;
@@ -13,9 +11,9 @@ import java.util.Scanner;
 
 public class SurveyController {
     private final Scanner input;
-    private final SurveyServiceImpl surveyService;
-    private final SurveyQuestionsServiceImpl surveyQuestionsService;
-    private final SurveyDetailsServiceImpl surveyDetailsService;
+    private final SurveyService surveyService;
+    private final SurveyQuestionsService surveyQuestionsService;
+    private final SurveyDetailsService surveyDetailsService;
 
     public SurveyController() {
         input = IOUtils.getInstance();
@@ -75,7 +73,7 @@ public class SurveyController {
                 default:
                     System.out.println("Please Select Correct Option From The Menu");
             }
-        }while (choice!=9);
+        } while (choice != 9);
     }
 
     public void displayPendingSurveyToUser() throws CustomException {

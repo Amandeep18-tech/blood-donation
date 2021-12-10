@@ -15,8 +15,8 @@ import java.util.Scanner;
 
 public class SurveyDetailsServiceImpl implements SurveyDetailsService {
     private final SessionService sessionService;
-    private final SurveyDetailsRepositoryImpl surveyDetailsRepository;
-    private final SurveyQuestionsRepositoryImpl surveyQuestionsRepository;
+    private final SurveyDetailsRepository surveyDetailsRepository;
+    private final SurveyQuestionsRepository surveyQuestionsRepository;
     private final Scanner in;
 
     public SurveyDetailsServiceImpl() {
@@ -32,8 +32,7 @@ public class SurveyDetailsServiceImpl implements SurveyDetailsService {
         int surveyMasterId = in.nextInt();
         in.nextLine();
         System.out.println();
-        SurveyQuestionsRepository questionRepo = surveyQuestionsRepository;
-        List<SurveyQuestions> questionList = questionRepo.getAllSurveyQuestions(surveyMasterId);
+        List<SurveyQuestions> questionList = surveyQuestionsRepository.getAllSurveyQuestions(surveyMasterId);
         List<SurveyDetails> surveyDetailsList = new ArrayList<>();
         String userId = String.valueOf(sessionService.getUserId());
         for (SurveyQuestions questionObj : questionList) {
@@ -45,8 +44,7 @@ public class SurveyDetailsServiceImpl implements SurveyDetailsService {
             surveyDetails.setUserId(userId);
             surveyDetails.setSurveyAnswer(answer);
             surveyDetailsList.add(surveyDetails);
-            SurveyDetailsRepository surveyDetailsRepositoryImpl = surveyDetailsRepository;
-            surveyDetailsRepositoryImpl.add(surveyDetails);
+            surveyDetailsRepository.add(surveyDetails);
         }
         System.out.println("\nSurvey Filled Successfully!");
     }
